@@ -16,9 +16,26 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        ConnectNearby.startDiscovery(this);
-        Log.d(Constants.NEARBY_LOG, "PostActivity onCreate: discovery started");
+        //ConnectNearby.startDiscovery();
+        //Log.d(Constants.NEARBY_LOG, "PostActivity onCreate: discovery started");
 
-        //TODO: stop this discovery properly
+        ConnectNearby.postActivity = this; //set the new activity
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //TODO: start discovery on button press not here
+        Log.d(Constants.NEARBY_LOG, "PostActivity onResume: start discovery");
+        ConnectNearby.startDiscovery();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Log.d(Constants.NEARBY_LOG, "PostActivity onPause: stop discovery");
+        ConnectNearby.stopDiscovery();
     }
 }

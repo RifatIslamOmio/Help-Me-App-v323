@@ -8,6 +8,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,11 +46,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        promptPermissions();
+
         init();
 
-        if( !permissionObject.checkPermissions() ){
-            permissionObject.askPermissions();
-        }
+        //ConnectNearby.startAdvertising(); //start advertising instantly
+        //Constants.IS_SENDER = false; //start as receiver, advertising to be found
 
     }
 
@@ -57,10 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
         helpButton = findViewById(R.id.helpButton);
 
+        ConnectNearby.username = "test_username"; //username for advertising //TODO: set unique(MUST!!!) username
+        ConnectNearby.mainActivity = this;
+
+    }
+
+    private void promptPermissions() {
+
         permissionObject = new Permissions(this, permissions,PERMISSIONS_REQUEST_CODE);
 
-        ConnectNearby.startAdvertising(this, "change username"); //TODO: set unique username
-
+        if( !permissionObject.checkPermissions() ){
+            permissionObject.askPermissions();
+        }
     }
 
     @Override
@@ -155,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         Log.d(Constants.NEARBY_LOG, "MainActivity onResume: start advertising");
-        ConnectNearby.startAdvertising(this, "change username");
+        ConnectNearby.startAdvertising();
+        Constants.IS_SENDER = false; //start as receiver, advertising to be found
     }
 
     @Override
@@ -163,15 +174,19 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         Log.d(Constants.NEARBY_LOG, "MainActivity onPause: stopping advertising");
-        ConnectNearby.stopAdvertising(this);
+        ConnectNearby.stopAdvertising();
     }
 
     public void helpClick(View view){
 
-        ConnectNearby.stopAdvertising(this);
+        Constants.IS_SENDER = true;
+
+        ConnectNearby.stopAdvertising();
         Log.d(Constants.NEARBY_LOG, "helpClick: stop advertising");
 
-        //TODO: start PostActivity
+        //start PostActivity
+        Intent intent = new Intent(this, PostActivity.class);
+        startActivity(intent);
 
     }
 }
