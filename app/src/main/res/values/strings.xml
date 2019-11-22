@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Help Me</string>
+
+    <string name="homepage_button">HELP</string>
+
+    <!--Permissions.java strings-->
+    <string name="dialogbox_title">Permissions Explanation</string>
+    <string name="dialogbox_positive">Yes</string>
+    <string name="dialogbox_negative">No</string>
+    <string name="location_permission">Location is needed to access and forward your/victim\'s location instantly</string>
+    <string name="wifi_permission">Wifi is needed to forward your call wirelessly to nearby devices WITHOUT INTERNET</string>
+    <string name="internet_permission">Internet access is needed to upload the event online to a broader audience</string>
+    <!--end-->
+
+</resources>
