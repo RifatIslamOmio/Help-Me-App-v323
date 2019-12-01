@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -163,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        ConnectNearby.clearRequestedPeerList(); //clear out requested peer list
 
         Log.d(Constants.NEARBY_LOG, "MainActivity onResume: start advertising");
         ConnectNearby.startAdvertising();
