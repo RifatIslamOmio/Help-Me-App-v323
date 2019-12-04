@@ -1,10 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#673AB7"
+    android:orientation="vertical"
     tools:context=".Activities.PostActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/editText_description_post"
+            android:layout_width="300dp"
+            android:layout_height="190dp"
+            android:ems="10"
+            android:hint="Write Short Description Here..."
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="30dp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <Button
+            android:id="@+id/btn_take_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/custombutton_post"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="15dp"
+            android:text="+ Take Photo" />
+
+        <Button
+            android:id="@+id/btn_rec_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/custombutton_post"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="15dp"
+            android:text="+ Record Video" />
+
+        <Button
+            android:id="@+id/btn_pick_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/custombutton_post"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="15dp"
+            android:text="+ Pick location" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/btn_post"
+            android:layout_width="257dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="90dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/custombutton_post"
+            android:backgroundTint="@color/post_button_color"
+            android:fontFamily="@font/roboto_bold"
+            android:padding="23dp"
+            android:text="Post"
+            android:textColor="#fff"
+            android:textSize="15sp">
+
+
+        </Button>
+
+    </RelativeLayout>
+</LinearLayout>
