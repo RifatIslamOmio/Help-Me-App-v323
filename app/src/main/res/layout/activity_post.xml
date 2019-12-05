@@ -32,6 +32,8 @@
 
         <Button
             android:id="@+id/btn_take_photo"
+            android:drawableStart="@drawable/ic_photo_camera"
+            android:drawablePadding="-20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
@@ -44,6 +46,8 @@
 
         <Button
             android:id="@+id/btn_rec_video"
+            android:drawableStart="@drawable/ic_video_camera"
+            android:drawablePadding="-10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
@@ -56,6 +60,8 @@
 
         <Button
             android:id="@+id/btn_pick_location"
+            android:drawableStart="@drawable/ic_map"
+            android:drawablePadding="-5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
