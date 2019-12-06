@@ -20,7 +20,7 @@ public abstract class Constants {
     /***/
 
     /**Intent Tags*/
-    public static final String RECEIVED_STRING = "received_string";
+    public static final String RECEIVED_STRING_KEY = "received_string";
     /***/
 
     /**Result Codes*/

@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,22 +17,22 @@ import com.example.helpme.Externals.ConnectNearby;
 import com.example.helpme.Externals.LocationsFetch;
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.R;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 
 public class PostActivity extends AppCompatActivity {
 
     private LocationsFetch locationsFetch;
     private AccurateLocationAsync accurateLocationAsync;
 
-    public TextView locationText, countDownText; //TODO: remove these
+    public static boolean postClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        //TODO: remove below initialization
-        locationText = findViewById(R.id.locationText);
-        countDownText = findViewById(R.id.countDownText);
+        init();
     }
 
     private void init(){
@@ -39,10 +41,40 @@ public class PostActivity extends AppCompatActivity {
 
         locationsFetch = new LocationsFetch(this);
         locationsFetch.checkDeviceLocationSettings();
-        locationsFetch.startLocationUpdates();
 
         accurateLocationAsync = new AccurateLocationAsync(this);
+
+        //Log.d(Constants.LOCATION_LOG, "onResume: start aync task");
         accurateLocationAsync.execute(locationsFetch);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //locationsFetch.startLocationUpdates();
+        //Log.d(Constants.LOCATION_LOG, "PostActivity onResume: location request initiated");
+
+        /*if(onResumeCount==0) {
+            Log.d(Constants.LOCATION_LOG, "onResume: start aync task");
+            accurateLocationAsync.execute(locationsFetch);
+        }
+        onResumeCount++;*/
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(Constants.IS_DISCOVERING) {
+            Log.d(Constants.NEARBY_LOG, "PostActivity onPause: stop discovery");
+            ConnectNearby.stopDiscovery();
+        }
+
+        accurateLocationAsync.cancel(true);
+        locationsFetch.stopLocationUpdates();
     }
 
     @Override
@@ -57,32 +89,39 @@ public class PostActivity extends AppCompatActivity {
 
                     Log.d(Constants.LOCATION_LOG, "onActivityResult: location enabled");
                 }
+
+                else if(Activity.RESULT_CANCELED == resultCode){
+                    Log.d(Constants.LOCATION_LOG, "onActivityResult: user picked no");
+                    Constants.IS_LOCATION_ENABLED = false;
+
+                    //TODO: show dialog and open settings for manual location enabling
+                }
+
                 else {
+
+                    //TODO: show dialog and open settings for manual location enabling
                     Toast.makeText(this,"Please Turn On Locations",Toast.LENGTH_LONG).show();
                     Constants.IS_LOCATION_ENABLED = false;
 
                     Log.d(Constants.LOCATION_LOG, "onActivityResult: location is turned off");
                 }
 
+                break;
+
+            default:
+                break;
+
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    public void postClick(View view) {
 
-        //TODO: start discovery on button press not here
-        Log.d(Constants.NEARBY_LOG, "PostActivity onResume: start discovery");
+        if(!postClicked) //TODO: use in AccurateLocationAsync class. show progress dialog only after postClick
+            postClicked = true;
+
+        Log.d(Constants.NEARBY_LOG, "postClick: start discovery");
         ConnectNearby.startDiscovery();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if(Constants.IS_DISCOVERING) {
-            Log.d(Constants.NEARBY_LOG, "PostActivity onPause: stop discovery");
-            ConnectNearby.stopDiscovery();
-        }
+        //TODO: start new activity and delete this activity from stack to avoid calling startDiscovery() multiple times
     }
 }

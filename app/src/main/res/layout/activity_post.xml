@@ -16,12 +16,12 @@
             android:id="@+id/editText_description_post"
             android:layout_width="300dp"
             android:layout_height="190dp"
-            android:ems="10"
-            android:hint="Write Short Description Here..."
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
             android:layout_marginTop="45dp"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/description_hint"
+            android:inputType="textMultiLine" />
     </RelativeLayout>
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:background="@drawable/custombutton_post"
             android:fontFamily="@font/roboto_medium"
             android:padding="15dp"
-            android:text="+ Take Photo" />
+            android:text="@string/take_photo_button" />
 
         <Button
             android:id="@+id/btn_rec_video"
@@ -52,7 +52,7 @@
             android:background="@drawable/custombutton_post"
             android:fontFamily="@font/roboto_medium"
             android:padding="15dp"
-            android:text="+ Record Video" />
+            android:text="@string/record_video_button" />
 
         <Button
             android:id="@+id/btn_pick_location"
@@ -65,7 +65,7 @@
             android:background="@drawable/custombutton_post"
             android:fontFamily="@font/roboto_medium"
             android:padding="15dp"
-            android:text="+ Pick location" />
+            android:text="@string/pick_location_button" />
     </LinearLayout>
 
     <RelativeLayout
@@ -85,12 +85,24 @@
             android:backgroundTint="@color/post_button_color"
             android:fontFamily="@font/roboto_bold"
             android:padding="23dp"
-            android:text="Post"
+            android:text="@string/post_button"
             android:textColor="#fff"
-            android:textSize="15sp">
-
+            android:textSize="15sp"
+            android:onClick="postClick">
 
         </Button>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/locationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/countDownText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 </LinearLayout>

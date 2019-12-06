@@ -12,4 +12,12 @@
     <string name="internet_permission">Internet access is needed to upload the event online to a broader audience</string>
     <!--end-->
 
+    <!--activity_post.xml-->
+    <string name="description_hint">Write Short Description Here...</string>
+    <string name="take_photo_button">+ Take Photo</string>
+    <string name="record_video_button">+ Record Video</string>
+    <string name="pick_location_button">+ Pick location</string>
+
+    <string name="post_button">Post</string>
+
 </resources>
