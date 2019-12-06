@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="post_button_color">#FF1744</color>
     <color name="buttonBackgroundPost">#00E676</color>
+    <color name="textboxBorder">#0EBD6D</color>
 </resources>

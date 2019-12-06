@@ -16,13 +16,13 @@
             android:layout_marginRight="45dp"
             android:layout_marginBottom="23dp"
             android:ems="10"
+            android:background="@drawable/textbox_border"
             android:gravity="start|top"
             android:hint="Write Short Description Here..."
             android:inputType="textMultiLine"
-            android:paddingBottom="10dp"
+            android:padding="8dp"
             android:scrollbars="vertical"
-            android:lines="4"
-            />
+            android:lines="4" />
 
         <Button
             android:id="@+id/btn_take_photo"
@@ -38,7 +38,8 @@
             android:fontFamily="@font/roboto_medium"
             android:padding="15dp"
             android:text="Take Photo"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#272626" />
 
         <Button
             android:id="@+id/btn_rec_video"
@@ -53,7 +54,8 @@
             android:fontFamily="@font/roboto_medium"
             android:padding="15dp"
             android:text="Record Video"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#272626" />
 
         <Button
             android:id="@+id/btn_pick_location"
@@ -70,7 +72,8 @@
             android:fontFamily="@font/roboto_medium"
             android:padding="15dp"
             android:text="Pick location"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#272626" />
 
         <Button
             android:id="@+id/btn_post"
