@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Activities.ReceiverEndPostActivity"></activity>
-        <activity android:name=".Activities.PostActivity" />
+        <activity android:name=".Activities.PostActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
