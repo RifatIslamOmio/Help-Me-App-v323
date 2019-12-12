@@ -3,91 +3,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/bgpost"
     tools:context=".Activities.PostActivity">
 
-        <EditText
-            android:id="@+id/editText_description_post"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="45dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginRight="45dp"
-            android:layout_marginBottom="23dp"
-            android:ems="10"
-            android:background="@drawable/textbox_border"
-            android:gravity="start|top"
-            android:hint="Write Short Description Here..."
-            android:inputType="textMultiLine"
-            android:padding="8dp"
-            android:scrollbars="vertical"
-            android:lines="4" />
+            android:layout_height="match_parent"
+            >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_take_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/custombutton_post"
-            android:baselineAligned="false"
-            android:drawableStart="@drawable/ic_photo_camera"
-            android:drawablePadding="-20dp"
-            android:fontFamily="@font/roboto_medium"
-            android:padding="15dp"
-            android:text="Take Photo"
-            android:textAlignment="center"
-            android:textColor="#272626" />
+                        <EditText
+                            android:id="@+id/editText_description_post"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="45dp"
+                            android:layout_marginTop="45dp"
+                            android:layout_marginRight="45dp"
+                            android:layout_marginBottom="23dp"
+                            android:background="@drawable/textbox_border"
+                            android:ems="10"
+                            android:gravity="start|top"
+                            android:hint="Write Short Description Here..."
+                            android:inputType="textMultiLine"
+                            android:lines="4"
+                            android:padding="8dp"
+                            android:scrollbars="vertical" />
 
-        <Button
-            android:id="@+id/btn_rec_video"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/custombutton_post"
-            android:drawableStart="@drawable/ic_video_camera"
-            android:drawablePadding="-10dp"
-            android:fontFamily="@font/roboto_medium"
-            android:padding="15dp"
-            android:text="Record Video"
-            android:textAlignment="center"
-            android:textColor="#272626" />
+                        <Button
+                            android:id="@+id/btn_take_photo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="50dp"
+                            android:background="@drawable/custombutton_post"
+                            android:baselineAligned="false"
+                            android:drawableStart="@drawable/ic_photo_camera"
+                            android:drawablePadding="-20dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:padding="15dp"
+                            android:text="Take Photo"
+                            android:textAlignment="center"
+                            android:textColor="#272626" />
 
-        <Button
-            android:id="@+id/btn_pick_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginBottom="22dp"
-            android:background="@drawable/custombutton_post"
-            android:baselineAligned="false"
-            android:drawableStart="@drawable/ic_map"
-            android:drawablePadding="-5dp"
-            android:fontFamily="@font/roboto_medium"
-            android:padding="15dp"
-            android:text="Pick location"
-            android:textAlignment="center"
-            android:textColor="#272626" />
+                        <Button
+                            android:id="@+id/btn_rec_video"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="50dp"
+                            android:background="@drawable/custombutton_post"
+                            android:drawableStart="@drawable/ic_video_camera"
+                            android:drawablePadding="-10dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:padding="15dp"
+                            android:text="Record Video"
+                            android:textAlignment="center"
+                            android:textColor="#272626" />
 
-        <Button
-            android:id="@+id/btn_post"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="95dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="95dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/custombutton_post"
-            android:backgroundTint="@color/post_button_color"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Post"
-            android:textColor="#fff"
-            android:textSize="15sp"
-            android:padding="20dp"/>
+                        <Button
+                            android:id="@+id/btn_pick_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="50dp"
+                            android:layout_marginBottom="22dp"
+                            android:background="@drawable/custombutton_post"
+                            android:baselineAligned="false"
+                            android:drawableStart="@drawable/ic_map"
+                            android:drawablePadding="-5dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:padding="15dp"
+                            android:text="Pick location"
+                            android:textAlignment="center"
+                            android:textColor="#272626" />
+
+                        <Button
+                            android:id="@+id/btn_post"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="95dp"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginRight="95dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@drawable/custombutton_post"
+                            android:backgroundTint="@color/post_button_color"
+                            android:fontFamily="@font/roboto_bold"
+                            android:padding="20dp"
+                            android:text="Post"
+                            android:textColor="#fff"
+                            android:textSize="15sp" />
+                </LinearLayout>
+        </ScrollView>
+
+
 </LinearLayout>
