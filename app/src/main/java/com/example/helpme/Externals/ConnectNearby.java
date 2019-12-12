@@ -39,6 +39,11 @@ public class ConnectNearby {
     public static MainActivity mainActivity;
     public static PostActivity postActivity;
 
+    private static String latlongStringToSend = "no location received";
+    public static void setLatlongStringToSend(String latlongStringToSend) {
+        ConnectNearby.latlongStringToSend = latlongStringToSend;
+    }
+
     private static final Strategy strategy = Strategy.P2P_POINT_TO_POINT;
     private static final String SERVICE_ID = "com.example.helpme"; //TODO: come up with unique SERVICE_ID for App
     private static final AdvertisingOptions advertisingOptions = new AdvertisingOptions.Builder().setStrategy(strategy).build();
@@ -65,7 +70,7 @@ public class ConnectNearby {
 
             //start ReceiverEndPostActivity
             Intent intent = new Intent(mainActivity, ReceiverEndPostActivity.class);
-            intent.putExtra(Constants.RECEIVED_STRING, receivedMessage);
+            intent.putExtra(Constants.RECEIVED_STRING_KEY, receivedMessage);
             mainActivity.startActivity(intent);
         }
 
@@ -73,7 +78,7 @@ public class ConnectNearby {
         public void onPayloadTransferUpdate(String endpointId, PayloadTransferUpdate update) {
             // Bytes payloads are sent as a single chunk, so you'll receive a SUCCESS update immediately
             // after the call to onPayloadReceived().
-            Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: disconnecting endpoint and starting new activity");
+            Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: disconnecting endpoint = "+endpointId);
 
             //disconnecting from sender endpoint
             Nearby.getConnectionsClient(ConnectNearby.mainActivity)
@@ -120,11 +125,10 @@ public class ConnectNearby {
                             if(Constants.IS_SENDER) {
                                 ConnectNearby.displayToast("Sender connected to: " + endpointId, postActivity);
 
-                                Payload bytesPayload = Payload.fromBytes(new byte[] {97, 98, 99, 100}); //what the hell is this?
+                                Payload bytesPayload = Payload.fromBytes(latlongStringToSend.getBytes(StandardCharsets.UTF_8)); //what the hell is this?
                                 Nearby.getConnectionsClient(postActivity).sendPayload(endpointId, bytesPayload);
 
-                                Byte bt[] = {97, 98, 99, 100};
-                                Log.d(Constants.NEARBY_LOG, "onConnectionResult: send byte = "+bt);
+                                Log.d(Constants.NEARBY_LOG, "onConnectionResult: send byte = "+latlongStringToSend.getBytes(StandardCharsets.UTF_8));
 
                                 //disconnect from receiver immediately after sending
                                 //Nearby.getConnectionsClient(postActivity).disconnectFromEndpoint(endpointId);
@@ -227,7 +231,9 @@ public class ConnectNearby {
                                                 // We successfully requested a connection. Now both sides
                                                 // must accept before the connection is established.
 
-                                                Log.d(Constants.NEARBY_LOG, "requestConncetion onSuccess: success!");
+                                                Log.d(Constants.NEARBY_LOG,
+                                                        "endpointDiscoveryCallback->onEndpointFound->" +
+                                                                "onSuccess: success!");
 
                                                 //requestedPeerEPIs.add(decoyEndpointId); //Here?
                                             }
@@ -238,7 +244,9 @@ public class ConnectNearby {
                                             public void onFailure(@NonNull Exception e) {
                                                 // Nearby Connections failed to request the connection.
 
-                                                Log.d(Constants.NEARBY_LOG, "requestConnection onFailure: discovery failed see error stack trace"
+                                                Log.d(Constants.NEARBY_LOG,
+                                                        "endpointDiscoveryCallback->onEndpointFound->" +
+                                                                "onFailure: discovery failed see error stack trace"
                                                         + e.getMessage());
                                             }
                                         });

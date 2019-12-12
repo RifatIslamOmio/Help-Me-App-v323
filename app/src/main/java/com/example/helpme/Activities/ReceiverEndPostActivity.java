@@ -28,7 +28,7 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
     private void init() {
 
         testText = findViewById(R.id.testText);
-        testText.setText(getIntent().getStringExtra(Constants.RECEIVED_STRING));
+        testText.setText(getIntent().getStringExtra(Constants.RECEIVED_STRING_KEY));
 
         if(Constants.IS_ADVERTISING)
             ConnectNearby.stopAdvertising();
