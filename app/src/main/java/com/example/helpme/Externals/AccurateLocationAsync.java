@@ -1,6 +1,5 @@
 package com.example.helpme.Externals;
 
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,8 +9,7 @@ import com.example.helpme.Extras.Constants;
 public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, String> {
 
     private PostActivity postActivity;
-    public int count;
-    private LocationManager locationManager;
+    private int count;
 
     public AccurateLocationAsync(PostActivity postActivity) {
         this.postActivity = postActivity;
@@ -28,8 +26,10 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
                 return "location update canceled";
             }
 
-            if(locationsFetches[0].isLocationEnabledLM())
+            if(locationsFetches[0].isLocationEnabledLM()) {
+                Constants.IS_LOCATION_ENABLED = true;
                 break;
+            }
         }
 
         while (!locationsFetches[0].isLocationAccurate()){

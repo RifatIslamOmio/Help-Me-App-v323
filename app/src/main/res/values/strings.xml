@@ -10,13 +10,16 @@
     <string name="location_permission">Location is needed to access and forward your/victim\'s location instantly</string>
     <string name="wifi_permission">Wifi is needed to forward your call wirelessly to nearby devices WITHOUT INTERNET</string>
     <string name="internet_permission">Internet access is needed to upload the event online to a broader audience</string>
+
+    <string name="camera_permission">Adding pictures increase reliable and can help gain more response</string>
+    <string name="files_write_permission">Write permission required save the picture taken to your device</string>
     <!--end-->
 
     <!--activity_post.xml-->
     <string name="description_hint">Write Short Description Here...</string>
-    <string name="take_photo_button">+ Take Photo</string>
-    <string name="record_video_button">+ Record Video</string>
-    <string name="pick_location_button">+ Pick location</string>
+    <string name="take_photo_button">Take Photo</string>
+    <string name="record_video_button">Record Video</string>
+    <string name="pick_location_button">Pick location</string>
 
     <string name="post_button">Post</string>
 

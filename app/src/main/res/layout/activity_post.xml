@@ -26,7 +26,7 @@
                             android:background="@drawable/textbox_border"
                             android:ems="10"
                             android:gravity="start|top"
-                            android:hint="Write Short Description Here..."
+                            android:hint="@string/description_hint"
                             android:inputType="textMultiLine"
                             android:lines="4"
                             android:padding="8dp"
@@ -44,9 +44,11 @@
                             android:drawableStart="@drawable/ic_photo_camera"
                             android:drawablePadding="-20dp"
                             android:fontFamily="@font/roboto_medium"
+                            android:onClick="takePhotoClick"
                             android:padding="15dp"
-                            android:text="Take Photo"
+                            android:text="@string/take_photo_button"
                             android:textAlignment="center"
+
                             android:textColor="#272626" />
 
                         <Button
@@ -61,7 +63,7 @@
                             android:drawablePadding="-10dp"
                             android:fontFamily="@font/roboto_medium"
                             android:padding="15dp"
-                            android:text="Record Video"
+                            android:text="@string/record_video_button"
                             android:textAlignment="center"
                             android:textColor="#272626" />
 
@@ -79,7 +81,7 @@
                             android:drawablePadding="-5dp"
                             android:fontFamily="@font/roboto_medium"
                             android:padding="15dp"
-                            android:text="Pick location"
+                            android:text="@string/pick_location_button"
                             android:textAlignment="center"
                             android:textColor="#272626" />
 
@@ -94,8 +96,9 @@
                             android:background="@drawable/custombutton_post"
                             android:backgroundTint="@color/post_button_color"
                             android:fontFamily="@font/roboto_bold"
+                            android:onClick="postClick"
                             android:padding="20dp"
-                            android:text="Post"
+                            android:text="@string/post_button"
                             android:textColor="#fff"
                             android:textSize="15sp" />
                 </LinearLayout>

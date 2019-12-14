@@ -25,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button helpButton;
 
-    private String permissions[] = {
+    private static final String permissions[] = {
         Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_WIFI_STATE,
         Manifest.permission.CHANGE_WIFI_STATE,
         Manifest.permission.CHANGE_NETWORK_STATE,
@@ -79,74 +78,13 @@ public class MainActivity extends AppCompatActivity {
 
             case PERMISSIONS_REQUEST_CODE: {
 
-                Log.d(Constants.PERMISSIONS_LOG, "onRequestPermissionsResult: case "+permissionObject.getPERMISSION_REQUEST_CODE());
+                Log.d(Constants.PERMISSIONS_LOG, "MainActivity->onRequestPermissionsResult: case "+permissionObject.getPERMISSION_REQUEST_CODE());
 
-                HashMap<String, Integer> permissionResult = new HashMap<>();
-
-                for (int i = 0; i < grantResults.length; i++) {
-                    //get the still not allowed permissions
-
-                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        permissionResult.put(permissions[i], grantResults[i]);
-                        Log.d(Constants.PERMISSIONS_LOG, "onRequestPermissionsResult: denied permission = "+permissions[i]+" grant result = "+grantResults[i]);
-                    }
-                }
-
-                if (!permissionResult.isEmpty()) {
-
-                    String alertBoxMessage = getString(R.string.location_permission)+"\n"
-                            +getString(R.string.wifi_permission)+"\n"
-                            +getString(R.string.internet_permission);
-                    Log.d(Constants.PERMISSIONS_LOG, "onRequestPermissionsResult: alert box message = "+alertBoxMessage);
-
-                    for (Map.Entry<String, Integer> entry : permissionResult.entrySet()) {
-                        //request permission one by one with proper explanation
-                        String permission = entry.getKey();
-                        int resultCode = entry.getValue();
-                        Log.d(Constants.PERMISSIONS_LOG, "onRequestPermissionsResult: permission = "+permission+" result code = "+resultCode);
-
-                        if(ActivityCompat.shouldShowRequestPermissionRationale(this, permission)){
-                            //user denied collective permission once but hasn't picked never allow
-
-                            permissionObject.alertDialog(
-
-                                    alertBoxMessage,
-
-                                    //positive listener
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            permissionObject.checkPermissions();
-                                            permissionObject.askPermissions(); /**check*/
-                                        }
-                                    },
-
-                                    //negative listener
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            finish();
-                                        }
-                                    }
-
-                            );
-
-                        }
-                        else {
-                            //user has picked never allow
-
-                            Log.d(Constants.PERMISSIONS_LOG, "onRequestPermissionsResult: never allow disos kerreee!!!!!!");
-                            //TODO: show user dialog box then go to settings to allow
-                        }
-
-                    }
-
-                }
-
-                else
-                    Log.d(Constants.PERMISSIONS_LOG, "onRequestPermissionsResult: All permissions granted");
+                permissionObject.resolvePermissions(permissions, grantResults,
+                        getString(R.string.location_permission)+"\n"
+                                +getString(R.string.wifi_permission)+"\n"
+                                +getString(R.string.internet_permission)
+                );
 
                 return;
             }
