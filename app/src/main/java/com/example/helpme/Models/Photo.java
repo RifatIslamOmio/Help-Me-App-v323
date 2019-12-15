@@ -2,6 +2,7 @@ package com.example.helpme.Models;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import id.zelory.compressor.Compressor;
+
 public class Photo {
 
     private Activity activity;
@@ -23,6 +26,9 @@ public class Photo {
     private File photoFile;
     private Uri photoURI;
     private String photoPath;
+
+    private File compressPhotoFile;
+    private String compressPhotoPath;
 
     public Photo(Activity activity) throws IOException {
         this.activity = activity;
@@ -61,6 +67,24 @@ public class Photo {
 
     public String getPhotoPath() {
         return photoPath;
+    }
+
+
+    public File getCompressPhotoFile() throws IOException {
+
+        this.compressPhotoFile = new Compressor(this.activity)
+                    .setQuality(75)
+                    .setDestinationDirectoryPath(activity.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath())
+                    .setCompressFormat(Bitmap.CompressFormat.JPEG)
+                .compressToFile(this.photoFile, "temp_image.jpg");
+
+        this.compressPhotoPath = this.compressPhotoFile.getAbsolutePath();
+
+        return this.compressPhotoFile;
+    }
+
+    public String getCompressPhotoPath() {
+        return compressPhotoPath;
     }
 
     public void takePhoto(){

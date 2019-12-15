@@ -25,6 +25,7 @@ import com.example.helpme.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 
+import java.io.File;
 import java.io.IOException;
 
 public class PostActivity extends AppCompatActivity {
@@ -123,15 +124,22 @@ public class PostActivity extends AppCompatActivity {
             case Constants.REQUEST_TAKE_PHOTO:
 
                 if(Activity.RESULT_OK == resultCode){
+                    //called after photo is taken successfully
+
                     Log.d(Constants.PHOTO_LOG, "onActivityResult: camera open success?");
+                    File checkfile = null;
+                    try {
+                        checkfile = photo.getCompressPhotoFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-                    /*Bundle extras = data.getExtras();
-                    Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-                    Log.d(Constants.PHOTO_LOG, "onActivityResult: image bitmap = "+imageBitmap.getConfig());
-                    */
+                    if(checkfile==null)
+                        Log.d(Constants.PHOTO_LOG, "onActivityResult: checkfile is null");
                 }
                 else if(Activity.RESULT_CANCELED == resultCode){
+                    //called if user didn't take photo
+
                     Log.d(Constants.PHOTO_LOG, "onActivityResult: open camera intent failed");
                 }
 
