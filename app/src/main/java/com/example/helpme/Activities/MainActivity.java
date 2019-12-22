@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
 
+        if(Constants.IS_SENDER)
+            Constants.IS_SENDER = false;
+
         helpButton = findViewById(R.id.helpButton);
 
         ConnectNearby.username = "test_username"; //username for advertising //TODO: set unique(MUST!!!) username
@@ -101,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         ConnectNearby.clearRequestedPeerList(); //clear out requested peer list
+        if(Constants.IS_DISCOVERING)
+            ConnectNearby.stopDiscovery();
 
         Log.d(Constants.NEARBY_LOG, "MainActivity onResume: start advertising");
         ConnectNearby.startAdvertising();

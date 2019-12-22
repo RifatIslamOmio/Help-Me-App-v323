@@ -14,6 +14,21 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08" />
+
+    <ImageView
+        android:id="@+id/postImageView"
+        android:layout_width="293dp"
+        android:layout_height="356dp"
+        android:contentDescription="@android:string/defaultMsisdnAlphaTag"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testText"
+        app:layout_constraintVertical_bias="0.197"
+        app:srcCompat="@drawable/noimage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

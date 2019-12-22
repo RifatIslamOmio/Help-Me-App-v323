@@ -2,6 +2,7 @@ package com.example.helpme.Externals;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.helpme.Activities.PostActivity;
 import com.example.helpme.Extras.Constants;
@@ -10,6 +11,7 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
     private PostActivity postActivity;
     private int count;
+    private boolean progressNeeded = false;
 
     public AccurateLocationAsync(PostActivity postActivity) {
         this.postActivity = postActivity;
@@ -73,15 +75,24 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
     protected void onProgressUpdate(Integer... values) {
         Log.d(Constants.LOCATION_LOG, "onProgressUpdate: progress at="+values[0]);
 
-        //TODO: show progress UI only after post click
+        if(PostActivity.postClicked) {
+            //TODO: show progress UI only after post click
+            Toast demo = Toast.makeText(postActivity, "please wait and press again getting accurate location.", Toast.LENGTH_LONG);
 
+            progressNeeded = true;
+        }
     }
 
     @Override
     protected void onPostExecute(String latlong) {
         Log.d(Constants.LOCATION_LOG, "onPostExecute: latlong = "+latlong);
 
+        if(progressNeeded) {
+            Toast demo = Toast.makeText(postActivity, "ready to send POST now", Toast.LENGTH_LONG);
+        }
+
         ConnectNearby.setLatlongStringToSend(latlong);
+        postActivity.post.setLatlong(latlong);
     }
 
     @Override

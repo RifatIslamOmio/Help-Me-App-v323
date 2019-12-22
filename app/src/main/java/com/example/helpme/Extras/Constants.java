@@ -18,10 +18,14 @@ public abstract class Constants {
     public static final String RECEIVER_END_POST_ACTIVITY = "receiverend_activity";
     public static final String LOCATION_LOG = "location_debug";
     public static final String PHOTO_LOG = "photo_debug";
+
+    public static final String DB_LOG = "database_debug";
     /***/
 
     /**Intent Tags*/
-    public static final String RECEIVED_STRING_KEY = "received_string";
+    public static final String RECEIVED_MESSAGE_KEY = "received_message";
+    public static final String RECEIVED_PHOTO_PATH_KEY = "received_photo_path";
+    public static final String RECEIVED_LOCATION_KEY = "received_location";
     /***/
 
     /**Result Codes*/

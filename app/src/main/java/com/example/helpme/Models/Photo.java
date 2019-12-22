@@ -1,6 +1,5 @@
 package com.example.helpme.Models;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -21,7 +20,7 @@ import id.zelory.compressor.Compressor;
 
 public class Photo {
 
-    private Activity activity;
+    private PostActivity activity;
 
     private File photoFile;
     private Uri photoURI;
@@ -30,13 +29,13 @@ public class Photo {
     private File compressPhotoFile;
     private String compressPhotoPath;
 
-    public Photo(Activity activity) throws IOException {
+    public Photo(PostActivity activity) throws IOException {
         this.activity = activity;
         this.photoFile = createImageFile();
 
         if(photoFile!=null) {
             this.photoURI = FileProvider.getUriForFile( activity.getApplicationContext(),
-                    "com.example.android.fileprovider",
+                    "com.example.android.photofileprovider",
                     photoFile);
         }
     }
@@ -70,7 +69,7 @@ public class Photo {
     }
 
 
-    public File getCompressPhotoFile() throws IOException {
+    public void compressPhotoFile() throws IOException {
 
         this.compressPhotoFile = new Compressor(this.activity)
                     .setQuality(75)
@@ -80,7 +79,10 @@ public class Photo {
 
         this.compressPhotoPath = this.compressPhotoFile.getAbsolutePath();
 
-        return this.compressPhotoFile;
+    }
+
+    public File getCompressPhotoFile() {
+        return compressPhotoFile;
     }
 
     public String getCompressPhotoPath() {

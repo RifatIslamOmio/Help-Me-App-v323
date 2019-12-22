@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,19 +20,23 @@ import com.example.helpme.Externals.LocationsFetch;
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.Extras.Permissions;
 import com.example.helpme.Models.Photo;
+import com.example.helpme.Models.Post;
 import com.example.helpme.R;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
-
-import java.io.File;
 import java.io.IOException;
 
 public class PostActivity extends AppCompatActivity {
+
+    public Post post;
+
+    private TextView postText;
 
     private LocationsFetch locationsFetch;
     private AccurateLocationAsync accurateLocationAsync;
 
     public static boolean postClicked = false;
+
+    private Boolean photoSent = false;
+    public Boolean isPhotoSent() { return photoSent; }
 
     private Photo photo;
     private static final String permissions[] = {
@@ -49,6 +52,8 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        postText = findViewById(R.id.editText_description_post);
+
         init();
     }
 
@@ -57,6 +62,7 @@ public class PostActivity extends AppCompatActivity {
         permissionObject = new Permissions(this, permissions, PERMISSIONS_REQUEST_CODE);
 
         ConnectNearby.postActivity = this; //set the new activity
+        post = new Post(this);
 
         locationsFetch = new LocationsFetch(this);
         locationsFetch.checkDeviceLocationSettings();
@@ -126,16 +132,26 @@ public class PostActivity extends AppCompatActivity {
                 if(Activity.RESULT_OK == resultCode){
                     //called after photo is taken successfully
 
-                    Log.d(Constants.PHOTO_LOG, "onActivityResult: camera open success?");
-                    File checkfile = null;
+                    Log.d(Constants.PHOTO_LOG, "onActivityResult: camera open success");
+
                     try {
-                        checkfile = photo.getCompressPhotoFile();
+                        photo.compressPhotoFile();
+
+                        //load photo into ConnectNearby class
+                        ConnectNearby.photoFile = photo.getPhotoFile();
+                        ConnectNearby.photoFileUri = Uri.fromFile(photo.getCompressPhotoFile());
+                        photoSent = true;
+
+                        //load photo file in post object
+                        post.setPhoto(photo.getPhotoFile());
+
+                        Log.d(Constants.NEARBY_LOG, "onActivityResult: photo compressed successfully uri = "
+                                + ConnectNearby.photoFileUri);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    if(checkfile==null)
-                        Log.d(Constants.PHOTO_LOG, "onActivityResult: checkfile is null");
                 }
                 else if(Activity.RESULT_CANCELED == resultCode){
                     //called if user didn't take photo
@@ -199,8 +215,25 @@ public class PostActivity extends AppCompatActivity {
         if(!postClicked) //TODO: use in AccurateLocationAsync class. show progress dialog only after postClick
             postClicked = true;
 
-        Log.d(Constants.NEARBY_LOG, "postClick: start discovery");
-        ConnectNearby.startDiscovery();
+        if(locationsFetch.isLocationAccurate()) {
+
+            ConnectNearby.message = (String) postText.getText().toString();
+            post.setPostDescription(postText.getText().toString());
+            postText.setText("");
+
+            if (!photoSent) {
+                ConnectNearby.photoFile = null;
+                ConnectNearby.photoFileUri = null;
+                Log.d(Constants.NEARBY_LOG, "postClick: no photo sent setting ConnectNearby photos null");
+            }
+
+            Log.d(Constants.NEARBY_LOG, "postClick: start discovery");
+            ConnectNearby.startDiscovery();
+        }
+
+        else{
+            Log.d(Constants.NEARBY_LOG, "postClick: location not accurate yet");
+        }
 
         //TODO: start new activity and delete this activity from stack to avoid calling startDiscovery() multiple times
     }
