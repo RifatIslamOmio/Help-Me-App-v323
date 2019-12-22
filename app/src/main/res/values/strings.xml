@@ -22,5 +22,6 @@
     <string name="pick_location_button">Pick location</string>
 
     <string name="post_button">Post</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

@@ -26,6 +26,8 @@ public abstract class Constants {
     public static final String RECEIVED_MESSAGE_KEY = "received_message";
     public static final String RECEIVED_PHOTO_PATH_KEY = "received_photo_path";
     public static final String RECEIVED_LOCATION_KEY = "received_location";
+    public static final String MAP_LATITUDE_KEY = "location_latitude";
+    public static final String MAP_LONGITUDE_KEY = "location_longitude";
     /***/
 
     /**Result Codes*/

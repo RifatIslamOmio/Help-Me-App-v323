@@ -2,10 +2,13 @@ package com.example.helpme.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +20,9 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
 
     private TextView testText; //TODO: remove this
     private ImageView postImage;
+    private Button showMapBtn;
 
-    private String photoFilePath = null;
+    private String message, location, photoFilePath = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,12 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
 
     private void init() {
 
+        message = getIntent().getStringExtra(Constants.RECEIVED_MESSAGE_KEY);
+        location = getIntent().getStringExtra(Constants.RECEIVED_LOCATION_KEY);
+
         testText = findViewById(R.id.testText);
-        testText.setText(getIntent().getStringExtra(Constants.RECEIVED_MESSAGE_KEY)
-                + "\n\nlocation: "+getIntent().getStringExtra(Constants.RECEIVED_LOCATION_KEY));
+        testText.setText(message
+                + "\n\nlocation: "+location);
 
         postImage = findViewById(R.id.postImageView);
         String photoPath = getIntent().getStringExtra(Constants.RECEIVED_PHOTO_PATH_KEY);
@@ -48,7 +55,23 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
             postImage.setImageBitmap(imageBitmap);
         }
 
+        showMapBtn = findViewById(R.id.show_map_button); //why???
+
         if(Constants.IS_ADVERTISING)
             ConnectNearby.stopAdvertising();
+    }
+
+    public void showMapClicked(View view) {
+
+        String latlang[] = location.split(" ");
+        double latitude = Double.parseDouble(latlang[0]), longitude = Double.parseDouble(latlang[1]);
+
+        Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "showMapClicked: latitude = "+latitude+" longitude = "+longitude);
+
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra(Constants.MAP_LATITUDE_KEY, latitude);
+        intent.putExtra(Constants.MAP_LONGITUDE_KEY, longitude);
+        startActivity(intent);
+
     }
 }
