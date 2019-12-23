@@ -22,11 +22,21 @@ import com.example.helpme.Extras.Permissions;
 import com.example.helpme.Models.Photo;
 import com.example.helpme.Models.Post;
 import com.example.helpme.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.IOException;
+import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
 
     public Post post;
+
+    private StorageReference folder;
 
     private TextView postText;
 
@@ -39,7 +49,7 @@ public class PostActivity extends AppCompatActivity {
     public Boolean isPhotoSent() { return photoSent; }
 
     private Photo photo;
-    private static final String permissions[] = {
+    private static final String[] permissions = {
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
@@ -58,6 +68,9 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void init(){
+
+        //storage folder
+        folder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
 
         permissionObject = new Permissions(this, permissions, PERMISSIONS_REQUEST_CODE);
 
@@ -138,12 +151,49 @@ public class PostActivity extends AppCompatActivity {
                         photo.compressPhotoFile();
 
                         //load photo into ConnectNearby class
-                        ConnectNearby.photoFile = photo.getPhotoFile();
+                        ConnectNearby.photoFile = photo.getCompressPhotoFile();
                         ConnectNearby.photoFileUri = Uri.fromFile(photo.getCompressPhotoFile());
                         photoSent = true;
 
-                        //load photo file in post object
-                        post.setPhoto(photo.getPhotoFile());
+
+
+                        //upload to database
+
+                        //check
+                        Uri imageData = Uri.fromFile(photo.getCompressPhotoFile());
+                        Log.d(Constants.DB_LOG, "onActivityResult: db upload image uri = "
+                                +imageData.toString());
+                        //
+
+                        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("ImgUrl");
+                        final String photo_name_id = reference.push().getKey();
+
+                        final StorageReference imageName = folder.child(photo_name_id);
+                        imageName.putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+
+                                        Log.d(Constants.DB_LOG, "onSuccess: file upload success");
+
+                                        HashMap<String,String> hashMap = new HashMap<>();
+                                        hashMap.put("imageURL",uri.toString());
+                                        reference.child(photo_name_id).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getApplicationContext(),"Uploaded",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                    }
+                                });
+                            }
+                        });
+
+
+
 
                         Log.d(Constants.NEARBY_LOG, "onActivityResult: photo compressed successfully uri = "
                                 + ConnectNearby.photoFileUri);
@@ -215,9 +265,9 @@ public class PostActivity extends AppCompatActivity {
         if(!postClicked) //TODO: use in AccurateLocationAsync class. show progress dialog only after postClick
             postClicked = true;
 
-        if(locationsFetch.isLocationAccurate()) {
+        if(locationsFetch.isLocationAccurate() || accurateLocationAsync.isAsyncLocationDone()) {
 
-            ConnectNearby.message = (String) postText.getText().toString();
+            ConnectNearby.message = postText.getText().toString();
             post.setPostDescription(postText.getText().toString());
             postText.setText("");
 

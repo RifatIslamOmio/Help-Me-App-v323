@@ -11,7 +11,8 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
     private PostActivity postActivity;
     private int count;
-    private boolean progressNeeded = false;
+    private boolean progressNeeded = false, asyncLocationDone= false;
+    public boolean isAsyncLocationDone() { return asyncLocationDone; }
 
     public AccurateLocationAsync(PostActivity postActivity) {
         this.postActivity = postActivity;
@@ -86,6 +87,8 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
     @Override
     protected void onPostExecute(String latlong) {
         Log.d(Constants.LOCATION_LOG, "onPostExecute: latlong = "+latlong);
+
+        asyncLocationDone = true;
 
         if(progressNeeded) {
             Toast demo = Toast.makeText(postActivity, "ready to send POST now", Toast.LENGTH_LONG);
