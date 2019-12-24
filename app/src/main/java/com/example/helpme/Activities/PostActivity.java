@@ -215,7 +215,7 @@ public class PostActivity extends AppCompatActivity {
         if(!postClicked) //TODO: use in AccurateLocationAsync class. show progress dialog only after postClick
             postClicked = true;
 
-        if(locationsFetch.isLocationAccurate()) {
+        if(locationsFetch.isLocationAccurate() || locationsFetch.isBestLocationTaken()) {
 
             ConnectNearby.message = (String) postText.getText().toString();
             post.setPostDescription(postText.getText().toString());

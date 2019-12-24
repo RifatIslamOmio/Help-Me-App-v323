@@ -35,6 +35,7 @@ public class LocationsFetch {
     private Location location, bestLocation;
     private double bestLocationAccuracy = 99999; //used only in getLastLocation()
     private boolean isLocationAccurate;
+    private boolean bestLocationTaken;
     private boolean isUpdating;
     private boolean isLocationEnabledLM;
     private boolean onLocationResultWorks;
@@ -97,6 +98,7 @@ public class LocationsFetch {
         this.onLocationResultWorks = false;
         this.isUpdating = false;
         this.isLocationEnabledLM = false;
+        this.bestLocationTaken = false;
     }
 
 
@@ -160,6 +162,8 @@ public class LocationsFetch {
         return onLocationResultWorks;
     }
 
+    public boolean isBestLocationTaken() { return bestLocationTaken; }
+
     public boolean isLocationEnabledLM(){
         LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
         isLocationEnabledLM = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
@@ -168,6 +172,12 @@ public class LocationsFetch {
         Log.d(Constants.LOCATION_LOG, "isLocationEnabledLM: "+isLocationEnabledLM);
 
         return isLocationEnabledLM;
+    }
+
+
+
+    public void setBestLocationTaken(boolean bestLocationTaken) {
+        this.bestLocationTaken = bestLocationTaken;
     }
 
 

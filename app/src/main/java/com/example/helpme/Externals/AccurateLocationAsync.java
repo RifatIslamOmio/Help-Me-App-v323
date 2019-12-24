@@ -61,6 +61,8 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
             if(this.count<=0) {
                 Log.d(Constants.LOCATION_LOG, "doInBackground: best location taken");
 
+                locationsFetches[0].setBestLocationTaken(true);
+
                 locationsFetches[0].stopLocationUpdates();
                 return locationsFetches[0].getBestLocation().getLatitude() + " " + locationsFetches[0].getBestLocation().getLongitude();
             }
