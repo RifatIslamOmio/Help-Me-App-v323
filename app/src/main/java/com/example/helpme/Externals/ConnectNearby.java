@@ -2,6 +2,8 @@ package com.example.helpme.Externals;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
@@ -175,28 +177,34 @@ public class ConnectNearby {
 
             if(update.getStatus() == PayloadTransferUpdate.Status.SUCCESS) {
                 //file receive complete?
+                if(!Constants.IS_SENDER) {
+                    if (breaknow) {
+                        breaknow = false;
 
-                if(breaknow){
-                    breaknow = false;
+                        Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: calling processPayload() from - breaknow if statement");
+                        proccessPayload(photofilePayload);
 
-                    Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: calling processPayload() from - breaknow if statement");
+                        if (bytesReceived && fileReceived) {
+                            Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: starting new activity");
+                            startNewActivity(endpointId);
+                        }
+
+                        return;
+                    }
+
+                    fileReceived = true;
+                    Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: calling processPayload() from - outside breaknow if statement");
                     proccessPayload(photofilePayload);
 
-                    if(bytesReceived && fileReceived) {
+                    if (bytesReceived && fileReceived) {
                         Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: starting new activity");
                         startNewActivity(endpointId);
                     }
 
-                    return;
                 }
 
-                fileReceived = true;
-                Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: calling processPayload() from - outside breaknow if statement");
-                proccessPayload(photofilePayload);
-
-                if(bytesReceived && fileReceived) {
-                    Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: starting new activity");
-                    startNewActivity(endpointId);
+                else{ //this is sender
+                    Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: this is sender crysis avoided?");
                 }
 
             }
@@ -228,14 +236,23 @@ public class ConnectNearby {
 
                         //receiver is at MainActivity
 
-                        //TODO: show permissions dialog to connect and play sound
+                        //start the connection
                         Nearby.getConnectionsClient(ConnectNearby.mainActivity) /**check context*/
-                                .acceptConnection(endpointId, payloadListener); //TODO: define payLoadCallback
+                                .acceptConnection(endpointId, payloadListener)
+                                .addOnSuccessListener(ConnectNearby.mainActivity, new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        //play alert sound
+                                        Uri alertSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                        MediaPlayer mp = MediaPlayer.create(ConnectNearby.mainActivity.getApplicationContext(), alertSound);
+                                        mp.start();
+                                    }
+                                });
                     }
                     else {
                         //sender at PostActivity
                         Nearby.getConnectionsClient(ConnectNearby.postActivity) /**check context*/
-                                .acceptConnection(endpointId, payloadListener); //TODO: define payLoadCallback
+                                .acceptConnection(endpointId, payloadListener);
                     }
                 }
 

@@ -32,7 +32,7 @@ public class LocationsFetch {
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
 
-    private Location location, bestLocation;
+    private Location location, bestLocation; public Location locationGetter(){ return location; }
     private double bestLocationAccuracy = 99999; //used only in getLastLocation()
     private boolean isLocationAccurate;
     private boolean bestLocationTaken;

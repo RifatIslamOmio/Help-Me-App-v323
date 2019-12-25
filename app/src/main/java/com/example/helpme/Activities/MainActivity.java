@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
         Manifest.permission.CHANGE_NETWORK_STATE,
         Manifest.permission.INTERNET,
         Manifest.permission.BLUETOOTH,
-        Manifest.permission.BLUETOOTH_ADMIN
+        Manifest.permission.BLUETOOTH_ADMIN,
+
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
     private static final int PERMISSIONS_REQUEST_CODE = 336;
 

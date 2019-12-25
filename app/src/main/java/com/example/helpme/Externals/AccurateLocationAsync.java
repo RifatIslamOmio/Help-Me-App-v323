@@ -1,5 +1,6 @@
 package com.example.helpme.Externals;
 
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,7 +12,8 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
     private PostActivity postActivity;
     private int count;
-    private boolean progressNeeded = false;
+    private boolean progressWasNeeded = false, asyncLocationDone= false;
+    public boolean isAsyncLocationDone() { return asyncLocationDone; }
 
     public AccurateLocationAsync(PostActivity postActivity) {
         this.postActivity = postActivity;
@@ -79,9 +81,10 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
         if(PostActivity.postClicked) {
             //TODO: show progress UI only after post click
-            Toast demo = Toast.makeText(postActivity, "please wait and press again getting accurate location.", Toast.LENGTH_LONG);
+            Toast demo = Toast.makeText(postActivity, "please wait and press again getting accurate location.", Toast.LENGTH_SHORT);
+            demo.show();
 
-            progressNeeded = true;
+            progressWasNeeded = true;
         }
     }
 
@@ -89,12 +92,32 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
     protected void onPostExecute(String latlong) {
         Log.d(Constants.LOCATION_LOG, "onPostExecute: latlong = "+latlong);
 
-        if(progressNeeded) {
+        asyncLocationDone = true;
+
+        if(progressWasNeeded) {
             Toast demo = Toast.makeText(postActivity, "ready to send POST now", Toast.LENGTH_LONG);
+            demo.show();
         }
 
+        //if(postActivity)
         ConnectNearby.setLatlongStringToSend(latlong);
-        postActivity.post.setLatlong(latlong);
+        postActivity.helpPost.setLatlong(latlong);
+
+        Log.d(Constants.LOCATION_LOG, "onPostExecute: "+postActivity.getLocationsFetch().isLocationAccurate());
+        //starting reverse geo here. CHECKKK!
+        if(postActivity.getLocationsFetch().isLocationAccurate()) {
+
+            if(Geocoder.isPresent())
+                postActivity.startAddressFetchService();
+            else{
+                Log.d(Constants.ADDRESS_LOG, "onPostExecute: geocoder not available");
+            }
+
+        }
+
+        else
+            Log.d(Constants.ADDRESS_LOG, "location not accurate?");
+
     }
 
     @Override

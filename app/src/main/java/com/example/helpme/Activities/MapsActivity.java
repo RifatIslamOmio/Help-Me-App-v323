@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.R;
@@ -32,6 +33,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        notifyInternetState();
+
     }
 
     private void fetchLatLang() {
@@ -40,6 +43,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         latitude = intent.getDoubleExtra(Constants.MAP_LATITUDE_KEY,-34);
         longitude = intent.getDoubleExtra(Constants.MAP_LONGITUDE_KEY,151);
 
+    }
+
+    private void notifyInternetState(){
+        if(Constants.isIsInternetEnabled(this))
+            Toast.makeText(this.getApplicationContext(),
+                    "active internet required to view map",
+                    Toast.LENGTH_LONG)
+            .show();
     }
 
 
