@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.helpme.everything.MenuActivity">
+    <include layout="@layout/toolbar"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_profile"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textAllCaps="false"
+            android:layout_margin="10dp"
+            android:background="@drawable/menu_button"
+            android:fontFamily="@font/roboto_medium"
+            android:drawableTop="@drawable/ic_userprofile">
+        </Button>
+
+
+        <Button
+            android:id="@+id/btn_seek_help"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Seek Help"
+            android:textAllCaps="false"
+            android:layout_margin="10dp"
+            android:background="@drawable/menu_button"
+            android:fontFamily="@font/roboto_medium"
+            android:drawableTop="@drawable/seekhelp">
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_help_feed"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Help Feed"
+            android:textAllCaps="false"
+            android:layout_margin="10dp"
+            android:background="@drawable/menu_button"
+            android:fontFamily="@font/roboto_medium"
+            android:drawableTop="@drawable/helpfeed"
+            android:padding="5dp">
+        </Button>
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textAllCaps="false"
+            android:layout_margin="10dp"
+            android:background="@drawable/menu_button"
+            android:fontFamily="@font/roboto_medium"
+            android:drawableTop="@drawable/settings"
+            android:padding="5dp">
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_button"
+            android:text="About"
+            android:textAllCaps="false"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:drawableTop="@drawable/about"
+            android:padding="5dp">
+
+        </Button>
+
+
+        <Button
+            android:id="@+id/logout_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_button"
+            android:text="Logout"
+            android:textAllCaps="false"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:drawableTop="@drawable/logout"
+            android:padding="5dp">
+
+        </Button>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00E676</color>
-    <color name="colorPrimaryDark">#00E676</color>
-    <color name="colorAccent">#D81B60</color>
     <color name="post_button_color">#FF1744</color>
     <color name="buttonBackgroundPost">#00E676</color>
     <color name="textboxBorder">#0EBD6D</color>
+    <color name="colorPrimary">#FF6E40</color>
+    <color name="colorPrimaryDark">#2E2B2B</color>
+    <color name="colorAccent">#2979FF</color>
+    <color name="start">#FD2929</color>
+    <color name="end">#FFD720</color>
+    <color name="white">#fff</color>
+    <color name="toolbar">#F4511E</color>
+    <color name="greeting">#35FF9C</color>
+    <color name="floationg_button">#FF6E40</color>
+    <color name="first">#FF593D</color>
+    <color name="second">#00E977</color>
+    <color name="third">#E01542</color>
+    <color name="picker">#2979FF</color>
+
 </resources>

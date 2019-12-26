@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FAFAFA"
+    tools:context="com.example.helpme.everything.Profile_Activity">
+    <include layout="@layout/toolbar_profile"/>
+
+    <ImageButton
+        android:id="@+id/profileEditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="3dp"
+        android:padding="4.5dp"
+        android:background="@drawable/button_login_signup"
+        app:srcCompat="@drawable/ic_edit_black_24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/profileUserpic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/userprofile"
+            android:layout_marginBottom="20dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profileUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="User Name: "
+                android:textSize="20sp"
+                android:drawableLeft="@drawable/ic_username"/>
+
+            <TextView
+                android:id="@+id/profileFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="Full Name: "
+                android:textSize="20sp"
+                android:drawableLeft="@drawable/ic_fullname"/>
+
+            <TextView
+                android:id="@+id/profileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"
+                android:fontFamily="@font/roboto"
+                android:text="User Email: "
+                android:drawablePadding="4dp"
+                android:drawableLeft="@drawable/ic_email"/>
+
+            <TextView
+                android:id="@+id/profilePhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"
+                android:fontFamily="@font/roboto"
+                android:text="Phone No: "
+                android:drawablePadding="4dp"
+                android:drawableLeft="@drawable/ic_phone"/>
+            <TextView
+                android:id="@+id/profileAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"
+                android:fontFamily="@font/roboto"
+                android:text="Address: "
+                android:drawableLeft="@drawable/ic_home_address"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

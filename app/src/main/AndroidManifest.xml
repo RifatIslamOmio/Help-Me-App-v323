@@ -23,11 +23,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/appicon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/AppTheme">
         <activity android:name=".Activities.DummyMainActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -53,13 +53,32 @@
         <activity
             android:name=".Activities.PostActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Activities.MainActivity">
+
+
+
+        <activity
+            android:name="com.example.helpme.everything.MainActivity"
+            android:noHistory="true"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.helpme.everything.AppIntroActivity" />
+        <activity
+            android:name="com.example.helpme.everything.RegistrationActivity"
+            android:noHistory="true"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name="com.example.helpme.everything.HelpSeekersProfile_activity"/>
+        <activity android:name="com.example.helpme.everything.Edit_Profile_Activity" />
+        <activity android:name="com.example.helpme.everything.Profile_Activity" />
+        <activity android:name="com.example.helpme.everything.HelpFeedActivity" />
+        <activity android:name="com.example.helpme.everything.MenuActivity" />
+
+
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
