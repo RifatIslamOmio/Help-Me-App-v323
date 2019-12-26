@@ -1,6 +1,7 @@
 package com.example.helpme.everything;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
 
         String userId = HelpList.profileData.getUser_id();
 
+
         usernameTVHS = findViewById(R.id.profileUsernameHS);
         emailTVHS = findViewById(R.id.profileEmailHS);
         fullnameTVHS = findViewById(R.id.profileFullNameHS);
@@ -35,7 +37,8 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
 
 
         Query query = FirebaseDatabase.getInstance().getReference("Profiles")
-                .orderByChild(userId);
+                .orderByChild("userId")
+                .equalTo(userId);
         query.addListenerForSingleValueEvent(valueEventListener);
 
     }
