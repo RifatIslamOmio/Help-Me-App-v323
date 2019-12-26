@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,7 @@ import android.os.ResultReceiver;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,18 +29,14 @@ import com.example.helpme.Extras.Permissions;
 import com.example.helpme.Models.Help;
 import com.example.helpme.Models.Photo;
 import com.example.helpme.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -52,6 +51,7 @@ public class PostActivity extends AppCompatActivity {
 
     public static boolean postClicked = false;
     private boolean currentLocationReceived = false;
+    private boolean addressFetched = false;
 
     private Boolean photoSent = false; public Boolean isPhotoSent() { return photoSent; }
 
@@ -89,8 +89,15 @@ public class PostActivity extends AppCompatActivity {
             // do something with the @param addressOutput
             PostActivity.this.helpPost.setCurrent_address(addressOutput);
 
-            //upload to db here?
-            //PostActivity.this.addHelpToDB();
+            if(PostActivity.postClicked) {
+                //upload to db here
+                // PostActivity.this.addHelpToDB();
+            }
+            else{
+                //notify at postClick
+                PostActivity.this.addressFetched = true;
+            }
+
         }
     }
 
@@ -325,6 +332,9 @@ public class PostActivity extends AppCompatActivity {
             //start discovery after reverse geo and db upload?
             Log.d(Constants.NEARBY_LOG, "postClick: start discovery");
             ConnectNearby.startDiscovery();
+            //do this only after start discovery
+            showPostingView();
+
         }
 
         else if(!currentLocationReceived){
@@ -338,7 +348,7 @@ public class PostActivity extends AppCompatActivity {
             Log.d(Constants.NEARBY_LOG, "postClick: location not accurate yet");
         }
 
-        if(Constants.isIsInternetEnabled(this)){
+        if(Constants.isIsInternetEnabled(this) && addressFetched){
 
             //upload to db here or inside addressReceiver?
             //addHelpToDB();
@@ -348,6 +358,24 @@ public class PostActivity extends AppCompatActivity {
         //TODO: start new activity and delete this activity from stack to avoid calling startDiscovery() multiple times
     }
 
+    private void showPostingView() {
+        setContentView(R.layout.activity_post_posting);
+        Log.d(Constants.NEW_VIEW_LOG, "showPostingView: new layout view ser");
+
+        TextView desc, addrs;
+        desc = findViewById(R.id.descriptionPostingText);
+        addrs = findViewById(R.id.addressText);
+        desc.setText(helpPost.getDescription());
+        addrs.setText(helpPost.getLatlong());
+
+        ImageView image = findViewById(R.id.imageViewPosting);
+        if(photo!=null) {
+
+            Bitmap bmp = BitmapFactory.decodeFile(photo.getCompressPhotoPath());
+            image.setImageBitmap(bmp);
+        }
+
+    }
 
 
     /**database upload method*/
@@ -385,8 +413,7 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-    String trimmer(String str)
-    {
+    String trimmer(String str) {
         String temp="";
         for(int i =0;i<str.length();i++)
         {

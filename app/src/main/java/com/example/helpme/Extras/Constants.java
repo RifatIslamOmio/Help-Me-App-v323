@@ -55,6 +55,7 @@ public abstract class Constants {
     public static final String RECEIVER_END_POST_ACTIVITY = "receiverend_activity";
     public static final String LOCATION_LOG = "location_debug";
     public static final String PHOTO_LOG = "photo_debug";
+    public static final String NEW_VIEW_LOG = "view_debug";
 
     public static final String DB_LOG = "database_debug";
 
