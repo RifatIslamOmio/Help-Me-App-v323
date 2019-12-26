@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.helpme.Activities.MainActivity;
+import com.example.helpme.Activities.DummyMainActivity;
 import com.example.helpme.Activities.PostActivity;
 import com.example.helpme.Activities.ReceiverEndPostActivity;
 import com.example.helpme.Extras.Constants;
@@ -42,7 +42,7 @@ import java.util.List;
 public class ConnectNearby {
 
     public static String username;
-    public static MainActivity mainActivity;
+    public static DummyMainActivity dummyMainActivity;
     public static PostActivity postActivity;
 
     private static String latlongStringToSend = "no location received";
@@ -78,7 +78,7 @@ public class ConnectNearby {
                 //testing by receiving byte
                 receivedMessage = new String(payload.asBytes(), StandardCharsets.UTF_8);
                 Toast debug;
-                debug = Toast.makeText(mainActivity, receivedMessage, Toast.LENGTH_LONG);
+                debug = Toast.makeText(dummyMainActivity, receivedMessage, Toast.LENGTH_LONG);
                 debug.setGravity(Gravity.CENTER, 0, 0);
                 debug.show();
 
@@ -117,9 +117,9 @@ public class ConnectNearby {
             }
 
             //start ReceiverEndPostActivity
-            //Intent intent = new Intent(mainActivity, ReceiverEndPostActivity.class);
+            //Intent intent = new Intent(dummyMainActivity, ReceiverEndPostActivity.class);
             //intent.putExtra(Constants.RECEIVED_STRING_KEY, receivedMessage);
-            //mainActivity.startActivity(intent);
+            //dummyMainActivity.startActivity(intent);
         }
 
         private void proccessPayload(Payload payload){
@@ -144,7 +144,7 @@ public class ConnectNearby {
             /***/
 
             //start ReceiverEndPostActivity
-            Intent intent = new Intent(mainActivity, ReceiverEndPostActivity.class);
+            Intent intent = new Intent(dummyMainActivity, ReceiverEndPostActivity.class);
 
             intent.putExtra(Constants.RECEIVED_MESSAGE_KEY, receivedMessage);
             if(receivedFile!=null) {
@@ -160,12 +160,12 @@ public class ConnectNearby {
 
             intent.putExtra(Constants.RECEIVED_LOCATION_KEY, latlong);
 
-            mainActivity.startActivity(intent);
+            dummyMainActivity.startActivity(intent);
 
             Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: disconnecting endpoint = " + endpointId);
 
             //disconnecting from sender endpoint
-            Nearby.getConnectionsClient(ConnectNearby.mainActivity)
+            Nearby.getConnectionsClient(ConnectNearby.dummyMainActivity)
                     .disconnectFromEndpoint(endpointId);
 
         }
@@ -234,17 +234,17 @@ public class ConnectNearby {
 
                         Log.d(Constants.NEARBY_LOG, "onConnectionInitiated: this is the receiver play alert sound here");
 
-                        //receiver is at MainActivity
+                        //receiver is at dummyMainActivity
 
                         //start the connection
-                        Nearby.getConnectionsClient(ConnectNearby.mainActivity) /**check context*/
+                        Nearby.getConnectionsClient(ConnectNearby.dummyMainActivity) /**check context*/
                                 .acceptConnection(endpointId, payloadListener)
-                                .addOnSuccessListener(ConnectNearby.mainActivity, new OnSuccessListener<Void>() {
+                                .addOnSuccessListener(ConnectNearby.dummyMainActivity, new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //play alert sound
                                         Uri alertSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                        MediaPlayer mp = MediaPlayer.create(ConnectNearby.mainActivity.getApplicationContext(), alertSound);
+                                        MediaPlayer mp = MediaPlayer.create(ConnectNearby.dummyMainActivity.getApplicationContext(), alertSound);
                                         mp.start();
                                     }
                                 });
@@ -305,7 +305,7 @@ public class ConnectNearby {
 
                             }
                             else
-                                ConnectNearby.displayToast("Receiver connected to: "+endpointId, mainActivity);
+                                ConnectNearby.displayToast("Receiver connected to: "+endpointId, dummyMainActivity);
 
                             Log.d(Constants.NEARBY_LOG, "onConnectionResult: connected to = "+endpointId);
                             break;
@@ -339,7 +339,7 @@ public class ConnectNearby {
 
     public static void startAdvertising() {
 
-        Nearby.getConnectionsClient(mainActivity.getApplicationContext())
+        Nearby.getConnectionsClient(dummyMainActivity.getApplicationContext())
                 .startAdvertising(
                         ConnectNearby.username, SERVICE_ID, connectionLifecycleCallback, advertisingOptions)
                 .addOnSuccessListener(
@@ -368,7 +368,7 @@ public class ConnectNearby {
     public static void stopAdvertising(){
         Log.d(Constants.NEARBY_LOG, "stopAdvertising(listener): stopping advertising");
 
-        Nearby.getConnectionsClient(mainActivity.getApplicationContext())
+        Nearby.getConnectionsClient(dummyMainActivity.getApplicationContext())
                 .stopAdvertising();
 
         Constants.IS_ADVERTISING = false; //keep track of advertising
