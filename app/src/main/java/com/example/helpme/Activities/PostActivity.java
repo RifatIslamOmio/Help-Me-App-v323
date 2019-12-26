@@ -29,11 +29,14 @@ import com.example.helpme.Extras.Permissions;
 import com.example.helpme.Models.Help;
 import com.example.helpme.Models.Photo;
 import com.example.helpme.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -42,6 +45,7 @@ public class PostActivity extends AppCompatActivity {
 
     public Help helpPost;
 
+    DatabaseReference reference;
     private StorageReference folder;
 
     private TextView postText;
@@ -212,7 +216,7 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-                        /*//upload to database
+                        //upload to database
                         Uri imageData = Uri.fromFile(photo.getCompressPhotoFile());
                         Log.d(Constants.DB_LOG, "onActivityResult: db upload image uri = "
                                 +imageData.toString());
@@ -231,19 +235,12 @@ public class PostActivity extends AppCompatActivity {
 
                                         Log.d(Constants.DB_LOG, "onSuccess: file upload success url = "+uri.toString()+"?");
 
-                                        HashMap<String,String> hashMap = new HashMap<>();
-                                        hashMap.put("imageURL",uri.toString());
-                                        reference.child(photo_name_id).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(getApplicationContext(),"Uploaded",Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+                                        helpPost.setPhoto_path(uri.toString());
 
                                     }
                                 });
                             }
-                        });*/
+                        });
 
 
 
@@ -382,7 +379,7 @@ public class PostActivity extends AppCompatActivity {
 
     /**database upload method*/
 
-    private DatabaseReference databaseHelp;
+
 
     private void addHelpToDB()
     {
@@ -394,23 +391,27 @@ public class PostActivity extends AppCompatActivity {
         String dateandtime = sdf.format(date);
 
         //Data to store in Real Time Database
-        helpPost.setSeeker_name("RIFAT"); //trimmer(user.getEmail())
-        helpPost.setUser_id("NGp4jm0Bi3TCDXHD3dPpCkZEE7h1"); //user.getUid()
+        helpPost.setSeeker_name(trimmer(user.getEmail())); //
+        helpPost.setUser_id(user.getUid());
         helpPost.setDateandtime(dateandtime);
+
 
 
         if(!TextUtils.isEmpty(helpPost.getDescription()) && helpPost.getCurrent_address()!=null)
         {
 
             Log.d(Constants.DB_LOG, "addHelpToDB: uploading to database");
+            reference = FirebaseDatabase.getInstance().getReference().child("helps");
 
-            String help_id = databaseHelp.push().getKey();
+            String help_id = reference.push().getKey();
+            helpPost.setHelpId(help_id);
+            reference.child(help_id).setValue(helpPost).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(getApplicationContext(),"Help Posted!",Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            databaseHelp.child(help_id).setValue(helpPost);
-
-            //startActivity(new Intent(getApplicationContext(), MenuActivity.class));
-
-            Toast.makeText(getApplicationContext(),"Posted",Toast.LENGTH_SHORT).show();
         }
 
     }
