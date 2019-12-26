@@ -118,6 +118,8 @@ public class PostActivity extends AppCompatActivity {
 
     private void init(){
 
+        postClicked = false;
+
         //databse storage folder
         folder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
 
@@ -345,7 +347,7 @@ public class PostActivity extends AppCompatActivity {
         }
 
         else{
-            Log.d(Constants.NEARBY_LOG, "postClick: location not accurate yet");
+            Log.d(Constants.LOCATION_LOG, "postClick: location not accurate yet");
         }
 
         if(Constants.isIsInternetEnabled(this) && addressFetched){
