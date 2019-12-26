@@ -1,58 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/descriptionPostingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="18dp"
-        android:text="description to be replaced"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Description to be replaced"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/addressText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/descriptionPostingText"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="22dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="45dp"
-        android:text="address"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Address"
         android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/imageViewPosting"
         android:layout_width="250dp"
         android:layout_height="300dp"
-        android:layout_below="@+id/addressText"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginRight="80dp"
         app:srcCompat="@drawable/noimage" />
 
     <Button
         android:id="@+id/cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageViewPosting"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginBottom="133dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="15dp"
         android:text="@string/cancel_button" />
-</RelativeLayout>
+</LinearLayout>
