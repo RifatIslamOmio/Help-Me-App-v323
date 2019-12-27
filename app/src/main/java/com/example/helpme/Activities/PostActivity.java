@@ -387,6 +387,8 @@ public class PostActivity extends AppCompatActivity {
             Log.d(Constants.NEARBY_LOG, "PostActivity onPause: stop discovery");
             ConnectNearby.stopDiscovery();
         }
+
+        finish();
     }
 
 

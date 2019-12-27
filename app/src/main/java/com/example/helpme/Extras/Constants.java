@@ -60,6 +60,8 @@ public abstract class Constants {
     public static final String DB_LOG = "database_debug";
 
     public static final String ADDRESS_LOG = "address_debug";
+
+    public static final String NOTIFICATION_LOG = "notification_debug";
     /***/
 
     /**Intent Tags*/
@@ -82,5 +84,10 @@ public abstract class Constants {
 
     public static final int GEO_SUCCESS = 91;
     public static final int GEO_FAILURE = 97;
+    /**/
+
+    /*Notification Channel ID */
+    public static final String CHANNEL_ID = "notsch";
+    public static final int NOTIFICATION_ID = 256;
     /**/
 }

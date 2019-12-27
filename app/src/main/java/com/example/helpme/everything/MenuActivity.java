@@ -19,6 +19,7 @@ import com.example.helpme.Activities.PostActivity;
 import com.example.helpme.Externals.ConnectNearby;
 import com.example.helpme.Externals.LocationsFetch;
 import com.example.helpme.Extras.Constants;
+import com.example.helpme.Extras.Notifications;
 import com.example.helpme.Extras.Permissions;
 import com.example.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -91,6 +92,8 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        Notifications.createNotificationChannel(this);
 
         if(Constants.IS_SENDER)
             Constants.IS_SENDER = false;
