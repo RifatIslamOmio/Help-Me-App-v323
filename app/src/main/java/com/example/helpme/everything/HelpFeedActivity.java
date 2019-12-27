@@ -1,6 +1,7 @@
 package com.example.helpme.everything;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,10 +26,13 @@ public class HelpFeedActivity extends AppCompatActivity {
     DatabaseReference reference;
     RecyclerView recyclerView;
     ArrayList<Help> list;
+    private Parcelable recyclerViewState;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helpfeed);
+
+
 
 
         reference = FirebaseDatabase.getInstance().getReference().child("helps");
@@ -36,6 +40,7 @@ public class HelpFeedActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -48,9 +53,12 @@ public class HelpFeedActivity extends AppCompatActivity {
                     list.add(help);
                 }
 
+                recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
                 Collections.reverse(list);
                 helpList = new HelpList(HelpFeedActivity.this,list);
                 recyclerView.setAdapter(helpList);
+                recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+
             }
 
             @Override
