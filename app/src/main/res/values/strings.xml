@@ -36,4 +36,10 @@
     <string name="email_address">Phone or Email</string>
     <string name="already_have_account_log_in_here">Already have account? Log in here!</string>
 
+    <!--MenuActivity-->
+    <string name="l_w_title"></string>
+    <string name="location_wifi_access">Please turn on both Location and WiFi to provide your precise location. Thank you.</string>
+    <string name="location_wifi_ok">Ok</string>
+    <string name="custom_location">pick cutom location</string>
+
 </resources>

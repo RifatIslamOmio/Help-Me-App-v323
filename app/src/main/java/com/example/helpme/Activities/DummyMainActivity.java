@@ -57,7 +57,7 @@ public class DummyMainActivity extends AppCompatActivity {
         helpButton = findViewById(R.id.helpButton);
 
         ConnectNearby.username = "test_username"; //username for advertising //TODO: set unique(MUST!!!) username
-        ConnectNearby.dummyMainActivity = this;
+        //ConnectNearby.me = this;
 
     }
 

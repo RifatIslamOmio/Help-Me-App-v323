@@ -87,6 +87,9 @@ public class LocationsFetch {
                         Log.d(Constants.LOCATION_LOG, "onLocationResult: taken location latlong = "
                                 +location.getLatitude()+", "+location.getLongitude());
 
+                        //new
+                        LocationsFetch.this.stopLocationUpdates();
+
                     }
 
                     prevLocation = location;
@@ -166,7 +169,7 @@ public class LocationsFetch {
 
     public boolean isLocationEnabledLM(){
         LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
-        isLocationEnabledLM = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+        isLocationEnabledLM = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
         Log.d(Constants.LOCATION_LOG, "isLocationEnabledLM: "+isLocationEnabledLM);

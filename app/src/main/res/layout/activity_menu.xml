@@ -35,7 +35,8 @@
             android:layout_margin="10dp"
             android:background="@drawable/menu_button"
             android:fontFamily="@font/roboto_medium"
-            android:drawableTop="@drawable/seekhelp">
+            android:drawableTop="@drawable/seekhelp"
+            android:onClick="seekHelpClick">
         </Button>
 
     </LinearLayout>

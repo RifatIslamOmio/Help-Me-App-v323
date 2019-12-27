@@ -1,5 +1,10 @@
 package com.example.helpme.Models;
 
+import android.util.Log;
+
+import com.example.helpme.Extras.Constants;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Help {
@@ -13,10 +18,11 @@ public class Help {
     private String current_address;
     private String photo_path=null;
     private int voteCount;
-    private List<String> voters = null ;
+    private List<String> voters = null;
 
     public Help() {
         this.voteCount = 0;
+        voters = new ArrayList<>();
         voters.add("null");
     }
 
@@ -41,6 +47,7 @@ public class Help {
     }
 
     public void setHelpId(String helpId) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting helpId");
         this.helpId = helpId;
     }
 
@@ -49,6 +56,7 @@ public class Help {
     }
 
     public void setSeeker_name(String seeker_name) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting seeker_name");
         this.seeker_name = seeker_name;
     }
 
@@ -57,6 +65,7 @@ public class Help {
     }
 
     public void setDescription(String description) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting description");
         this.description = description;
     }
 
@@ -65,6 +74,7 @@ public class Help {
     }
 
     public void setDateandtime(String dateandtime) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting dateandtime");
         this.dateandtime = dateandtime;
     }
 
@@ -74,6 +84,7 @@ public class Help {
     }
 
     public void setHandled(boolean handled) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting handled bool");
         this.handled = handled;
     }
 
@@ -82,6 +93,7 @@ public class Help {
     }
 
     public void setUser_id(String user_id) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting setUser_id");
         this.user_id = user_id;
     }
 
@@ -90,6 +102,7 @@ public class Help {
     }
 
     public void setLatlong(String latlong) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting latlong");
         this.latlong = latlong;
     }
 
@@ -98,6 +111,7 @@ public class Help {
     }
 
     public void setCurrent_address(String current_address) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting current_address");
         this.current_address = current_address;
     }
 
@@ -106,6 +120,7 @@ public class Help {
     }
 
     public void setPhoto_path(String photo_path) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting photo_path");
         this.photo_path = photo_path;
     }
 
@@ -114,6 +129,7 @@ public class Help {
     }
 
     public void setVoteCount(int voteCount) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting voteCount");
         this.voteCount = voteCount;
     }
 
@@ -122,6 +138,7 @@ public class Help {
     }
 
     public void setVoters(List<String> voters) {
+        Log.d(Constants.DB_LOG, "setHelpId: setting voters");
         this.voters = voters;
     }
 }

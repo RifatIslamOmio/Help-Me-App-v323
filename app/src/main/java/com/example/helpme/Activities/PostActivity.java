@@ -69,6 +69,7 @@ public class PostActivity extends AppCompatActivity {
     private Permissions permissionObject;
 
 
+
     /**geo-coding receiver*/
 
     class AddressResultReceiver extends ResultReceiver {
@@ -95,7 +96,8 @@ public class PostActivity extends AppCompatActivity {
 
             if(PostActivity.postClicked) {
                 //upload to db here
-                // PostActivity.this.addHelpToDB();
+                Log.d(Constants.DB_LOG, "onReceiveResult: addHelpToDB() called from receiver");
+                PostActivity.this.addHelpToDB();
             }
             else{
                 //notify at postClick
@@ -146,14 +148,11 @@ public class PostActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        //locationsFetch.startLocationUpdates();
-        //Log.d(Constants.LOCATION_LOG, "PostActivity onResume: location request initiated");
 
-        /*if(onResumeCount==0) {
-            Log.d(Constants.LOCATION_LOG, "onResume: start aync task");
-            accurateLocationAsync.execute(locationsFetch);
-        }
-        onResumeCount++;*/
+        //locationsFetch.startLocationUpdates();
+        //if(accurateLocationAsync.isCancelled())
+            //accurateLocationAsync.execute(locationsFetch);
+        //Log.d(Constants.LOCATION_LOG, "PostActivity onResume: location request initiated");
 
     }
 
@@ -161,13 +160,15 @@ public class PostActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        if(Constants.IS_DISCOVERING) {
-            Log.d(Constants.NEARBY_LOG, "PostActivity onPause: stop discovery");
-            ConnectNearby.stopDiscovery();
-        }
-
+        //if wifi + location + necessary location settings not met location update stopped here
         accurateLocationAsync.cancel(true);
         locationsFetch.stopLocationUpdates();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
     }
 
     @Override
@@ -217,7 +218,7 @@ public class PostActivity extends AppCompatActivity {
 
 
                         //upload to database
-                        Uri imageData = Uri.fromFile(photo.getCompressPhotoFile());
+                        /*Uri imageData = Uri.fromFile(photo.getCompressPhotoFile());
                         Log.d(Constants.DB_LOG, "onActivityResult: db upload image uri = "
                                 +imageData.toString());
                         //
@@ -240,7 +241,7 @@ public class PostActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                        });
+                        });*/
 
 
 
@@ -350,7 +351,8 @@ public class PostActivity extends AppCompatActivity {
         if(Constants.isIsInternetEnabled(this) && addressFetched){
 
             //upload to db here or inside addressReceiver?
-            //addHelpToDB();
+            Log.d(Constants.DB_LOG, "postClick: addHelpToDB() called at post press");
+            addHelpToDB();
 
         }
 
@@ -375,6 +377,17 @@ public class PostActivity extends AppCompatActivity {
         }
 
     }
+
+
+    public void cancelClick(View view) {
+
+        if(Constants.IS_DISCOVERING) {
+            Log.d(Constants.NEARBY_LOG, "PostActivity onPause: stop discovery");
+            ConnectNearby.stopDiscovery();
+        }
+    }
+
+
 
 
     /**database upload method*/
