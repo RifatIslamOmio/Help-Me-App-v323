@@ -218,14 +218,15 @@ public class PostActivity extends AppCompatActivity {
 
 
                         //upload to database
-                        /*Uri imageData = Uri.fromFile(photo.getCompressPhotoFile());
+                        Uri imageData = Uri.fromFile(photo.getCompressPhotoFile());
                         Log.d(Constants.DB_LOG, "onActivityResult: db upload image uri = "
                                 +imageData.toString());
                         //
 
-                        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("ImgUrl");
+                        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("helps");
                         final String photo_name_id = reference.push().getKey();
 
+                        folder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
                         final StorageReference imageName = folder.child(photo_name_id);
                         imageName.putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -241,7 +242,7 @@ public class PostActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                        });*/
+                        });
 
 
 

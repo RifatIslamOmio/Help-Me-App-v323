@@ -48,7 +48,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/roboto"
                 android:text="User Name: "
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:drawableLeft="@drawable/ic_username"/>
 
             <TextView
@@ -61,7 +61,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/roboto"
                 android:text="Full Name: "
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:drawableLeft="@drawable/ic_fullname"/>
 
             <TextView
@@ -72,7 +72,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/roboto"
                 android:text="User Email: "
                 android:drawablePadding="4dp"
@@ -86,7 +86,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/roboto"
                 android:text="Phone No: "
                 android:drawablePadding="4dp"
@@ -99,7 +99,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="@font/roboto"
                 android:text="Address: "
                 android:drawableLeft="@drawable/ic_home_address"/>
