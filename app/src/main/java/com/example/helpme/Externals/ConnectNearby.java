@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import com.example.helpme.Activities.PostActivity;
 import com.example.helpme.Activities.ReceiverEndPostActivity;
 import com.example.helpme.Extras.Constants;
+import com.example.helpme.Extras.Notifications;
 import com.example.helpme.everything.MenuActivity;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -160,7 +161,8 @@ public class ConnectNearby {
 
             intent.putExtra(Constants.RECEIVED_LOCATION_KEY, latlong);
 
-            menuActivity.startActivity(intent);
+            //menuActivity.startActivity(intent);
+            Notifications.showNotification(ConnectNearby.menuActivity, intent, "DISTRESS CALL!", "tap to view distress call details");
 
             Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: disconnecting endpoint = " + endpointId);
 
