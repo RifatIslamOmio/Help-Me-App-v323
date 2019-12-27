@@ -40,7 +40,7 @@ public abstract class Notifications {
     public static void showNotification(Activity currentActivity, Intent intent, String title, String content){
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //check
-        PendingIntent pendingIntent = PendingIntent.getActivity(currentActivity, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(currentActivity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = buildNotification(currentActivity, title, content, pendingIntent);
 

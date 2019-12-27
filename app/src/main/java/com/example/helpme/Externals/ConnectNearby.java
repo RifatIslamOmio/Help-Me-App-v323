@@ -88,7 +88,7 @@ public class ConnectNearby {
                 latlong = parts[1];
                 filename = parts[2];
                 receivedMessage = parts[0];
-                Log.d(Constants.NEARBY_LOG, "onPayloadReceived: received message = "+message
+                Log.d(Constants.NEARBY_LOG, "onPayloadReceived: received message = "+receivedMessage
                         +" location = "+latlong
                         +" filename = "+filename);
 
@@ -160,6 +160,8 @@ public class ConnectNearby {
                 intent.putExtra(Constants.RECEIVED_PHOTO_PATH_KEY, "null");
 
             intent.putExtra(Constants.RECEIVED_LOCATION_KEY, latlong);
+
+            Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "startNewActivity: "+receivedMessage+":"+latlong);
 
             //menuActivity.startActivity(intent);
             Notifications.showNotification(ConnectNearby.menuActivity, intent, "DISTRESS CALL!", "tap to view distress call details");

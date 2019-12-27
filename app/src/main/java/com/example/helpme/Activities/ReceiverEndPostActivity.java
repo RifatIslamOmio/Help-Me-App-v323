@@ -55,7 +55,7 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
             postImage.setImageBitmap(imageBitmap);
         }
 
-        showMapBtn = findViewById(R.id.show_map_button); //why???
+        showMapBtn = findViewById(R.id.show_map_button);
 
         if(Constants.IS_ADVERTISING)
             ConnectNearby.stopAdvertising();
