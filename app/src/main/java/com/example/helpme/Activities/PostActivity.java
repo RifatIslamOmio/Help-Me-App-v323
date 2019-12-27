@@ -133,6 +133,7 @@ public class PostActivity extends AppCompatActivity {
 
         ConnectNearby.postActivity = this; //set the new activity
         helpPost = new Help();
+        helpPost.setPhoto_path("https://i.imgur.com/7Q3B3ld.png");
 
         locationsFetch = new LocationsFetch(this);
         locationsFetch.checkDeviceLocationSettings();
@@ -236,7 +237,7 @@ public class PostActivity extends AppCompatActivity {
                                     public void onSuccess(Uri uri) {
 
                                         Log.d(Constants.DB_LOG, "onSuccess: file upload success url = "+uri.toString()+"?");
-
+                                        Toast.makeText(getApplicationContext(),"Photo Processed Successfully!",Toast.LENGTH_SHORT).show();
                                         helpPost.setPhoto_path(uri.toString());
 
                                     }
