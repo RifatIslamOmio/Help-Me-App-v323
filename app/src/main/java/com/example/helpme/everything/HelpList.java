@@ -57,7 +57,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         holder.description.setText(helpList.get(position).getDescription());
 
 
-        holder.location.setText("location");
+        holder.location.setText(helpList.get(position).getCurrent_address());
         //location and photolink
         Picasso.with(context)
                 .load(helpList.get(position).getPhoto_path())
