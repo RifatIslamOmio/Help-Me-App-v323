@@ -2,6 +2,7 @@ package com.example.helpme.everything;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.helpme.Activities.MapsActivity;
+import com.example.helpme.Extras.Constants;
 import com.example.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,10 +58,26 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         holder.time.setText(time_text);
         holder.name.setText(helpList.get(position).getSeeker_name());
         holder.description.setText(helpList.get(position).getDescription());
-
-
         holder.location.setText(helpList.get(position).getCurrent_address());
-        //location and photolink
+
+
+
+        holder.location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String latlang] = helpList.get(position).getLatlong().split(" ");
+                double latitude = Double.parseDouble(latlang[0]), longitude = Double.parseDouble(latlang[1]);
+
+                Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "showMapClicked: latitude = "+latitude+" longitude = "+longitude);
+
+                Intent intent = new Intent(context, MapsActivity.class);
+                intent.putExtra(Constants.MAP_LATITUDE_KEY, latitude);
+                intent.putExtra(Constants.MAP_LONGITUDE_KEY, longitude);
+                context.startActivity(intent);
+            }
+        });
+
+
         Picasso.with(context)
                 .load(helpList.get(position).getPhoto_path())
                 .into(holder.imageView);
