@@ -1,11 +1,11 @@
 package com.example.helpme.Extras;
 
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -17,10 +17,12 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.helpme.Externals.ConnectNearby;
 import com.example.helpme.R;
+import com.example.helpme.everything.MenuActivity;
+import com.example.helpme.everything.MyService;
 
 public abstract class Notifications {
 
-    public static void createNotificationChannel(Activity activity) {
+    public static void createNotificationChannel(MyService activity) {
 
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -51,9 +53,6 @@ public abstract class Notifications {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(currentActivity);
 
-        //play alert sound
-        playNotificationAlert();
-
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
 
@@ -63,11 +62,14 @@ public abstract class Notifications {
     }
 
     private static NotificationCompat.Builder buildNotification(Context activity, String title, String content, PendingIntent pendingIntent){
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, Constants.CHANNEL_ID)
-                .setSmallIcon(R.drawable.appicon)
                 .setContentTitle(title)
                 .setContentText(content)
+                .setSmallIcon(R.drawable.alert)
+                .setSound(defaultSoundUri)
+                .setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.alert))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
@@ -79,11 +81,8 @@ public abstract class Notifications {
 
     }
 
-    private static void playNotificationAlert(){
-        Uri alertSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        MediaPlayer mp = MediaPlayer.create(ConnectNearby.menuActivity.getApplicationContext(), alertSound);
-        mp.start();
+
+
+    public static void createNotificationChannel(MenuActivity menuActivity) {
     }
-
-
 }

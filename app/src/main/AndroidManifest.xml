@@ -97,6 +97,7 @@
         <service
             android:name=".Externals.FetchAddressIntentService"
             android:exported="false" />
+        <service android:name=".everything.MyService"/>
     </application>
 
 </manifest>

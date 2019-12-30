@@ -1,6 +1,7 @@
 package com.example.helpme.everything;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.helpme.R;
@@ -17,6 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class Edit_Profile_Activity extends AppCompatActivity {
 
@@ -25,12 +30,16 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     ImageView profilePic;
     DatabaseReference reference;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private static final int IMAGE_STATUS = 1 ;
+    private StorageReference folder;
+    String photoLink="link:";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__profile_);
 
+        folder = FirebaseStorage.getInstance().getReference().child("ProfilePicFolder");
         reference = FirebaseDatabase.getInstance().getReference("Profiles");
 
         fName = findViewById(R.id.FirstNameEditText);
@@ -39,6 +48,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         phone = findViewById(R.id.PhoneeditText);
         saveBtn = findViewById(R.id.Savebutton);
         profilePic = findViewById(R.id.profile_image_view);
+
 
 
 
@@ -76,7 +86,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                 }
 
 
-                UserInfo userInfo = new UserInfo(userId,username,firstName,lastName,userEmail,userPhone,userAddress,"link:");
+                UserInfo userInfo = new UserInfo(userId,username,firstName,lastName,userEmail,userPhone,userAddress,photoLink);
 
                 reference.child(userId).setValue(userInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -108,4 +118,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         }
         return temp.toUpperCase();
     }
+
+
+
 }
