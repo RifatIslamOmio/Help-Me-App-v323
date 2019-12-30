@@ -29,6 +29,7 @@ import com.example.helpme.Extras.Permissions;
 import com.example.helpme.Models.Help;
 import com.example.helpme.Models.Photo;
 import com.example.helpme.R;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -242,6 +243,11 @@ public class PostActivity extends AppCompatActivity {
 
                                     }
                                 });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(Constants.DB_LOG, "onFailure: failed to upload ");
                             }
                         });
 

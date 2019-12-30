@@ -164,7 +164,7 @@ public class ConnectNearby {
             Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "startNewActivity: "+receivedMessage+":"+latlong);
 
             //menuActivity.startActivity(intent);
-            Notifications.showNotification(ConnectNearby.menuActivity, intent, "DISTRESS CALL!", "tap to view distress call details");
+            Notifications.showNotification(ConnectNearby.menuActivity.getApplicationContext(), intent, "DISTRESS CALL!", "tap to view distress call details");
 
             Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: disconnecting endpoint = " + endpointId);
 
@@ -247,9 +247,7 @@ public class ConnectNearby {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //play alert sound
-                                        Uri alertSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                                        MediaPlayer mp = MediaPlayer.create(ConnectNearby.menuActivity.getApplicationContext(), alertSound);
-                                        mp.start();
+
                                     }
                                 });
                     }

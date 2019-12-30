@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.helpme.Externals.ConnectNearby;
 import com.example.helpme.R;
 
 public abstract class Notifications {
@@ -37,7 +42,7 @@ public abstract class Notifications {
         }
     }
 
-    public static void showNotification(Activity currentActivity, Intent intent, String title, String content){
+    public static void showNotification(Context currentActivity, Intent intent, String title, String content){
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //check
         PendingIntent pendingIntent = PendingIntent.getActivity(currentActivity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -45,6 +50,9 @@ public abstract class Notifications {
         NotificationCompat.Builder builder = buildNotification(currentActivity, title, content, pendingIntent);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(currentActivity);
+
+        //play alert sound
+        playNotificationAlert();
 
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
@@ -54,7 +62,7 @@ public abstract class Notifications {
 
     }
 
-    private static NotificationCompat.Builder buildNotification(Activity activity, String title, String content, PendingIntent pendingIntent){
+    private static NotificationCompat.Builder buildNotification(Context activity, String title, String content, PendingIntent pendingIntent){
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, Constants.CHANNEL_ID)
                 .setSmallIcon(R.drawable.appicon)
@@ -69,6 +77,12 @@ public abstract class Notifications {
 
         return builder;
 
+    }
+
+    private static void playNotificationAlert(){
+        Uri alertSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        MediaPlayer mp = MediaPlayer.create(ConnectNearby.menuActivity.getApplicationContext(), alertSound);
+        mp.start();
     }
 
 
