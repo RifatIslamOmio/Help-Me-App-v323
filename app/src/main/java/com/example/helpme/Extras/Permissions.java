@@ -152,7 +152,7 @@ public class Permissions{
         //TODO:common alert box
         Log.d(Constants.PERMISSIONS_LOG, "alertDialog: creating alert-box");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity.getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         builder.setTitle((R.string.dialogbox_title))
                 .setMessage(message)

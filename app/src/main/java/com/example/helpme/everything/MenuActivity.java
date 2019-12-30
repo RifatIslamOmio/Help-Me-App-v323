@@ -111,8 +111,10 @@ public class MenuActivity extends AppCompatActivity {
         if(Constants.IS_DISCOVERING)
             ConnectNearby.stopDiscovery();
 
-        Log.d(Constants.NEARBY_LOG, "ManuActivity onResume: start advertising");
-        ConnectNearby.startAdvertising();
+        turnOnNearby();
+
+        //Log.d(Constants.NEARBY_LOG, "ManuActivity onResume: start advertising");
+        //ConnectNearby.startAdvertising();
         Constants.IS_SENDER = false; //start as receiver, advertising to be found
     }
 
@@ -120,10 +122,16 @@ public class MenuActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        Log.d(Constants.NEARBY_LOG, "MenuActivity onPause: stopping advertising");
-        ConnectNearby.stopAdvertising();
+        //Log.d(Constants.NEARBY_LOG, "MenuActivity onPause: stopping advertising");
+        //ConnectNearby.stopAdvertising();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        turnOffNearby();
+    }
 
     /**Permission methods*/
     private void promptPermissions() {
@@ -166,10 +174,12 @@ public class MenuActivity extends AppCompatActivity {
 
         if(Constants.isIsWifiEnabled(this) && new LocationsFetch(this).isLocationEnabledLM()) {
 
+            turnOffNearby();
+
             Constants.IS_SENDER = true;
 
-            ConnectNearby.stopAdvertising();
-            Log.d(Constants.NEARBY_LOG, "helpClick: stop advertising");
+            //ConnectNearby.stopAdvertising();
+            //Log.d(Constants.NEARBY_LOG, "helpClick: stop advertising");
 
             //start PostActivity
             Intent intent = new Intent(getApplicationContext(), PostActivity.class);
@@ -211,6 +221,23 @@ public class MenuActivity extends AppCompatActivity {
             AlertDialog alert =  builder.create();
             alert.show();
 
+        }
+
+    }
+
+    private void turnOnNearby(){
+
+        if(!Constants.IS_ADVERTISING) {
+            Log.d(Constants.NEARBY_LOG, "turnOnNearby: start advertising");
+            ConnectNearby.startAdvertising();
+        }
+    }
+
+    private void turnOffNearby(){
+
+        if(Constants.IS_ADVERTISING) {
+            Log.d(Constants.NEARBY_LOG, "turnOffNearby: stop advertising");
+            ConnectNearby.stopAdvertising();
         }
 
     }
