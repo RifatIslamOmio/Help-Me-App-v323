@@ -65,7 +65,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         holder.location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String latlang] = helpList.get(position).getLatlong().split(" ");
+                String[] latlang = helpList.get(position).getLatlong().split(" ");
                 double latitude = Double.parseDouble(latlang[0]), longitude = Double.parseDouble(latlang[1]);
 
                 Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "showMapClicked: latitude = "+latitude+" longitude = "+longitude);
