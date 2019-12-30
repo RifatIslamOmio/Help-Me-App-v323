@@ -134,7 +134,7 @@ public class PostActivity extends AppCompatActivity {
 
         ConnectNearby.postActivity = this; //set the new activity
         helpPost = new Help();
-        helpPost.setPhoto_path("https://i.imgur.com/7Q3B3ld.png");
+        helpPost.setPhoto_path("https://i.imgur.com/FzjpMaM.png");
 
         locationsFetch = new LocationsFetch(this);
         locationsFetch.checkDeviceLocationSettings();
