@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import com.example.helpme.Extras.Constants;
 import com.example.helpme.Extras.Notifications;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -89,7 +90,7 @@ public class MyService extends Service {
                     {
                         Notifications.showNotification(getApplicationContext(),
                                 new Intent(getApplicationContext(),
-                                        HelpFeedActivity.class),"Help!",
+                                        HelpFeedActivity.class), Constants.DB_NOTIFICATION_ID,"Help!",
                                 help.getSeeker_name()+" is asking for help!");
 
                     }

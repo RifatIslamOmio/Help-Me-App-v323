@@ -22,7 +22,7 @@ import com.example.helpme.everything.MyService;
 
 public abstract class Notifications {
 
-    public static void createNotificationChannel(MyService activity) {
+    public static void createNotificationChannel(Context activity) {
 
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -44,7 +44,7 @@ public abstract class Notifications {
         }
     }
 
-    public static void showNotification(Context currentActivity, Intent intent, String title, String content){
+    public static void showNotification(Context currentActivity, Intent intent, int notification_id, String title, String content){
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //check
         PendingIntent pendingIntent = PendingIntent.getActivity(currentActivity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -54,7 +54,7 @@ public abstract class Notifications {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(currentActivity);
 
         // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
+        notificationManager.notify(notification_id, builder.build());
 
         Log.d(Constants.NOTIFICATION_LOG, "showNotification: notification showed");
 
@@ -67,9 +67,9 @@ public abstract class Notifications {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, Constants.CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(content)
-                .setSmallIcon(R.drawable.alert)
+                .setSmallIcon(R.drawable.appicon)
                 .setSound(defaultSoundUri)
-                .setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.alert))
+                .setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.appicon))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
@@ -81,8 +81,4 @@ public abstract class Notifications {
 
     }
 
-
-
-    public static void createNotificationChannel(MenuActivity menuActivity) {
-    }
 }
