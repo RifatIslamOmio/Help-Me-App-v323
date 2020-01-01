@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.CaseMap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,8 +30,12 @@ import com.example.helpme.Extras.Permissions;
 import com.example.helpme.Models.Help;
 import com.example.helpme.Models.Photo;
 import com.example.helpme.R;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +52,6 @@ public class PostActivity extends AppCompatActivity {
     public Help helpPost;
 
     DatabaseReference reference;
-    private StorageReference folder;
 
     private TextView postText;
 
@@ -127,8 +131,7 @@ public class PostActivity extends AppCompatActivity {
 
         postClicked = false;
 
-        //databse storage folder
-        folder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
+
 
         permissionObject = new Permissions(this, permissions, PERMISSIONS_REQUEST_CODE);
 
@@ -203,10 +206,10 @@ public class PostActivity extends AppCompatActivity {
                 break;
 
             case Constants.REQUEST_TAKE_PHOTO:
-
+                Log.d("COON","Reached!");
                 if(Activity.RESULT_OK == resultCode){
                     //called after photo is taken successfully
-
+                    Log.d("COON","Reached! 2");
                     Log.d(Constants.PHOTO_LOG, "onActivityResult: camera open success");
 
                     try {
@@ -220,23 +223,28 @@ public class PostActivity extends AppCompatActivity {
 
 
                         //upload to database
-                        Uri imageData = Uri.fromFile(photo.getCompressPhotoFile());
+                        Uri imageUri = Uri.fromFile(photo.getCompressPhotoFile());
+                        Log.d("COON","img data"+imageUri.toString());
                         Log.d(Constants.DB_LOG, "onActivityResult: db upload image uri = "
-                                +imageData.toString());
+                                +imageUri.toString());
                         //
 
+                        StorageReference mStorageRef;
+                        mStorageRef = FirebaseStorage.getInstance().getReference().child("uploads");
                         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("helps");
                         final String photo_name_id = reference.push().getKey();
+                        final StorageReference fileReference = mStorageRef.child(photo_name_id+".jpg");
 
-                        folder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
-                        final StorageReference imageName = folder.child(photo_name_id);
-                        imageName.putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+
+
+                        fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
-
+                                        Log.d("COON","Reached! 6");
                                         Log.d(Constants.DB_LOG, "onSuccess: file upload success url = "+uri.toString()+"?");
                                         Toast.makeText(getApplicationContext(),"Photo Processed Successfully!",Toast.LENGTH_SHORT).show();
                                         helpPost.setPhoto_path(uri.toString());
@@ -247,9 +255,12 @@ public class PostActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                Log.d("COON","Failed!");
                                 Log.d(Constants.DB_LOG, "onFailure: failed to upload ");
                             }
                         });
+
+
 
 
 
