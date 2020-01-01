@@ -24,6 +24,7 @@ public class Help {
         this.voteCount = 0;
         voters = new ArrayList<>();
         voters.add("null");
+        this.photo_path = "https://i.imgur.com/FzjpMaM.png";
     }
 
     public Help(String helpId, String seeker_name, String description, String dateandtime,String user_id, String latlong, String current_address, String photo_path) {

@@ -15,10 +15,8 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.helpme.Externals.ConnectNearby;
 import com.example.helpme.R;
-import com.example.helpme.everything.MenuActivity;
-import com.example.helpme.everything.MyService;
+
 
 public abstract class Notifications {
 
@@ -57,8 +55,6 @@ public abstract class Notifications {
         notificationManager.notify(notification_id, builder.build());
 
         Log.d(Constants.NOTIFICATION_LOG, "showNotification: notification showed");
-
-
     }
 
     private static NotificationCompat.Builder buildNotification(Context activity, String title, String content, PendingIntent pendingIntent){
@@ -67,9 +63,9 @@ public abstract class Notifications {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, Constants.CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(content)
-                .setSmallIcon(R.drawable.appicon)
+                .setSmallIcon(R.drawable.sos)
                 .setSound(defaultSoundUri)
-                .setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.appicon))
+                .setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), R.drawable.sos))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)

@@ -137,7 +137,6 @@ public class PostActivity extends AppCompatActivity {
 
         ConnectNearby.postActivity = this; //set the new activity
         helpPost = new Help();
-        helpPost.setPhoto_path("https://i.imgur.com/FzjpMaM.png");
 
         locationsFetch = new LocationsFetch(this);
         locationsFetch.checkDeviceLocationSettings();
@@ -244,9 +243,9 @@ public class PostActivity extends AppCompatActivity {
                                 fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
+                                        Toast.makeText(getApplicationContext(),"Photo Processed Successfully!",Toast.LENGTH_SHORT).show();
                                         Log.d("COON","Reached! 6");
                                         Log.d(Constants.DB_LOG, "onSuccess: file upload success url = "+uri.toString()+"?");
-                                        Toast.makeText(getApplicationContext(),"Photo Processed Successfully!",Toast.LENGTH_SHORT).show();
                                         helpPost.setPhoto_path(uri.toString());
 
                                     }
@@ -255,7 +254,7 @@ public class PostActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d("COON","Failed!");
+                                Log.d("","Failed!");
                                 Log.d(Constants.DB_LOG, "onFailure: failed to upload ");
                             }
                         });
