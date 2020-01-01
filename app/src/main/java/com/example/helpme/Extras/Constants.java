@@ -88,6 +88,7 @@ public abstract class Constants {
 
     /*Notification Channel ID */
     public static final String CHANNEL_ID = "notsch";
-    public static final int NOTIFICATION_ID = 256;
+    public static final int NEARBY_NOTIFICATION_ID = 256;
+    public static final int DB_NOTIFICATION_ID = 256;
     /**/
 }

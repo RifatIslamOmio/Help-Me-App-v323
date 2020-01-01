@@ -164,7 +164,13 @@ public class ConnectNearby {
             Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "startNewActivity: "+receivedMessage+":"+latlong);
 
             //menuActivity.startActivity(intent);
-            Notifications.showNotification(ConnectNearby.menuActivity.getApplicationContext(), intent, "DISTRESS CALL!", "tap to view distress call details");
+            Notifications.showNotification(
+                    ConnectNearby.menuActivity.getApplicationContext(),
+                    intent
+                    , Constants.NEARBY_NOTIFICATION_ID
+                    ,"DISTRESS CALL!"
+                    ,"tap to view distress call details"
+            );
 
             Log.d(Constants.NEARBY_LOG, "onPayloadTransferUpdate: disconnecting endpoint = " + endpointId);
 
