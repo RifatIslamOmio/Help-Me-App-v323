@@ -83,9 +83,9 @@ public class MyService extends Service {
                     for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
                     {
                          help = dataSnapshot1.getValue(Help.class);
-                        //list.add(help);
+
                     }
-                    //Collections.reverse(list);
+
                     if(user.getUid()!=help.getUser_id())
                     {
                         Notifications.showNotification(getApplicationContext(),
