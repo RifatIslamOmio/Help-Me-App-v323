@@ -25,7 +25,7 @@
     <string name="title_activity_maps">Map</string>
 
     <!--activity_post_posting.xml-->
-    <string name="cancel_button">Cancel</string>
+    <string name="cancel_button">Stop</string>
 
 
     <string name="sign_up">"Don't have an account? Sign Up!</string>

@@ -17,7 +17,10 @@
             android:id="@+id/testText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_mic_speaker"
             android:drawablePadding="5dp"
             android:fontFamily="@font/roboto"
@@ -29,7 +32,9 @@
             android:id="@+id/latlong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
             android:drawableLeft="@drawable/ic_latlong"
             android:drawablePadding="5dp"
             android:fontFamily="@font/roboto"
@@ -42,7 +47,7 @@
         android:id="@+id/postImageView"
         android:layout_width="match_parent"
         android:layout_height="356dp"
-        android:layout_margin="15dp"
+        android:layout_margin="20dp"
         android:contentDescription="@android:string/defaultMsisdnAlphaTag"
         app:srcCompat="@drawable/noimage" />
 
@@ -58,6 +63,5 @@
         android:layout_margin="15dp"
         android:padding="10dp"
         android:textColor="#2C2C2C"
-        android:onClick="showMapClicked"
-        />
+        android:onClick="showMapClicked" />
 </LinearLayout>
