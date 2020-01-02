@@ -18,7 +18,7 @@ import com.example.helpme.R;
 
 public class ReceiverEndPostActivity extends AppCompatActivity {
 
-    private TextView testText; //TODO: remove this
+    private TextView testText,latlong; //TODO: remove this
     private ImageView postImage;
     private Button showMapBtn;
 
@@ -39,10 +39,10 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
 
         message = getIntent().getStringExtra(Constants.RECEIVED_MESSAGE_KEY);
         location = getIntent().getStringExtra(Constants.RECEIVED_LOCATION_KEY);
-
+        latlong = findViewById(R.id.latlong);
         testText = findViewById(R.id.testText);
-        testText.setText(message
-                + "\n\nlocation: "+location);
+        testText.setText(message);
+        latlong.setText("Location: "+location);
 
         postImage = findViewById(R.id.postImageView);
         String photoPath = getIntent().getStringExtra(Constants.RECEIVED_PHOTO_PATH_KEY);
@@ -63,7 +63,7 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
 
     public void showMapClicked(View view) {
 
-        String latlang[] = location.split(" ");
+        String[] latlang = location.split(" ");
         double latitude = Double.parseDouble(latlang[0]), longitude = Double.parseDouble(latlang[1]);
 
         Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "showMapClicked: latitude = "+latitude+" longitude = "+longitude);

@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".Activities.ReceiverEndPostActivity">
 
     <TextView
         android:id="@+id/testText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:fontFamily="@font/roboto"
         android:text="Default Text"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/latlong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:fontFamily="@font/roboto"
+        android:text="Latlong"
+        android:drawableLeft="@drawable/ic_latlong"
+        android:drawablePadding="5dp"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/postImageView"
-        android:layout_width="293dp"
+        android:layout_width="match_parent"
         android:layout_height="356dp"
+        android:layout_margin="15dp"
         android:contentDescription="@android:string/defaultMsisdnAlphaTag"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/testText"
-        app:layout_constraintVertical_bias="0.197"
         app:srcCompat="@drawable/noimage" />
 
     <Button
@@ -37,10 +40,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="show in map"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postImageView"
+        android:drawableLeft="@drawable/ic_map"
+        android:background="@drawable/custombutton_post"
+        android:drawablePadding="5dp"
+        android:layout_margin="15dp"
+        android:padding="10dp"
         android:onClick="showMapClicked"
         />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
