@@ -166,8 +166,9 @@ public class PostActivity extends AppCompatActivity {
         super.onPause();
 
         //if wifi + location + necessary location settings not met location update stopped here
-        accurateLocationAsync.cancel(true);
-        locationsFetch.stopLocationUpdates();
+        Log.d(Constants.NEARBY_LOG, "onPause: called");
+        //accurateLocationAsync.cancel(true);
+        //locationsFetch.stopLocationUpdates();
     }
 
     @Override

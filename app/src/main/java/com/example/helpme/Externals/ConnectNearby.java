@@ -59,6 +59,7 @@ public class ConnectNearby {
     private static final AdvertisingOptions advertisingOptions = new AdvertisingOptions.Builder().setStrategy(strategy).build();
 
     private static List<String> requestedPeerEPIs = new ArrayList<String>();
+    private static List<String> duePeerEPIs = new ArrayList<String>();
 
     private static class ReceiveDataPayloadListener extends PayloadCallback  {
 
@@ -340,9 +341,58 @@ public class ConnectNearby {
                     // We've been disconnected from this endpoint. No more data can be
                     // sent or received.
 
+                    if(!duePeerEPIs.isEmpty()){
+
+                        String dueEndPoint = duePeerEPIs.get(0);
+                        duePeerEPIs.remove(0);
+
+                        Log.d(Constants.NEARBY_LOG, "onDisconnected: request connection from due list");
+                        ConnectNearby.requestToConnect(dueEndPoint);
+
+                    }
+
                     Log.d(Constants.NEARBY_LOG, "onDisconnected: disconnected from = "+endpointId);
                 }
             };
+
+    private static void requestToConnect(final String endpointId){
+
+        Nearby.getConnectionsClient(ConnectNearby.postActivity) //check context
+                .requestConnection(ConnectNearby.username, endpointId, connectionLifecycleCallback)
+                .addOnSuccessListener(
+                        new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                // We successfully requested a connection. Now both sides
+                                // must accept before the connection is established.
+
+                                Log.d(Constants.NEARBY_LOG,
+                                        "endpointDiscoveryCallback->onEndpointFound->" +
+                                                "onSuccess: success!");
+
+                                //requestedPeerEPIs.add(decoyEndpointId); //Here?
+                            }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Nearby Connections failed to request the connection.
+
+                                Log.d(Constants.NEARBY_LOG,
+                                        "endpointDiscoveryCallback->onEndpointFound->" +
+                                                "onFailure: discovery failed see error stack trace"
+                                                + e.getMessage());
+
+                                String errorMessage = e.getMessage();
+                                if(errorMessage.substring( errorMessage.indexOf(' ') + 1 )
+                                        .equals("STATUS_OUT_OF_ORDER_API_CALL"))
+                                    duePeerEPIs.add(endpointId);
+                            }
+                        });
+
+        requestedPeerEPIs.add(endpointId); //or here?
+    }
 
 
     public static void startAdvertising() {
@@ -400,36 +450,9 @@ public class ConnectNearby {
 
                     if(requestedPeerEPIs.indexOf(endpointId)==-1) { //only connect to new endpoints.
 
-                        Nearby.getConnectionsClient(ConnectNearby.postActivity) //check context
-                                .requestConnection(ConnectNearby.username, endpointId, connectionLifecycleCallback)
-                                .addOnSuccessListener(
-                                        new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                // We successfully requested a connection. Now both sides
-                                                // must accept before the connection is established.
+                        Log.d(Constants.NEARBY_LOG, "onEndpointFound: requesting conncetion on endpoint discovery");
+                        ConnectNearby.requestToConnect(endpointId);
 
-                                                Log.d(Constants.NEARBY_LOG,
-                                                        "endpointDiscoveryCallback->onEndpointFound->" +
-                                                                "onSuccess: success!");
-
-                                                //requestedPeerEPIs.add(decoyEndpointId); //Here?
-                                            }
-                                        })
-                                .addOnFailureListener(
-                                        new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // Nearby Connections failed to request the connection.
-
-                                                Log.d(Constants.NEARBY_LOG,
-                                                        "endpointDiscoveryCallback->onEndpointFound->" +
-                                                                "onFailure: discovery failed see error stack trace"
-                                                        + e.getMessage());
-                                            }
-                                        });
-
-                        requestedPeerEPIs.add(endpointId); //or here?
                     }
 
                 }
