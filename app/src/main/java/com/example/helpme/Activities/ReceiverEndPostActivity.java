@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,9 +41,11 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
         message = getIntent().getStringExtra(Constants.RECEIVED_MESSAGE_KEY);
         location = getIntent().getStringExtra(Constants.RECEIVED_LOCATION_KEY);
         latlong = findViewById(R.id.latlong);
-        testText = findViewById(R.id.testText);
+        testText = findViewById(R.id.description_reciver);
         testText.setText(message);
         latlong.setText("Location: "+location);
+        testText.setMovementMethod(new ScrollingMovementMethod());
+
 
         postImage = findViewById(R.id.postImageView);
         String photoPath = getIntent().getStringExtra(Constants.RECEIVED_PHOTO_PATH_KEY);

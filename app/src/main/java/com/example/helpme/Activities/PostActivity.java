@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -386,6 +387,8 @@ public class PostActivity extends AppCompatActivity {
         addrs = findViewById(R.id.addressText);
         desc.setText(helpPost.getDescription());
         addrs.setText(helpPost.getLatlong());
+        desc.setMovementMethod(new ScrollingMovementMethod());
+
 
         ImageView image = findViewById(R.id.imageViewPosting);
         if(photo!=null) {
