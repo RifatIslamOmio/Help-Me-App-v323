@@ -1,12 +1,15 @@
 package com.example.helpme.everything;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -61,7 +65,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         holder.location.setText(helpList.get(position).getCurrent_address());
 
 
-
+        //Location
         holder.location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,12 +82,13 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         });
 
 
+        //Load Imageview
         Picasso.with(context)
                 .load(helpList.get(position).getPhoto_path())
                 .into(holder.imageView);
 
 
-
+        //Profile
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +100,8 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         });
 
 
+
+        //Vote Icon
         List<String> voters = helpList.get(position).getVoters();
         if(voters.contains(user.getUid()))
         {
@@ -106,6 +113,8 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         }
 
 
+
+        //Vote Counter
         holder.votecounter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,9 +139,44 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
                     reference.child(helpList.get(position).getHelpId()).child("voters").setValue(voters);
                     Toast.makeText(context,"Voted!",Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+
+
+
+        //Delete Post/Item
+        holder.linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                if(user.getUid().equals(helpList.get(position).getUser_id()))
+                {
+                    AlertDialog Dialog = new AlertDialog.Builder(context)
+                            .setTitle("Delete")
+                            .setMessage("Do you want to remove this post?")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("helps").child(helpList.get(position).getHelpId());
+                                    reference.removeValue();
+                                    dialog.dismiss();
+                                    Toast.makeText(context,"Post Removed!",Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+
+                return false;
+            }
+        });
+
 
     }
 
@@ -145,9 +189,11 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
     {
         TextView name,date,time,description,votecounter,location;
         ImageView imageView;
+        LinearLayout linearLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            linearLayout = itemView.findViewById(R.id.itemOfRecyclerView);
             name = itemView.findViewById(R.id.seekerNameText);
             date = itemView.findViewById(R.id.dateText);
             time = itemView.findViewById(R.id.timeText);
