@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.helpme.Models.Help;
 import com.example.helpme.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,14 +34,12 @@ public class HelpFeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_helpfeed);
 
 
-
-
-        reference = FirebaseDatabase.getInstance().getReference().child("helps");
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
 
+        reference = FirebaseDatabase.getInstance().getReference().child("helps");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -52,12 +51,12 @@ public class HelpFeedActivity extends AppCompatActivity {
                     Help help = dataSnapshot1.getValue(Help.class);
                     list.add(help);
                 }
+
                 Collections.reverse(list);
                 helpList = new HelpList(HelpFeedActivity.this,list);
                 recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
                 recyclerView.setAdapter(helpList);
                 recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-
             }
 
             @Override

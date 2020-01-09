@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".everything.CommentFeedActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="15dp">
+
+            <EditText
+                android:id="@+id/commentSendText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:padding=".85dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/roboto"
+                android:background="@drawable/commentbox"
+                android:lines="2"
+                android:hint="@string/type_a_comment"
+                android:paddingStart="5dp"
+                android:paddingEnd=".8dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine" />
+
+            <Button
+                android:id="@+id/commentSendBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_medium"
+                android:drawableStart="@drawable/ic_send"
+                android:paddingStart="5dp"
+                android:layout_marginStart="5dp"
+                android:textColor="#fff"
+                android:background="@drawable/comment_send_button"
+                android:text="@string/send"
+                tools:ignore="RtlSymmetry" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/CommentrecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="13dp">
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

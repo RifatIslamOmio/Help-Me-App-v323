@@ -3,10 +3,13 @@ package com.example.helpme.Models;
 import android.util.Log;
 
 import com.example.helpme.Extras.Constants;
+import com.example.helpme.everything.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+//For sending data
 public class Help {
     private String helpId;
     private String seeker_name;
@@ -19,12 +22,15 @@ public class Help {
     private String photo_path=null;
     private int voteCount;
     private List<String> voters = null;
+    private List<Comment> commentList;
+
 
     public Help() {
         this.voteCount = 0;
         voters = new ArrayList<>();
         voters.add("null");
         this.photo_path = "https://i.imgur.com/FzjpMaM.png";
+        commentList = new ArrayList<>();
     }
 
     public Help(String helpId, String seeker_name, String description, String dateandtime,String user_id, String latlong, String current_address, String photo_path) {
@@ -38,7 +44,7 @@ public class Help {
         this.photo_path = photo_path;
         this.voteCount = 0;
         voters.add("null");
-
+        commentList = new ArrayList<>();
     }
 
 
@@ -141,5 +147,13 @@ public class Help {
     public void setVoters(List<String> voters) {
         Log.d(Constants.DB_LOG, "setHelpId: setting voters");
         this.voters = voters;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 }

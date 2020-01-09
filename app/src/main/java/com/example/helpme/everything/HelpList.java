@@ -1,5 +1,6 @@
 package com.example.helpme.everything;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,12 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.helpme.Activities.MapsActivity;
 import com.example.helpme.Extras.Constants;
+import com.example.helpme.Models.Help;
 import com.example.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_view,parent,false));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
 
@@ -80,6 +82,20 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
                 context.startActivity(intent);
             }
         });
+
+
+
+        //testing comment
+        holder.date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profileData = helpList.get(position);
+                Intent intent = new Intent(context,CommentFeedActivity.class);
+                context.startActivity(intent);
+
+            }
+        });
+
 
 
         //Load Imageview
@@ -114,7 +130,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
 
 
-        //Vote Counter
+        //Vote Commit
         holder.votecounter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,7 +217,6 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
             imageView = itemView.findViewById(R.id.imageViewHelpFeed);
             votecounter = itemView.findViewById(R.id.counterText);
             location = itemView.findViewById(R.id.locationText);
-
         }
     }
 

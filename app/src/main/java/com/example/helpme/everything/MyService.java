@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.Extras.Notifications;
+import com.example.helpme.Models.Help;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

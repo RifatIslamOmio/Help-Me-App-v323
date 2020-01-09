@@ -31,7 +31,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".everything.CommentFeedActivity"></activity>
+        <activity android:name=".Main2Activity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -56,11 +57,8 @@
         <activity
             android:name=".Activities.PostActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
-
-
         <activity
-            android:name="com.example.helpme.everything.MainActivity"
+            android:name=".everything.MainActivity"
             android:noHistory="true"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -69,19 +67,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.helpme.everything.AppIntroActivity" />
+        <activity android:name=".everything.AppIntroActivity" />
         <activity
-            android:name="com.example.helpme.everything.RegistrationActivity"
+            android:name=".everything.RegistrationActivity"
             android:noHistory="true"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name="com.example.helpme.everything.HelpSeekersProfile_activity"/>
-        <activity android:name="com.example.helpme.everything.Edit_Profile_Activity" />
-        <activity android:name="com.example.helpme.everything.Profile_Activity" />
-        <activity android:name="com.example.helpme.everything.HelpFeedActivity" />
-        <activity android:name="com.example.helpme.everything.MenuActivity" />
-
-
-
+        <activity android:name=".everything.HelpSeekersProfile_activity" />
+        <activity android:name=".everything.Edit_Profile_Activity" />
+        <activity android:name=".everything.Profile_Activity" />
+        <activity android:name=".everything.HelpFeedActivity" />
+        <activity android:name=".everything.MenuActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -97,11 +92,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-
         <service
             android:name=".Externals.FetchAddressIntentService"
             android:exported="false" />
-        <service android:name=".everything.MyService"/>
+        <service android:name=".everything.MyService" />
     </application>
 
 </manifest>

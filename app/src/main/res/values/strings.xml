@@ -45,5 +45,7 @@
     <!--Notification Channel-->
     <string name="channel_name">helpme notifications</string>
     <string name="channel_description">nearby + database notifications</string>
+    <string name="type_a_comment">Type a comment...</string>
+    <string name="send">Send</string>
 
 </resources>
