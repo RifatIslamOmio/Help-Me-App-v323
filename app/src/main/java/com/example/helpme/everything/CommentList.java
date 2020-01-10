@@ -36,6 +36,8 @@ public class CommentList extends RecyclerView.Adapter<CommentList.MyViewHolder> 
 
     Context context;
     ArrayList<Comment> list;
+    public static String COMMENT_USER_ID=null;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     public CommentList(Context c, ArrayList<Comment> cList)
     {
         this.list = cList;
@@ -46,14 +48,69 @@ public class CommentList extends RecyclerView.Adapter<CommentList.MyViewHolder> 
     @Override
     public CommentList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.comment_view,parent,false));
-
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull CommentList.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CommentList.MyViewHolder holder, final int position) {
+        holder.votecounter.setText(list.get(position).getUpvoteCount()+"");
+        holder.name.setText(list.get(position).getcUserName());
+        holder.commentText.setText(list.get(position).getCommentText());
+        holder.date.setText(list.get(position).getDate());
+        holder.time.setText(list.get(position).getTime());
 
 
+        holder.name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                COMMENT_USER_ID = list.get(position).getcUserId();
+                Intent intent = new Intent(context,HelpSeekersProfile_activity.class);
+                context.startActivity(intent);
 
+            }
+        });
+
+
+        holder.votecounter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("helps")
+                        .child(HelpList.profileData.getHelpId())
+                        .child("comments")
+                        .child(list.get(position).getComment_id());
+
+                List<String> voters = list.get(position).getCommentVoters();
+
+                if(voters.contains(user.getUid()))
+                {
+                    int voteCount = list.get(position).getUpvoteCount()-1;
+                    reference.child("upvoteCount").setValue(voteCount);
+                    voters.remove(user.getUid());
+                    reference.child("commentVoters").setValue(voters);
+                    Toast.makeText(context,"Vote Removed!",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    int voteCount = list.get(position).getUpvoteCount()+1;
+                    reference.child("upvoteCount").setValue(voteCount);
+                    voters.add(user.getUid());
+                    reference.child("commentVoters").setValue(voters);
+                    Toast.makeText(context,"Voted!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        //Vote Icon
+        List<String> voters = list.get(position).getCommentVoters();
+        if(voters.contains(user.getUid()))
+        {
+            holder.votecounter.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_voted, 0, 0, 0);
+        }
+        else
+        {
+            holder.votecounter.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_notvoted, 0, 0, 0);
+        }
 
     }
 

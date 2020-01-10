@@ -25,7 +25,17 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_seekers_profile);
 
-        String userId = HelpList.profileData.getUser_id();
+
+        String userId;
+        if(CommentList.COMMENT_USER_ID!=null)
+        {
+            userId = CommentList.COMMENT_USER_ID;
+            CommentList.COMMENT_USER_ID=null;
+        }
+        else
+        {
+            userId = HelpList.profileData.getUser_id();
+        }
 
 
         usernameTVHS = findViewById(R.id.profileUsernameHS);
@@ -50,7 +60,6 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
             {
                 for(DataSnapshot snapshot:dataSnapshot.getChildren())
                 {
-
                     UserInfo userInfo = snapshot.getValue(UserInfo.class);
 
                     String fullName = fullnameTVHS.getText()+userInfo.getFirstName()+" "+userInfo.getLastName();

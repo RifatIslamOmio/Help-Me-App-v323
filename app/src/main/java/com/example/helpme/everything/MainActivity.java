@@ -29,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText email;
     private  EditText pass;
     private Button login_button;
-
     private FirebaseAuth mAuth;
-
     private ProgressDialog mDialog;
 
     @Override
