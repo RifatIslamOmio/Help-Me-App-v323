@@ -70,6 +70,8 @@ public class MenuActivity extends AppCompatActivity {
                 mAuth.signOut();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
+                stopService(new Intent(getApplicationContext(),MyService.class));
+
             }
         });
 

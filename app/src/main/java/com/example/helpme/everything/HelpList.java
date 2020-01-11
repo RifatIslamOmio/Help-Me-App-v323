@@ -75,22 +75,6 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
 
 
-        //Counting 'Comments' Childs
-//        reference = FirebaseDatabase.getInstance().getReference()
-//                .child("helps")
-//                .child(helpList.get(position).getHelpId())
-//                .child("comments");
-//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                child_count = dataSnapshot.getChildrenCount();
-//
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) { }});
-//
-
-
 
         //Location
         holder.location.setOnClickListener(new View.OnClickListener() {
