@@ -23,6 +23,7 @@ public class Help {
     private int voteCount;
     private List<String> voters = null;
     private List<Comment> commentList;
+    private int commentCount;
 
 
     public Help() {
@@ -31,6 +32,7 @@ public class Help {
         voters.add("null");
         this.photo_path = "https://i.imgur.com/FzjpMaM.png";
         commentList = new ArrayList<>();
+        this.commentCount = 0;
     }
 
     public Help(String helpId, String seeker_name, String description, String dateandtime,String user_id, String latlong, String current_address, String photo_path) {
@@ -43,6 +45,7 @@ public class Help {
         this.current_address = current_address;
         this.photo_path = photo_path;
         this.voteCount = 0;
+        this.commentCount = 0;
         voters.add("null");
         commentList = new ArrayList<>();
     }
@@ -155,5 +158,13 @@ public class Help {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 }

@@ -50,19 +50,34 @@
                 android:textSize="15sp" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/timeText"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/roboto"
-            android:text="Time"
-            android:textColor="#00E676"
-            android:textSize="15sp"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/ic_circular_clock"
-            >
-        </TextView>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableStart="@drawable/ic_circular_clock"
+                android:drawablePadding="3dp"
+                android:fontFamily="@font/roboto"
+                android:text="Time"
+                android:textColor="#00E676"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/Comment_Counter_ItemView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableStart="@drawable/ic_comments"
+                android:drawablePadding="3dp"
+                android:fontFamily="@font/roboto"
+                android:layout_alignParentEnd="true"
+                android:text="0"
+                android:textColor="#2979FF"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/locationText"

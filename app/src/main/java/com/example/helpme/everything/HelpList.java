@@ -23,8 +23,11 @@ import com.example.helpme.Models.Help;
 import com.example.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,9 +38,12 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
 
     public static Help profileData;
+    public static int COMMENT_COUNT;
+    long child_count;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     Context context;
     ArrayList<Help> helpList;
+    DatabaseReference reference;
     public HelpList(Context c, ArrayList<Help> helpList)
     {
         context = c;
@@ -52,7 +58,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         String[] parts = helpList.get(position).getDateandtime().split("/");
         String date_text = parts[0], time_text = parts[1];
@@ -65,6 +71,25 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         holder.name.setText(helpList.get(position).getSeeker_name());
         holder.description.setText(helpList.get(position).getDescription());
         holder.location.setText(helpList.get(position).getCurrent_address());
+        holder.comment.setText(helpList.get(position).getCommentCount()+"");
+
+
+
+        //Counting 'Comments' Childs
+//        reference = FirebaseDatabase.getInstance().getReference()
+//                .child("helps")
+//                .child(helpList.get(position).getHelpId())
+//                .child("comments");
+//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                child_count = dataSnapshot.getChildrenCount();
+//
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) { }});
+//
+
 
 
         //Location
@@ -74,8 +99,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
                 String[] latlang = helpList.get(position).getLatlong().split(" ");
                 double latitude = Double.parseDouble(latlang[0]), longitude = Double.parseDouble(latlang[1]);
 
-                Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "showMapClicked: latitude = "+latitude+" longitude = "+longitude);
-
+                //Log.d(Constants.RECEIVER_END_POST_ACTIVITY, "showMapClicked: latitude = "+latitude+" longitude = "+longitude);
                 Intent intent = new Intent(context, MapsActivity.class);
                 intent.putExtra(Constants.MAP_LATITUDE_KEY, latitude);
                 intent.putExtra(Constants.MAP_LONGITUDE_KEY, longitude);
@@ -84,15 +108,15 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         });
 
 
+        //Post Comments
 
-        //testing comment
-        holder.date.setOnClickListener(new View.OnClickListener() {
+        holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 profileData = helpList.get(position);
+                COMMENT_COUNT = helpList.get(position).getCommentCount();
                 Intent intent = new Intent(context,CommentFeedActivity.class);
                 context.startActivity(intent);
-
             }
         });
 
@@ -203,7 +227,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        TextView name,date,time,description,votecounter,location;
+        TextView name,date,time,description,votecounter,location,comment;
         ImageView imageView;
         LinearLayout linearLayout;
 
@@ -217,6 +241,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
             imageView = itemView.findViewById(R.id.imageViewHelpFeed);
             votecounter = itemView.findViewById(R.id.counterText);
             location = itemView.findViewById(R.id.locationText);
+            comment = itemView.findViewById(R.id.Comment_Counter_ItemView);
         }
     }
 

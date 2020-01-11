@@ -37,7 +37,7 @@
             </TextView>
 
             <TextView
-                android:id="@+id/CommentVotecounter"
+                android:id="@+id/CommentVotecounter_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

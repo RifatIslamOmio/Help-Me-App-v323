@@ -51,7 +51,6 @@ public class HelpFeedActivity extends AppCompatActivity {
                     Help help = dataSnapshot1.getValue(Help.class);
                     list.add(help);
                 }
-
                 Collections.reverse(list);
                 helpList = new HelpList(HelpFeedActivity.this,list);
                 recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();

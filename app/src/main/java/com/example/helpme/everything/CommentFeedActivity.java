@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 public class CommentFeedActivity extends AppCompatActivity {
 
@@ -84,8 +84,12 @@ public class CommentFeedActivity extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             commentText.setText("");
                             Toast.makeText(getApplicationContext(),"Comment Added",Toast.LENGTH_SHORT).show();
+                            recyclerViewComment.smoothScrollToPosition(HelpList.COMMENT_COUNT);
                         }
                     });
+
+                    reference.child(help_post_id).child("commentCount").setValue(list.size()+1);
+
                 }
             }
         });
@@ -96,7 +100,6 @@ public class CommentFeedActivity extends AppCompatActivity {
 
         recyclerViewComment = findViewById(R.id.CommentrecyclerView);
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setReverseLayout(true);
         recyclerViewComment.setLayoutManager(manager);
         recyclerViewComment.setHasFixedSize(true);
 
@@ -112,7 +115,7 @@ public class CommentFeedActivity extends AppCompatActivity {
                     list.add(comment);
                 }
 
-                Collections.reverse(list);
+
                 commentList = new CommentList(CommentFeedActivity.this,list);
                 recyclerViewState = recyclerViewComment.getLayoutManager().onSaveInstanceState();
                 recyclerViewComment.setAdapter(commentList);
@@ -125,6 +128,7 @@ public class CommentFeedActivity extends AppCompatActivity {
             {Toast.makeText(getApplicationContext(),"Failed To Load",Toast.LENGTH_SHORT).show();
             }
         });
+        recyclerViewComment.smoothScrollToPosition(HelpList.COMMENT_COUNT);
 
 
 

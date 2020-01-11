@@ -120,7 +120,7 @@ public class CommentList extends RecyclerView.Adapter<CommentList.MyViewHolder> 
             date = itemView.findViewById(R.id.CommentDate);
             time = itemView.findViewById(R.id.CommentTime);
             commentText = itemView.findViewById(R.id.Comment_Text);
-            votecounter = itemView.findViewById(R.id.CommentVotecounter);
+            votecounter = itemView.findViewById(R.id.CommentVotecounter_text);
 
         }
     }
