@@ -1,8 +1,11 @@
 package com.example.helpme.everything;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,15 +80,26 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
                     String address = addressTVHS.getText()+userInfo.getAddress();
                     addressTVHS.setText(address);
 
-                    setSupportActionBar(toolbar);
-                    getSupportActionBar().setTitle(userInfo.getUserName()+"'s Profile");
 
+                    setSupportActionBar(toolbar);
+
+                    getSupportActionBar().setTitle(userInfo.getUserName()+"'s Profile");
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    getSupportActionBar().setDisplayShowHomeEnabled(true);
+                    toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    });
                 }
             }
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
+            Toast.makeText(getApplicationContext(),"Failed to load profile",Toast.LENGTH_SHORT).show();
 
         }
     };

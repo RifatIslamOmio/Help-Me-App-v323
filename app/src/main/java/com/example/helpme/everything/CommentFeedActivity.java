@@ -2,6 +2,7 @@ package com.example.helpme.everything;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
@@ -22,9 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CommentFeedActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
     String help_id = HelpList.profileData.getHelpId() ;
     RecyclerView recyclerViewComment;
     EditText commentText;
@@ -44,6 +47,21 @@ public class CommentFeedActivity extends AppCompatActivity {
         sendBtn = findViewById(R.id.commentSendBtn);
         reference = FirebaseDatabase.getInstance().getReference("helps");
         user = FirebaseAuth.getInstance().getCurrentUser();
+        toolbar = findViewById(R.id.comment_feed_toolbar);
+
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(HelpList.profileData.getSeeker_name()+"'s Post Comments");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
 
 
@@ -78,6 +96,7 @@ public class CommentFeedActivity extends AppCompatActivity {
 
         recyclerViewComment = findViewById(R.id.CommentrecyclerView);
         LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setReverseLayout(true);
         recyclerViewComment.setLayoutManager(manager);
         recyclerViewComment.setHasFixedSize(true);
 
@@ -93,6 +112,7 @@ public class CommentFeedActivity extends AppCompatActivity {
                     list.add(comment);
                 }
 
+                Collections.reverse(list);
                 commentList = new CommentList(CommentFeedActivity.this,list);
                 recyclerViewState = recyclerViewComment.getLayoutManager().onSaveInstanceState();
                 recyclerViewComment.setAdapter(commentList);
@@ -102,7 +122,7 @@ public class CommentFeedActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
-            {Toast.makeText(getApplicationContext(),"Failded To Load",Toast.LENGTH_SHORT).show();
+            {Toast.makeText(getApplicationContext(),"Failed To Load",Toast.LENGTH_SHORT).show();
             }
         });
 
