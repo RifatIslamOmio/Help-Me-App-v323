@@ -68,9 +68,10 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
+                stopService(new Intent(getApplicationContext(),MyService.class));
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
-                stopService(new Intent(getApplicationContext(),MyService.class));
+
 
             }
         });
