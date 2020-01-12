@@ -19,7 +19,7 @@ public class Help {
     private String user_id;
     private String latlong;
     private String current_address;
-    private String photo_path=null;
+    private String photo_path= "https://i.imgur.com/FzjpMaM.png";
     private int voteCount;
     private List<String> voters = null;
     private List<Comment> commentList;
@@ -30,7 +30,6 @@ public class Help {
         this.voteCount = 0;
         voters = new ArrayList<>();
         voters.add("null");
-        this.photo_path = "https://i.imgur.com/FzjpMaM.png";
         commentList = new ArrayList<>();
         this.commentCount = 0;
     }

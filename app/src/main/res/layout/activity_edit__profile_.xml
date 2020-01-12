@@ -88,17 +88,39 @@
                 android:inputType="textPostalAddress"
                 android:textColorHint="@color/colorPrimaryDark" />
 
-            <Button
-                android:id="@+id/Savebutton"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
+                android:orientation="horizontal"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="80dp"
-                android:background="@drawable/custom_save_button"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Save"
-                android:textColor="#FFF" />
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/Cancelbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/custom_cancel_button"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Cancel"
+                    android:paddingStart="42dp"
+                    android:paddingEnd="42dp"
+                    android:textColor="#FFF" />
+
+                <Button
+                    android:id="@+id/Savebutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:paddingStart="50dp"
+                    android:paddingEnd="50dp"
+                    android:background="@drawable/custom_save_button"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Save"
+                    android:textColor="#FFF"/>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

@@ -26,7 +26,7 @@ import com.google.firebase.storage.UploadTask;
 public class Edit_Profile_Activity extends AppCompatActivity {
 
     EditText fName,lName,address,phone;
-    Button saveBtn;
+    Button saveBtn,cancelBtn;
     ImageView profilePic;
     DatabaseReference reference;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -48,7 +48,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         phone = findViewById(R.id.PhoneeditText);
         saveBtn = findViewById(R.id.Savebutton);
         profilePic = findViewById(R.id.profile_image_view);
-
+        cancelBtn = findViewById(R.id.Cancelbutton);
 
 
 
@@ -96,6 +96,14 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), Profile_Activity.class));
                     }
                 });
+            }
+        });
+
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

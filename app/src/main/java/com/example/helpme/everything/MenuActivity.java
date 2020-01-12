@@ -71,8 +71,6 @@ public class MenuActivity extends AppCompatActivity {
                 stopService(new Intent(getApplicationContext(),MyService.class));
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
-
-
             }
         });
 
