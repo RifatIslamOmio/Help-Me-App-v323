@@ -106,7 +106,6 @@
             android:text="Seeker's Name"
             android:textColor="#F44336"
             android:textSize="20sp">
-
         </TextView>
 
         <TextView
@@ -117,16 +116,28 @@
             android:fontFamily="@font/roboto"
             android:text="Description"
             android:textSize="18sp">
-
         </TextView>
+
+        <ProgressBar
+            android:id="@+id/progressBar_itemView_image"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="#F44336"
+            android:layout_margin="20dp"/>
 
         <ImageView
             android:id="@+id/imageViewHelpFeed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:scaleType="centerCrop"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/loading" />
 
     </LinearLayout>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,7 @@ public class Profile_Activity extends AppCompatActivity {
     TextView emailTV,usernameTV,fullnameTV,addressTV,phoneTV;
     ImageButton editProfileBtn;
     ImageView imageView;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +44,22 @@ public class Profile_Activity extends AppCompatActivity {
         fullnameTV = findViewById(R.id.profileFullName);
         addressTV = findViewById(R.id.profileAddress);
         phoneTV = findViewById(R.id.profilePhone);
+        toolbar = findViewById(R.id.toolbar_profile);
 
         Query query = FirebaseDatabase.getInstance().getReference("Profiles")
                 .orderByChild("userId")
                 .equalTo(user.getUid());
         query.addListenerForSingleValueEvent(valueEventListener);
 
+
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +131,6 @@ public class Profile_Activity extends AppCompatActivity {
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
-
         }
     };
 

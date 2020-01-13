@@ -5,31 +5,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.helpme.Activities.MapsActivity;
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.Models.Help;
 import com.example.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +34,9 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
     public static Help profileData;
     public static int COMMENT_COUNT;
-    long child_count;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     Context context;
     ArrayList<Help> helpList;
-    DatabaseReference reference;
     public HelpList(Context c, ArrayList<Help> helpList)
     {
         context = c;
@@ -93,7 +86,6 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
 
         //Post Comments
-
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,8 +101,16 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         //Load Imageview
         Picasso.with(context)
                 .load(helpList.get(position).getPhoto_path())
-                .into(holder.imageView);
+                .into(holder.imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.progressBar.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onError() {
 
+                    }
+                });
 
         //Profile
         holder.name.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +214,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         TextView name,date,time,description,votecounter,location,comment;
         ImageView imageView;
         LinearLayout linearLayout;
+        ProgressBar progressBar;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -226,6 +227,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
             votecounter = itemView.findViewById(R.id.counterText);
             location = itemView.findViewById(R.id.locationText);
             comment = itemView.findViewById(R.id.Comment_Counter_ItemView);
+            progressBar = itemView.findViewById(R.id.progressBar_itemView_image);
         }
     }
 

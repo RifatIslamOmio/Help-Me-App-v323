@@ -7,7 +7,7 @@
     android:elevation="3.5dp"
     app:titleTextColor="#FFF"
     app:title="User Profile"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:id="@+id/toolbar_profile">
 
 </androidx.appcompat.widget.Toolbar>
