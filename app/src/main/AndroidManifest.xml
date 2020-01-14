@@ -75,7 +75,8 @@
             android:noHistory="true"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".everything.HelpSeekersProfile_activity" />
-        <activity android:name=".everything.Edit_Profile_Activity" />
+        <activity android:name=".everything.Edit_Profile_Activity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".everything.Profile_Activity" />
         <activity android:name=".everything.HelpFeedActivity" />
         <activity android:name=".everything.MenuActivity" />

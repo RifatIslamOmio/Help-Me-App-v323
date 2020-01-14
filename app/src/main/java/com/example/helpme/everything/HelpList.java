@@ -65,6 +65,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         holder.description.setText(helpList.get(position).getDescription());
         holder.location.setText(helpList.get(position).getCurrent_address());
         holder.comment.setText(helpList.get(position).getCommentCount()+"");
+        holder.progressBar.setVisibility(View.VISIBLE);
 
 
 
@@ -101,6 +102,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
         //Load Imageview
         Picasso.with(context)
                 .load(helpList.get(position).getPhoto_path())
+                .error(R.drawable.ic_failed_to_load_image)
                 .into(holder.imageView, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -108,9 +110,11 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
                     }
                     @Override
                     public void onError() {
-
+                        holder.progressBar.setVisibility(View.GONE);
                     }
                 });
+
+
 
         //Profile
         holder.name.setOnClickListener(new View.OnClickListener() {
