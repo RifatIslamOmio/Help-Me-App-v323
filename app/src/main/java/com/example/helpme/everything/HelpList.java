@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,7 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
     public static Help profileData;
     public static int COMMENT_COUNT;
+
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     Context context;
     ArrayList<Help> helpList;

@@ -25,13 +25,14 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
-            android:id="@+id/profileUserpic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/userprofile"
-            android:layout_marginBottom="20dp"
-            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="15dp"
+            android:src="@drawable/userprofile"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -5,13 +5,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.example.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,14 +19,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile_Activity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     DatabaseReference reference;
     TextView emailTV,usernameTV,fullnameTV,addressTV,phoneTV;
     ImageButton editProfileBtn;
-    ImageView imageView;
     Toolbar toolbar;
+    CircleImageView circleImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +35,6 @@ public class Profile_Activity extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference("Profiles");
 
-        imageView = findViewById(R.id.profileUserpic);
         editProfileBtn = findViewById(R.id.profileEditButton);
         usernameTV = findViewById(R.id.profileUsername);
         emailTV = findViewById(R.id.profileEmail);
@@ -45,6 +42,7 @@ public class Profile_Activity extends AppCompatActivity {
         addressTV = findViewById(R.id.profileAddress);
         phoneTV = findViewById(R.id.profilePhone);
         toolbar = findViewById(R.id.toolbar_profile);
+        circleImageView = findViewById(R.id.profile_image);
 
         Query query = FirebaseDatabase.getInstance().getReference("Profiles")
                 .orderByChild("userId")
@@ -97,13 +95,12 @@ public class Profile_Activity extends AppCompatActivity {
                     String address = addressTV.getText()+userInfo.getAddress();
                     addressTV.setText(address);
 
-//                    if(userInfo.getPhoto_link().compareTo("link:")!=0)
-//                    {
-//                        Picasso.with(getApplicationContext())
-//                                .load(userInfo.getPhoto_link())
-//                                .resize(128,128)
-//                                .into(imageView);
-//                    }
+                    if(userInfo.getPhoto_link().compareTo("link:")!=0)
+                    {
+                        Picasso.with(getApplicationContext())
+                                .load(userInfo.getPhoto_link())
+                                .into(circleImageView);
+                    }
 
                 }
             }

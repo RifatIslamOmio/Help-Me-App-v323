@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.helpme.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,6 +48,18 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         saveBtn = findViewById(R.id.Savebutton);
         profilePic = findViewById(R.id.profile_image_view);
         cancelBtn = findViewById(R.id.Cancelbutton);
+        folder = FirebaseStorage.getInstance().getReference().child("ProfileImageFolder");
+
+
+
+
+        
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadData(v);
+            }
+        });
 
 
 
@@ -107,9 +118,49 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             }
         });
 
+    }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==IMAGE_STATUS)
+        {
+            if(resultCode==RESULT_OK)
+            {
+                final Uri imageData = data.getData();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Profiles");
+                final StorageReference imageName = folder.child(reference.push().getKey());
+                imageName.putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                photoLink = uri.toString();
+                                Toast.makeText(getApplicationContext(),"Profile Photo Uploaded!",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
+        }
 
     }
+
+
+
+    public void UploadData(View view) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent,IMAGE_STATUS);
+
+    }
+
+
+
+
+
     String trimmer(String str)
     {
         String temp="";
