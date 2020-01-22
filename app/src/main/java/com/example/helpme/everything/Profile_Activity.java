@@ -5,7 +5,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,8 +21,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class Profile_Activity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -27,14 +32,17 @@ public class Profile_Activity extends AppCompatActivity {
     TextView emailTV,usernameTV,fullnameTV,addressTV,phoneTV;
     ImageButton editProfileBtn;
     Toolbar toolbar;
+    ProgressBar progressBar;
     CircleImageView circleImageView;
+    LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_);
 
         reference = FirebaseDatabase.getInstance().getReference("Profiles");
-
+        progressBar = findViewById(R.id.progressBar_profileView);
+        linearLayout = findViewById(R.id.profileView_linear_layout);
         editProfileBtn = findViewById(R.id.profileEditButton);
         usernameTV = findViewById(R.id.profileUsername);
         emailTV = findViewById(R.id.profileEmail);
@@ -43,6 +51,10 @@ public class Profile_Activity extends AppCompatActivity {
         phoneTV = findViewById(R.id.profilePhone);
         toolbar = findViewById(R.id.toolbar_profile);
         circleImageView = findViewById(R.id.profile_image);
+
+
+        linearLayout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         Query query = FirebaseDatabase.getInstance().getReference("Profiles")
                 .orderByChild("userId")
@@ -69,7 +81,6 @@ public class Profile_Activity extends AppCompatActivity {
         });
 
     }
-
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -99,13 +110,26 @@ public class Profile_Activity extends AppCompatActivity {
                     {
                         Picasso.with(getApplicationContext())
                                 .load(userInfo.getPhoto_link())
-                                .into(circleImageView);
+                                .into(circleImageView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressBar.setVisibility(View.GONE);
+                                        linearLayout.setVisibility(View.VISIBLE);
+                                    }
+                                    @Override
+                                    public void onError() { }
+                                });
                     }
-
+                    else
+                    {
+                        progressBar.setVisibility(View.GONE);
+                        linearLayout.setVisibility(View.VISIBLE);
+                    }
                 }
             }
             else
             {
+
                 String fullName = "Please set full name!";
                 fullnameTV.setText(fullName);
                 fullnameTV.setTextColor(Color.RED);
@@ -123,11 +147,18 @@ public class Profile_Activity extends AppCompatActivity {
                 String address = "Please set address!";
                 addressTV.setText(address);
                 addressTV.setTextColor(Color.RED);
+
+                progressBar.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.VISIBLE);
             }
+
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
+            linearLayout.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(),"Failed to load profile",Toast.LENGTH_SHORT).show();
         }
     };
 

@@ -7,7 +7,7 @@
     android:background="#FF1744"
     android:elevation="3.5dp"
     app:titleTextColor="#FFF"
-    app:title="Help Seeker's Profile"
+    app:title="Profile"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 

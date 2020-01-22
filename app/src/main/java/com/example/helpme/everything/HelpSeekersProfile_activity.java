@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +19,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class HelpSeekersProfile_activity extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView emailTVHS,usernameTVHS,fullnameTVHS,addressTVHS,phoneTVHS;
+    CircleImageView circleImageView;
+    ProgressBar progressBar;
+    LinearLayout linearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +57,23 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
         addressTVHS = findViewById(R.id.profileAddressHS);
         phoneTVHS = findViewById(R.id.profilePhoneHS);
         toolbar = findViewById(R.id.ToolbarSeekerProfile);
+        circleImageView = findViewById(R.id.profileUserpicHS);
+        progressBar = findViewById(R.id.progressBar_helpSeekerprofileView);
+        linearLayout = findViewById(R.id.helpSeekerProfileView_linear_layout);
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        linearLayout.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         Query query = FirebaseDatabase.getInstance().getReference("Profiles")
                 .orderByChild("userId")
@@ -65,6 +91,8 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
                 {
                     UserInfo userInfo = snapshot.getValue(UserInfo.class);
 
+                    getSupportActionBar().setTitle(userInfo.getUserName()+"'s Profile");
+
                     String fullName = fullnameTVHS.getText()+userInfo.getFirstName()+" "+userInfo.getLastName();
                     fullnameTVHS.setText(fullName);
 
@@ -81,18 +109,26 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
                     addressTVHS.setText(address);
 
 
-                    setSupportActionBar(toolbar);
+                    if(userInfo.getPhoto_link().compareTo("link:")!=0)
+                    {
+                        Picasso.with(getApplicationContext())
+                                .load(userInfo.getPhoto_link())
+                                .into(circleImageView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        progressBar.setVisibility(View.GONE);
+                                        linearLayout.setVisibility(View.VISIBLE);
+                                    }
+                                    @Override
+                                    public void onError() { }
+                                });
+                    }
+                    else
+                    {
+                        progressBar.setVisibility(View.GONE);
+                        linearLayout.setVisibility(View.VISIBLE);
+                    }
 
-                    getSupportActionBar().setTitle(userInfo.getUserName()+"'s Profile");
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    getSupportActionBar().setDisplayShowHomeEnabled(true);
-                    toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
-                    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            finish();
-                        }
-                    });
                 }
             }
         }

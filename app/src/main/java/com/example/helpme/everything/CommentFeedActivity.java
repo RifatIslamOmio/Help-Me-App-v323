@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -83,9 +86,15 @@ public class CommentFeedActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             commentText.setText("");
+                            //Hiding Keyboard
+                            try { InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                            } catch (Exception e) {}
+
+                            recyclerViewComment.smoothScrollToPosition(HelpList.COMMENT_COUNT+1);
                             Toast.makeText(getApplicationContext(),"Comment Added",Toast.LENGTH_SHORT).show();
-                            recyclerViewComment.smoothScrollToPosition(HelpList.COMMENT_COUNT);
                         }
+
                     });
 
                     reference.child(help_post_id).child("commentCount").setValue(list.size()+1);
@@ -93,8 +102,6 @@ public class CommentFeedActivity extends AppCompatActivity {
                 }
             }
         });
-
-
 
 
 
@@ -108,6 +115,7 @@ public class CommentFeedActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list = new ArrayList<>();
+                HelpList.COMMENT_COUNT = (int) dataSnapshot.getChildrenCount();
 
                 for(DataSnapshot data:dataSnapshot.getChildren())
                 {
@@ -115,12 +123,10 @@ public class CommentFeedActivity extends AppCompatActivity {
                     list.add(comment);
                 }
 
-
                 commentList = new CommentList(CommentFeedActivity.this,list);
                 recyclerViewState = recyclerViewComment.getLayoutManager().onSaveInstanceState();
                 recyclerViewComment.setAdapter(commentList);
                 recyclerViewComment.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-
             }
 
             @Override
@@ -129,9 +135,6 @@ public class CommentFeedActivity extends AppCompatActivity {
             }
         });
         recyclerViewComment.smoothScrollToPosition(HelpList.COMMENT_COUNT);
-
-
-
     }
 
     public String[] getDatenTime()

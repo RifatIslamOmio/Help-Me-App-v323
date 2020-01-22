@@ -53,7 +53,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 
 
-        
+
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
