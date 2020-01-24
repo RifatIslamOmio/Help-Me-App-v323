@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +21,20 @@ import com.example.helpme.Models.Help;
 import com.example.helpme.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
@@ -131,8 +136,6 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
             }
         });
 
-
-
         //Vote Icon
         List<String> voters = helpList.get(position).getVoters();
         if(voters.contains(user.getUid()))
@@ -157,16 +160,14 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
 
                 if(voters.contains(user.getUid()))
                 {
-                    int voteCount = helpList.get(position).getVoteCount()-1;
-                    reference.child(helpList.get(position).getHelpId()).child("voteCount").setValue(voteCount);
+                    setVote("decrease",helpList.get(position).getHelpId());
                     voters.remove(user.getUid());
                     reference.child(helpList.get(position).getHelpId()).child("voters").setValue(voters);
                     Toast.makeText(context,"Vote Removed!",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    int voteCount = helpList.get(position).getVoteCount()+1;
-                    reference.child(helpList.get(position).getHelpId()).child("voteCount").setValue(voteCount);
+                    setVote("increase",helpList.get(position).getHelpId());
                     voters.add(user.getUid());
                     reference.child(helpList.get(position).getHelpId()).child("voters").setValue(voters);
                     Toast.makeText(context,"Voted!",Toast.LENGTH_SHORT).show();
@@ -237,6 +238,30 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
             comment = itemView.findViewById(R.id.Comment_Counter_ItemView);
             progressBar = itemView.findViewById(R.id.progressBar_itemView_image);
         }
+    }
+
+    public static void setVote(final String operation,String helpId) {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("helps");
+        DatabaseReference voteRef = rootRef.child(helpId).child("voteCount");
+        voteRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                Integer score = mutableData.getValue(Integer.class);
+                if (score == null) {
+                    return Transaction.success(mutableData);
+                }
+
+                if (operation.equals("increase")) {
+                    mutableData.setValue(score + 1);
+                } else if (operation.equals("decrease")){
+                    mutableData.setValue(score - 1);
+                }
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {}
+        });
     }
 
 }

@@ -98,7 +98,6 @@ public class CommentFeedActivity extends AppCompatActivity {
                     });
 
                     reference.child(help_post_id).child("commentCount").setValue(list.size()+1);
-
                 }
             }
         });

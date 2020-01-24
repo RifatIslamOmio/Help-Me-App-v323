@@ -65,6 +65,7 @@
                 android:text="Time"
                 android:textColor="#00E676"
                 android:textSize="15sp"/>
+
             <TextView
                 android:id="@+id/Comment_Counter_ItemView"
                 android:layout_width="wrap_content"
@@ -142,6 +143,5 @@
             app:srcCompat="@drawable/loading" />
 
     </LinearLayout>
-
 
 </LinearLayout>

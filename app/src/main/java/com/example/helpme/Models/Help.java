@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.everything.Comment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class Help {
     public Help() {
         this.voteCount = 0;
         voters = new ArrayList<>();
-        voters.add("null");
+        //voters.add("null");
         commentList = new ArrayList<>();
         this.commentCount = 0;
     }
@@ -45,7 +44,7 @@ public class Help {
         this.photo_path = photo_path;
         this.voteCount = 0;
         this.commentCount = 0;
-        voters.add("null");
+        //voters.add("null");
         commentList = new ArrayList<>();
     }
 
