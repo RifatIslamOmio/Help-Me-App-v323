@@ -32,7 +32,7 @@ public class LocationsFetch {
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
 
-    private Location location, bestLocation; public Location locationGetter(){ return location; }
+    private Location location, bestLocation; public Location locationGetter(){return location;} //used in address fetch
     private double bestLocationAccuracy = 99999; //used only in getLastLocation()
     private boolean isLocationAccurate;
     private boolean bestLocationTaken;
@@ -40,6 +40,8 @@ public class LocationsFetch {
     private boolean isLocationEnabledLM;
     private boolean onLocationResultWorks;
 
+
+    /**constructor for PostActivity*/
     public LocationsFetch(Activity activity) {
         this.activity = activity;
 
@@ -62,7 +64,7 @@ public class LocationsFetch {
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
 
-                if(!LocationsFetch.this.onLocationResultWorks) //check if callback runs (-_- doesn't get called on all devices -_-)
+                if(!LocationsFetch.this.onLocationResultWorks) //check if callback runs (doesn't get called on all devices -_-)
                     LocationsFetch.this.onLocationResultWorks = true;
 
                 if (locationResult == null) {
@@ -103,7 +105,6 @@ public class LocationsFetch {
         this.isLocationEnabledLM = false;
         this.bestLocationTaken = false;
     }
-
 
 
     public Location getLocation() {

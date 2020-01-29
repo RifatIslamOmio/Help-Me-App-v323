@@ -98,7 +98,13 @@
         <service
             android:name=".Externals.FetchAddressIntentService"
             android:exported="false" />
+
         <service android:name=".everything.MyService" />
+        <service
+            android:name=".Services.NearbyReceiveScheduler"
+            android:exported="false"
+            />
+
     </application>
 
 </manifest>

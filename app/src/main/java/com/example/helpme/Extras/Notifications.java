@@ -1,5 +1,6 @@
 package com.example.helpme.Extras;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -42,7 +43,9 @@ public abstract class Notifications {
         }
     }
 
-    public static void showNotification(Context currentActivity, Intent intent, int notification_id, String title, String content){
+    public static void showNotification(
+            Context currentActivity, Intent intent,
+            int notification_id, String title, String content){
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //check
         PendingIntent pendingIntent = PendingIntent.getActivity(currentActivity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -51,8 +54,13 @@ public abstract class Notifications {
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(currentActivity);
 
+        Notification notification = builder.build();
+
+        //if(called_from_nearby)
+          //  notification.flags |= Notification.FLAG_INSISTENT;
+
         // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(notification_id, builder.build());
+        notificationManager.notify(notification_id, notification);
 
         Log.d(Constants.NOTIFICATION_LOG, "showNotification: notification showed");
     }

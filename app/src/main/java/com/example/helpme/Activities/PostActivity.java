@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class PostActivity extends AppCompatActivity {
     DatabaseReference reference;
 
     private TextView postText;
+    private Button takePhotoBtn;
 
     private LocationsFetch locationsFetch; public LocationsFetch getLocationsFetch(){ return this.locationsFetch; }
     private AccurateLocationAsync accurateLocationAsync;
@@ -124,6 +126,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         postText = findViewById(R.id.editText_description_post);
+        takePhotoBtn = findViewById(R.id.btn_take_photo);
 
         init();
     }
@@ -131,7 +134,6 @@ public class PostActivity extends AppCompatActivity {
     private void init(){
 
         postClicked = false;
-
 
 
         permissionObject = new Permissions(this, permissions, PERMISSIONS_REQUEST_CODE);
@@ -152,7 +154,6 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
 
         //locationsFetch.startLocationUpdates();
         //if(accurateLocationAsync.isCancelled())
@@ -210,6 +211,10 @@ public class PostActivity extends AppCompatActivity {
                 Log.d("COON","Reached!");
                 if(Activity.RESULT_OK == resultCode){
                     //called after photo is taken successfully
+
+                    takePhotoBtn.setText(R.string.photo_taken);
+                    takePhotoBtn.setEnabled(false);
+
                     Log.d("COON","Reached! 2");
                     Log.d(Constants.PHOTO_LOG, "onActivityResult: camera open success");
 
@@ -220,7 +225,6 @@ public class PostActivity extends AppCompatActivity {
                         ConnectNearby.photoFile = photo.getCompressPhotoFile();
                         ConnectNearby.photoFileUri = Uri.fromFile(photo.getCompressPhotoFile());
                         photoSent = true;
-
 
 
                         //upload to database
@@ -235,7 +239,6 @@ public class PostActivity extends AppCompatActivity {
                         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("helps");
                         final String photo_name_id = reference.push().getKey();
                         final StorageReference fileReference = mStorageRef.child(photo_name_id+".jpg");
-
 
 
 
@@ -263,13 +266,14 @@ public class PostActivity extends AppCompatActivity {
 
 
 
-
-
-
                         Log.d(Constants.NEARBY_LOG, "onActivityResult: photo compressed successfully uri = "
                                 + ConnectNearby.photoFileUri);
 
                     } catch (IOException e) {
+
+                        takePhotoBtn.setText(R.string.take_photo_button);
+                        takePhotoBtn.setEnabled(true);
+
                         e.printStackTrace();
                     }
 

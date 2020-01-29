@@ -1,8 +1,10 @@
 package com.example.helpme.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -15,11 +17,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements
+        OnMapReadyCallback,
+        GoogleMap.OnMyLocationButtonClickListener,
+        GoogleMap.OnMyLocationClickListener
+{
 
     private GoogleMap mMap;
 
-    private double latitude, longitude;
+    private double callerLatitude, callerLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +46,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void fetchLatLang() {
 
         Intent intent = getIntent();
-        latitude = intent.getDoubleExtra(Constants.MAP_LATITUDE_KEY,-34);
-        longitude = intent.getDoubleExtra(Constants.MAP_LONGITUDE_KEY,151);
+        callerLatitude = intent.getDoubleExtra(Constants.MAP_LATITUDE_KEY,-34);
+        callerLongitude = intent.getDoubleExtra(Constants.MAP_LONGITUDE_KEY,151);
 
     }
 
     private void notifyInternetState(){
-        if(Constants.isIsInternetEnabled(this))
+        if(!Constants.isIsInternetEnabled(this))
             Toast.makeText(this.getApplicationContext(),
                     "active internet required to view map",
                     Toast.LENGTH_LONG)
@@ -54,22 +60,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        mMap.setOnMyLocationClickListener(this);
+        mMap.setOnMyLocationButtonClickListener(this);
+
         // Add a marker in caller and move the camera
-        LatLng callerLatLng = new LatLng(latitude, longitude);
+        LatLng callerLatLng = new LatLng(callerLatitude, callerLongitude);
         mMap.addMarker(new MarkerOptions().position(callerLatLng).title("caller position"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(callerLatLng,18.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(callerLatLng,18.5f));
+    }
+
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+
+        String toastText = "";
+        if(!Constants.isIsWifiEnabled(this) && !Constants.IS_LOCATION_ENABLED)
+            toastText = "Turn On WiFi & Location";
+        else if(!Constants.IS_LOCATION_ENABLED)
+            toastText = "Turn On Location";
+        else if(!Constants.isIsWifiEnabled(this))
+            toastText = "Turn On WiFi";
+
+        Toast.makeText(this, toastText + " to show your location", Toast.LENGTH_LONG).show();
+
+        return false;
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+
+        if(location.getAccuracy()>150)
+            Toast.makeText(this, "Location Accuracy is LOW"+location, Toast.LENGTH_LONG).show();
+
     }
 }

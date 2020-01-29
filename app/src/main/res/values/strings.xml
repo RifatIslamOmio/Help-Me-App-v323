@@ -18,6 +18,8 @@
     <!--activity_post.xml-->
     <string name="description_hint">Write Short Description Here...</string>
     <string name="take_photo_button">Take Photo</string>
+    <string name="photo_taken">Photo Taken</string>
+    <string name="failed_photo_take">Failed! Take Photo Again</string>
     <string name="record_video_button">Record Video</string>
     <string name="pick_location_button">Pick location</string>
 
