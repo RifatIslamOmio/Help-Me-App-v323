@@ -30,11 +30,9 @@ import com.google.firebase.database.Transaction;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 
 public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
@@ -122,6 +120,16 @@ public class HelpList extends RecyclerView.Adapter<HelpList.MyViewHolder>  {
                         holder.progressBar.setVisibility(View.GONE);
                     }
                 });
+
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,FullScreenImage.class);
+                intent.putExtra("link",helpList.get(position).getPhoto_path());
+                context.startActivity(intent);
+            }
+        });
 
 
 

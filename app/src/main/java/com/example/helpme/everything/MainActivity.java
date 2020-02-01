@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String uEmail;
     private TextView reg_view;
     private EditText email;
     private  EditText pass;
