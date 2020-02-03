@@ -1,8 +1,7 @@
 package com.example.helpme.everything;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,6 +31,7 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
     CircleImageView circleImageView;
     ProgressBar progressBar;
     LinearLayout linearLayout;
+    String photopath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +111,7 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
 
                     if(userInfo.getPhoto_link().compareTo("link:")!=0)
                     {
+                        photopath = userInfo.getPhoto_link();
                         Picasso.with(getApplicationContext())
                                 .load(userInfo.getPhoto_link())
                                 .into(circleImageView, new Callback() {
@@ -122,6 +123,16 @@ public class HelpSeekersProfile_activity extends AppCompatActivity {
                                     @Override
                                     public void onError() { }
                                 });
+
+                        circleImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getApplicationContext(),FullScreenImage.class);
+                                intent.putExtra("link",photopath);
+                                startActivity(intent);
+                            }
+                        });
+
                     }
                     else
                     {

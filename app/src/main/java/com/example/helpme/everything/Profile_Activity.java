@@ -35,6 +35,7 @@ public class Profile_Activity extends AppCompatActivity {
     ProgressBar progressBar;
     CircleImageView circleImageView;
     LinearLayout linearLayout;
+    String photopath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +109,7 @@ public class Profile_Activity extends AppCompatActivity {
 
                     if(userInfo.getPhoto_link().compareTo("link:")!=0)
                     {
+                        photopath = userInfo.getPhoto_link();
                         Picasso.with(getApplicationContext())
                                 .load(userInfo.getPhoto_link())
                                 .into(circleImageView, new Callback() {
@@ -119,6 +121,15 @@ public class Profile_Activity extends AppCompatActivity {
                                     @Override
                                     public void onError() { }
                                 });
+
+                        circleImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getApplicationContext(),FullScreenImage.class);
+                                intent.putExtra("link",photopath);
+                                startActivity(intent);
+                            }
+                        });
                     }
                     else
                     {
