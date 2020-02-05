@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String uEmail;
     private TextView reg_view;
     private EditText email;
     private  EditText pass;
@@ -59,9 +58,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         AppIntroThread.start();
-
-
-
 
 
 
@@ -121,14 +117,11 @@ public class MainActivity extends AppCompatActivity {
                         {
                             mDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Error: Login Failed!",Toast.LENGTH_SHORT).show();
-                            return;
                         }
                     }
                 });
 
             }
         });
-
-
     }
 }

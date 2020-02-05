@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".everything.FullScreenImage">
+
+    <ProgressBar
+        android:id="@+id/progressBar_full_screen_imageView"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:indeterminateTint="#FFFFFF"
+        android:indeterminateTintMode="src_atop" />
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/full_screen_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"/>
+</RelativeLayout>

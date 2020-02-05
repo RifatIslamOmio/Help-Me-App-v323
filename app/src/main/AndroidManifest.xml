@@ -31,10 +31,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".everything.FullScreenImage"></activity>
+        <activity android:name=".everything.FullScreenImageView" />
         <activity android:name=".everything.CommentFeedActivity" />
-
-
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -75,8 +74,9 @@
             android:noHistory="true"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".everything.HelpSeekersProfile_activity" />
-        <activity android:name=".everything.Edit_Profile_Activity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".everything.Edit_Profile_Activity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".everything.Profile_Activity" />
         <activity android:name=".everything.HelpFeedActivity" />
         <activity android:name=".everything.MenuActivity" />
