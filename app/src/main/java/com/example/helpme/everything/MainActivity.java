@@ -61,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
         mAuth = FirebaseAuth.getInstance();
         mDialog = new ProgressDialog(this);
 
@@ -120,14 +117,11 @@ public class MainActivity extends AppCompatActivity {
                         {
                             mDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Error: Login Failed!",Toast.LENGTH_SHORT).show();
-                            return;
                         }
                     }
                 });
 
             }
         });
-
-
     }
 }
