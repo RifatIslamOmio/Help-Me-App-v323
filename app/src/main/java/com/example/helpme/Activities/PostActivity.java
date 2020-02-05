@@ -9,7 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.icu.text.CaseMap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,21 +23,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.helpme.Externals.AccurateLocationAsync;
-import com.example.helpme.Externals.ConnectNearby;
-import com.example.helpme.Externals.FetchAddressIntentService;
-import com.example.helpme.Externals.LocationsFetch;
+import com.example.helpme.External_Models.AccurateLocationAsync;
+import com.example.helpme.External_Models.ConnectNearby;
+import com.example.helpme.External_Models.FetchAddressIntentService;
+import com.example.helpme.External_Models.LocationsFetch;
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.Extras.Permissions;
 import com.example.helpme.Models.Help;
 import com.example.helpme.Models.Photo;
 import com.example.helpme.R;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -57,11 +53,13 @@ public class PostActivity extends AppCompatActivity {
 
     private TextView postText;
     private Button takePhotoBtn;
+    private Button takeLocationBtn;
 
     private LocationsFetch locationsFetch; public LocationsFetch getLocationsFetch(){ return this.locationsFetch; }
     private AccurateLocationAsync accurateLocationAsync;
 
     public static boolean postClicked = false;
+    public static boolean customLocationTaken = false;
     private boolean currentLocationReceived = false;
     private boolean addressFetched = false;
 
@@ -76,6 +74,7 @@ public class PostActivity extends AppCompatActivity {
 
     private Permissions permissionObject;
 
+    public static Location customLocation = new Location("maps");
 
 
     /**geo-coding receiver*/
@@ -127,6 +126,7 @@ public class PostActivity extends AppCompatActivity {
 
         postText = findViewById(R.id.editText_description_post);
         takePhotoBtn = findViewById(R.id.btn_take_photo);
+        takeLocationBtn = findViewById(R.id.btn_pick_location);
 
         init();
     }
@@ -134,7 +134,9 @@ public class PostActivity extends AppCompatActivity {
     private void init(){
 
         postClicked = false;
-
+        customLocationTaken = false;
+        currentLocationReceived = false;
+        addressFetched = false;
 
         permissionObject = new Permissions(this, permissions, PERMISSIONS_REQUEST_CODE);
 
@@ -315,6 +317,18 @@ public class PostActivity extends AppCompatActivity {
 
     /**button click listeners*/
 
+    public void pickLocationClick(View view) {
+
+        Intent intent = new Intent(this, MapsActivity.class);
+
+        intent.putExtra(Constants.MAP_LATITUDE_KEY, locationsFetch.getBestLocation().getLatitude());
+        intent.putExtra(Constants.MAP_LONGITUDE_KEY, locationsFetch.getBestLocation().getLongitude());
+        intent.putExtra(Constants.MARKER_VISIBILITY_KEY, false);
+
+        startActivity(intent);
+
+    }
+
     public void takePhotoClick(View view) {
 
         if(!permissionObject.checkPermissions())
@@ -343,26 +357,49 @@ public class PostActivity extends AppCompatActivity {
 
         if(locationsFetch.isLocationAccurate() || accurateLocationAsync.isAsyncLocationDone()) {
 
-            ConnectNearby.message = postText.getText().toString();
-            helpPost.setDescription(postText.getText().toString());
-            postText.setText("");
+            if(locationsFetch.isLocationAccurate() || customLocationTaken || locationsFetch.getBestLocation().getAccuracy() <= 100) {
 
-            if (!photoSent) {
-                ConnectNearby.photoFile = null;
-                ConnectNearby.photoFileUri = null;
-                Log.d(Constants.NEARBY_LOG, "postClick: no photo sent setting ConnectNearby photos null");
+                ConnectNearby.message = postText.getText().toString();
+                helpPost.setDescription(postText.getText().toString());
+                postText.setText("");
+
+                if (!photoSent) {
+                    ConnectNearby.photoFile = null;
+                    ConnectNearby.photoFileUri = null;
+                    Log.d(Constants.NEARBY_LOG, "postClick: no photo sent setting ConnectNearby photos null");
+                }
+
+                //start discovery after reverse geo and db upload?
+                Log.d(Constants.NEARBY_LOG, "postClick: start discovery");
+                ConnectNearby.startDiscovery();
+
+                showPostingView(); //do this only after start discovery
+
+                if(customLocationTaken){
+
+                    Log.d(Constants.PICK_LOCATION_LOG, "postClick: custom location was taken");
+
+                    helpPost.setLatlong(customLocation.getLatitude()+" "+customLocation.getLongitude());
+                    startAddressFetchService(customLocation);
+
+                }
+
             }
 
-            //start discovery after reverse geo and db upload?
-            Log.d(Constants.NEARBY_LOG, "postClick: start discovery");
-            ConnectNearby.startDiscovery();
-            //do this only after start discovery
-            showPostingView();
+            else{
+                //let user chose proper location
+                takeLocationBtn.setEnabled(true);
+                Toast.makeText(this, "Accurate location not available! please Pick A Location", Toast.LENGTH_LONG).show();
+
+                Log.d(Constants.PICK_LOCATION_LOG, "postClick: user prompted for custom location");
+            }
 
         }
 
         else if(!currentLocationReceived){
             //prompt user to pick location manually from a Map
+
+            Toast.makeText(this, "Error! Location not received", Toast.LENGTH_LONG).show();
 
             Log.d(Constants.LOCATION_LOG, "postClick: current location not received");
 
@@ -380,7 +417,6 @@ public class PostActivity extends AppCompatActivity {
 
         }
 
-        //TODO: start new activity and delete this activity from stack to avoid calling startDiscovery() multiple times
     }
 
     private void showPostingView() {
@@ -432,7 +468,7 @@ public class PostActivity extends AppCompatActivity {
         String dateandtime = sdf.format(date);
 
         //Data to store in Real Time Database
-        helpPost.setSeeker_name(trimmer(user.getEmail())); //
+        helpPost.setSeeker_name(trimmer(user.getEmail()));
         helpPost.setUser_id(user.getUid());
         helpPost.setDateandtime(dateandtime);
 
@@ -477,11 +513,11 @@ public class PostActivity extends AppCompatActivity {
 
     /**start new intent methods*/
 
-    public void startAddressFetchService(){
+    public void startAddressFetchService(Location location){
 
         Intent intent = new Intent(PostActivity.this, FetchAddressIntentService.class);
         intent.putExtra(Constants.GEO_POST_RECEIVER, addressResultReceiver);
-        intent.putExtra(Constants.POST_GEO_LOCATION,locationsFetch.locationGetter());
+        intent.putExtra(Constants.POST_GEO_LOCATION,location);
 
         Log.d(Constants.ADDRESS_LOG, "startAddressFetchService: starting intent service");
         startService(intent);

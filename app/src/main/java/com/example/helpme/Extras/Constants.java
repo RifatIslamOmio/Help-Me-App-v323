@@ -46,6 +46,7 @@ public abstract class Constants {
 
     }
 
+
     /***/
 
     /**Log Tags*/
@@ -56,12 +57,10 @@ public abstract class Constants {
     public static final String LOCATION_LOG = "location_debug";
     public static final String PHOTO_LOG = "photo_debug";
     public static final String NEW_VIEW_LOG = "view_debug";
-
     public static final String DB_LOG = "database_debug";
-
     public static final String ADDRESS_LOG = "address_debug";
-
     public static final String NOTIFICATION_LOG = "notification_debug";
+    public static final String PICK_LOCATION_LOG  = "pl_debug";
     /***/
 
     /**Intent Tags*/
@@ -70,6 +69,7 @@ public abstract class Constants {
     public static final String RECEIVED_LOCATION_KEY = "received_location";
     public static final String MAP_LATITUDE_KEY = "location_latitude";
     public static final String MAP_LONGITUDE_KEY = "location_longitude";
+    public static final String MARKER_VISIBILITY_KEY = "marker_visibility";
     /***/
 
     /**Result Codes*/

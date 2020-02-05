@@ -1,4 +1,4 @@
-package com.example.helpme.Externals;
+package com.example.helpme.External_Models;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,13 +32,15 @@ public class LocationsFetch {
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
 
-    private Location location, bestLocation; public Location locationGetter(){return location;} //used in address fetch
+    private Location location, bestLocation;
     private double bestLocationAccuracy = 99999; //used only in getLastLocation()
     private boolean isLocationAccurate;
     private boolean bestLocationTaken;
     private boolean isUpdating;
     private boolean isLocationEnabledLM;
     private boolean onLocationResultWorks;
+
+    private static final int ACCURATE_LOCATION_THRESHOLD = 30;
 
 
     /**constructor for PostActivity*/
@@ -82,7 +84,7 @@ public class LocationsFetch {
                         LocationsFetch.this.bestLocation = location;
 
 
-                    if(location.getAccuracy()<50) {
+                    if(location.getAccuracy() < LocationsFetch.ACCURATE_LOCATION_THRESHOLD) {
                         LocationsFetch.this.location = location;
                         LocationsFetch.this.isLocationAccurate = true;
 
@@ -121,7 +123,7 @@ public class LocationsFetch {
 
                             if(location!=null){
 
-                                if(location.getAccuracy()<50) {
+                                if(location.getAccuracy() < LocationsFetch.ACCURATE_LOCATION_THRESHOLD) {
                                     LocationsFetch.this.isLocationAccurate = true;
                                     LocationsFetch.this.location = location;
 

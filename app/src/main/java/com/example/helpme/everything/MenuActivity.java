@@ -16,8 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.helpme.Activities.PostActivity;
-import com.example.helpme.Externals.ConnectNearby;
-import com.example.helpme.Externals.LocationsFetch;
+import com.example.helpme.External_Models.ConnectNearby;
+import com.example.helpme.External_Models.LocationsFetch;
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.Extras.Notifications;
 import com.example.helpme.Extras.Permissions;

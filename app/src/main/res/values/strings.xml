@@ -28,8 +28,6 @@
 
     <!--activity_post_posting.xml-->
     <string name="cancel_button">Stop</string>
-
-
     <string name="sign_up">"Don't have an account? Sign Up!</string>
     <string name="logout">Logout</string>
     <string name="phone_email">Phone or Email</string>
@@ -43,6 +41,11 @@
     <string name="location_wifi_access">Please turn on both Location and WiFi to provide your precise location. Thank you.</string>
     <string name="location_wifi_ok">Ok</string>
     <string name="custom_location">pick cutom location</string>
+
+    <!--MapsActivity-->
+    <string name="confirm_dialog_msg">Send this location?</string>
+    <string name="confirm_positive">Yes</string>
+    <string name="confirm_negative">Select again</string>
 
     <!--Notification Channel-->
     <string name="channel_name">helpme notifications</string>

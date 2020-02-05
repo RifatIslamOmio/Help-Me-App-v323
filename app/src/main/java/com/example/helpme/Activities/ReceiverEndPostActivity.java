@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.helpme.Externals.ConnectNearby;
+import com.example.helpme.External_Models.ConnectNearby;
 import com.example.helpme.Extras.Constants;
 import com.example.helpme.R;
 
@@ -74,6 +74,7 @@ public class ReceiverEndPostActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putExtra(Constants.MAP_LATITUDE_KEY, latitude);
         intent.putExtra(Constants.MAP_LONGITUDE_KEY, longitude);
+
         startActivity(intent);
 
     }

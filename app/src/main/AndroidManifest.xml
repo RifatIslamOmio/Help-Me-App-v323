@@ -96,7 +96,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <service
-            android:name=".Externals.FetchAddressIntentService"
+            android:name=".External_Models.FetchAddressIntentService"
             android:exported="false" />
 
         <service android:name=".everything.MyService" />

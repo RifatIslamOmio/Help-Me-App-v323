@@ -1,9 +1,7 @@
-package com.example.helpme.Externals;
+package com.example.helpme.External_Models;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;

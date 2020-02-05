@@ -1,4 +1,4 @@
-package com.example.helpme.Externals;
+package com.example.helpme.External_Models;
 
 import android.app.IntentService;
 import android.content.Intent;

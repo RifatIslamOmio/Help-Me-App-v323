@@ -1,4 +1,4 @@
-package com.example.helpme.Externals;
+package com.example.helpme.External_Models;
 
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -22,7 +22,6 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
     @Override
     protected String doInBackground(LocationsFetch... locationsFetches) {
-        Log.d(Constants.LOCATION_LOG, "doInBackground: ");
 
         //halt till location is enabled
         while (!Constants.IS_LOCATION_ENABLED){
@@ -81,7 +80,7 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
         if(PostActivity.postClicked) {
             //TODO: show progress UI only after post click
-            Toast demo = Toast.makeText(postActivity, "please wait and press again getting accurate location.", Toast.LENGTH_SHORT);
+            Toast demo = Toast.makeText(postActivity, "Please wait and press again. Getting accurate location.", Toast.LENGTH_SHORT);
             demo.show();
 
             progressWasNeeded = true;
@@ -108,7 +107,7 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
         if(postActivity.getLocationsFetch().isLocationAccurate()) {
 
             if(Geocoder.isPresent())
-                postActivity.startAddressFetchService();
+                postActivity.startAddressFetchService(postActivity.getLocationsFetch().getLocation());
             else{
                 Log.d(Constants.ADDRESS_LOG, "onPostExecute: geocoder not available");
             }
