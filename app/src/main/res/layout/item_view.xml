@@ -8,8 +8,8 @@
     android:layout_height="wrap_content"
     android:padding="15dp"
     android:background="@drawable/custom"
-    android:layout_marginLeft="13.5dp"
-    android:layout_marginRight="13.5dp"
+    android:layout_marginLeft="14dp"
+    android:layout_marginRight="14dp"
     android:layout_marginBottom="14dp"
     android:baselineAligned="false">
 
