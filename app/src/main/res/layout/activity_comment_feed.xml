@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFF"
     tools:context=".everything.CommentFeedActivity">
     <include layout="@layout/toolbar_comment_feed"/>
 
@@ -43,9 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="2dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="8dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 

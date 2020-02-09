@@ -8,6 +8,7 @@
     android:elevation="3.5dp"
     app:titleTextColor="#FFF"
     app:title="Profile"
+    app:contentInsetStartWithNavigation="0dp"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 

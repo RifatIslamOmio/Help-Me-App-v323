@@ -8,6 +8,7 @@
     app:titleTextColor="#FFF"
     app:title="User Profile"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    android:id="@+id/toolbar_profile">
+    android:id="@+id/toolbar_profile"
+    app:contentInsetStartWithNavigation="0dp">
 
 </androidx.appcompat.widget.Toolbar>
