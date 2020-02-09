@@ -63,7 +63,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:padding="5dp"
                 android:text="Help Feed"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false" />
 
 
             <Button

@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:weightSum="2"
     android:id="@+id/itemOfRecyclerView"
-    android:layout_height="wrap_content"
     android:padding="15dp"
     android:background="@drawable/custom"
-    android:layout_marginLeft="14dp"
-    android:layout_marginRight="14dp"
-    android:layout_marginBottom="14dp"
-    android:baselineAligned="false">
+    android:layout_marginLeft="13dp"
+    android:layout_marginRight="13dp"
+    android:layout_marginBottom="13.5dp"
+    android:baselineAligned="false"
+    android:elevation="3.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
