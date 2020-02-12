@@ -118,7 +118,7 @@ public class Comment {
                 {
                     temp=temp+"<font color='#FD2929'>"+ s+"</font>"+" ";
                 }
-                else if(s.equals("danger")||s.equals("Dangerous"))
+                else if(s.equals("danger")||s.equals("dangerous"))
                 {
                     temp=temp+"<font color='#FD2929'>"+ s+"</font>"+" ";
                 }
@@ -132,7 +132,7 @@ public class Comment {
                 }
                 else if(s.equals("999")||s.equals("911")||s.equals("police")||s.equals("rab")||s.equals("RAB"))
                 {
-                    temp=temp+"<font color='#FF593D'>"+ s+"</font>"+" ";
+                    temp=temp+"<font color='#FF3D00'>"+ s+"</font>"+" ";
                 }
                 else{temp=temp+s+" ";}
 
