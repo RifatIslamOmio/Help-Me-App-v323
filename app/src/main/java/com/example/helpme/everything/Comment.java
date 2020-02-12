@@ -14,8 +14,7 @@ public class Comment {
     private int upvoteCount;
     private List<String> commentVoters = null;
 
-
-    public Comment() { }
+    public Comment(){}
 
     public Comment(String comment_id, String cUserId, String cUserName,String helpPostId, String date, String time, String commentText) {
         this.comment_id = comment_id;
@@ -101,5 +100,49 @@ public class Comment {
 
     public void setHelpPostId(String helpPostId) {
         this.helpPostId = helpPostId;
+    }
+
+    public String commentFormat()
+    {
+        if(this.commentText.length()<40)
+        {
+            String[] strara = this.commentText.split(" ");
+            String temp ="";
+            for(String s:strara)
+            {
+                if(s.equals("snatcher")||s.equals("Snatcher")||s.equals("attacker"))
+                {
+                    temp=temp+"<font color='#FD2929'>"+ s+"</font>"+" ";
+                }
+                else if(s.equals("robber")||s.equals("Robber")||s.equals("robbing"))
+                {
+                    temp=temp+"<font color='#FD2929'>"+ s+"</font>"+" ";
+                }
+                else if(s.equals("danger")||s.equals("Dangerous"))
+                {
+                    temp=temp+"<font color='#FD2929'>"+ s+"</font>"+" ";
+                }
+                else if(s.equals("Harmful")||s.equals("harmful"))
+                {
+                    temp=temp+"<font color='#FD2929'>"+ s+"</font>"+" ";
+                }
+                else if(s.equals("safe")||s.equals("Safe")||s.equals("secure")||s.equals("rescued"))
+                {
+                    temp=temp+"<font color='#2D81FF'>"+ s+"</font>"+" ";
+                }
+                else if(s.equals("999")||s.equals("911")||s.equals("police")||s.equals("rab")||s.equals("RAB"))
+                {
+                    temp=temp+"<font color='#FF593D'>"+ s+"</font>"+" ";
+                }
+                else{temp=temp+s+" ";}
+
+            }
+            return temp.trim();
+        }
+        else
+        {
+            return this.commentText.trim();
+        }
+
     }
 }

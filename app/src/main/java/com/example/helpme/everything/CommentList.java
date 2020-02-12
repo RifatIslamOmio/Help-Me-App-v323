@@ -1,5 +1,6 @@
 package com.example.helpme.everything;
 
+import android.text.Html;
 import android.view.ViewGroup;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -45,7 +46,8 @@ public class CommentList extends RecyclerView.Adapter<CommentList.MyViewHolder> 
     public void onBindViewHolder(@NonNull CommentList.MyViewHolder holder, final int position) {
         holder.votecounter.setText(list.get(position).getUpvoteCount()+"");
         holder.name.setText(list.get(position).getcUserName());
-        holder.commentText.setText(list.get(position).getCommentText());
+        //holder.commentText.setText(list.get(position).getCommentText());
+        holder.commentText.setText(Html.fromHtml(list.get(position).commentFormat()));
         holder.date.setText(list.get(position).getDate());
         holder.time.setText(list.get(position).getTime());
 
