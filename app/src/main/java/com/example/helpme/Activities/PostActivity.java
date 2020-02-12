@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -63,7 +65,7 @@ public class PostActivity extends AppCompatActivity {
     private boolean currentLocationReceived = false;
     private boolean addressFetched = false;
 
-    private Boolean photoSent = false; public Boolean isPhotoSent() { return photoSent; }
+    private Boolean photoSent = false;
 
     private Photo photo;
     private static final String[] permissions = {
@@ -319,13 +321,53 @@ public class PostActivity extends AppCompatActivity {
 
     public void pickLocationClick(View view) {
 
-        Intent intent = new Intent(this, MapsActivity.class);
+        if(Constants.isIsInternetEnabled(this)) {
 
-        intent.putExtra(Constants.MAP_LATITUDE_KEY, locationsFetch.getBestLocation().getLatitude());
-        intent.putExtra(Constants.MAP_LONGITUDE_KEY, locationsFetch.getBestLocation().getLongitude());
-        intent.putExtra(Constants.MARKER_VISIBILITY_KEY, false);
+            Intent intent = new Intent(this, MapsActivity.class);
 
-        startActivity(intent);
+            try {
+
+                intent.putExtra(Constants.MAP_LATITUDE_KEY, locationsFetch.getBestLocation().getLatitude());
+                intent.putExtra(Constants.MAP_LONGITUDE_KEY, locationsFetch.getBestLocation().getLongitude());
+
+            }catch (NullPointerException e){
+
+                Log.d(Constants.PICK_LOCATION_LOG, "pickLocationClick: map opened with location = null");
+
+            }
+
+            intent.putExtra(Constants.MARKER_VISIBILITY_KEY, false);
+
+            startActivity(intent);
+        }
+
+        else{
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Active Internet required to select location from Map!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d(Constants.PICK_LOCATION_LOG, "onClick: user is turning on internet");
+                            Toast.makeText(PostActivity.this, "please connect to internet and 'Pick A Location'", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    })
+                    .setNegativeButton("Try Again", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Log.d(Constants.PICK_LOCATION_LOG, "onClick: started asyncLocationFetch again!");
+
+                            locationsFetch.checkDeviceLocationSettings();
+                            new AccurateLocationAsync(PostActivity.this).execute(locationsFetch);
+
+                        }
+                    });
+
+            builder.create().show();
+
+        }
 
     }
 
@@ -355,7 +397,7 @@ public class PostActivity extends AppCompatActivity {
         if(!postClicked) //TODO: use in AccurateLocationAsync class. show progress dialog only after postClick
             postClicked = true;
 
-        if(locationsFetch.isLocationAccurate() || accurateLocationAsync.isAsyncLocationDone()) {
+        if(locationsFetch.isLocationAccurate() || locationsFetch.isBestLocationTaken() /* || accurateLocationAsync.isAsyncLocationDone()*/) {
 
             if(locationsFetch.isLocationAccurate() || customLocationTaken || locationsFetch.getBestLocation().getAccuracy() <= 100) {
 
@@ -397,17 +439,16 @@ public class PostActivity extends AppCompatActivity {
         }
 
         else if(!currentLocationReceived){
-            //prompt user to pick location manually from a Map
+            //let user chose proper location
+            takeLocationBtn.setEnabled(true);
+            Toast.makeText(this, "Accurate location not available! please Pick A Location", Toast.LENGTH_LONG).show();
 
-            Toast.makeText(this, "Error! Location not received", Toast.LENGTH_LONG).show();
-
-            Log.d(Constants.LOCATION_LOG, "postClick: current location not received");
-
+            Log.d(Constants.PICK_LOCATION_LOG, "postClick: user prompted for custom location");
         }
 
-        else{
+        else
             Log.d(Constants.LOCATION_LOG, "postClick: location not accurate yet");
-        }
+
 
         if(Constants.isIsInternetEnabled(this) && addressFetched){
 
@@ -493,7 +534,7 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-    String trimmer(String str) {
+    private String trimmer(String str) {
         String temp="";
         for(int i =0;i<str.length();i++)
         {

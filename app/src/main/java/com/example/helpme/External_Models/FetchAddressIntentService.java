@@ -79,9 +79,9 @@ public class FetchAddressIntentService extends IntentService {
 
         // Handle case where no address was found.
         if (addresses == null || addresses.size()  == 0) {
-            if (errorMessage.isEmpty()) {
-                errorMessage = "no address found";
-                Log.e(Constants.ADDRESS_LOG, errorMessage);
+            if (!errorMessage.isEmpty()) {
+                errorMessage = "tap here to view address";
+                Log.d(Constants.ADDRESS_LOG, errorMessage);
             }
             deliverResultToReceiver(Constants.GEO_FAILURE, errorMessage);
         } else {

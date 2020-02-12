@@ -51,7 +51,6 @@ public abstract class Constants {
 
     /**Log Tags*/
     public static final String PERMISSIONS_LOG = "permissions_debug";
-    public static final String WIFI_LOG = "wifi_debug";
     public static final String NEARBY_LOG = "nearby_debug";
     public static final String RECEIVER_END_POST_ACTIVITY = "receiverend_activity";
     public static final String LOCATION_LOG = "location_debug";

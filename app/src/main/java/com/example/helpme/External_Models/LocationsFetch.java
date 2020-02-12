@@ -50,8 +50,8 @@ public class LocationsFetch {
         this.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
 
         this.locationRequest = LocationRequest.create();
-        locationRequest.setInterval(2500);
-        locationRequest.setFastestInterval(1000);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(2500);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         this.locationCallback = new LocationCallback() {
@@ -168,7 +168,7 @@ public class LocationsFetch {
         return onLocationResultWorks;
     }
 
-    public boolean isBestLocationTaken() { return bestLocationTaken; }
+    public boolean isBestLocationTaken() { Log.d(Constants.LOCATION_LOG, "isBestLocationTaken: bestLocationTaken = "+bestLocationTaken); return bestLocationTaken; }
 
     public boolean isLocationEnabledLM(){
         LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
@@ -184,6 +184,7 @@ public class LocationsFetch {
 
     public void setBestLocationTaken(boolean bestLocationTaken) {
         this.bestLocationTaken = bestLocationTaken;
+        Log.d(Constants.LOCATION_LOG, "setBestLocationTaken: bestLocationTaken = "+this.bestLocationTaken);
     }
 
 

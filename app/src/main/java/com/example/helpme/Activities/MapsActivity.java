@@ -103,10 +103,11 @@ public class MapsActivity extends FragmentActivity implements
         else if(!Constants.isIsWifiEnabled(this))
             toastText = "Turn On WiFi";
 
-        Toast.makeText(this
-                , toastText + " to show your location"
-                , Toast.LENGTH_LONG)
-                .show();
+        if(!toastText.equals(""))
+            Toast.makeText(this
+                    , toastText + " to show your location"
+                    , Toast.LENGTH_LONG)
+                    .show();
 
         return false;
     }
@@ -115,7 +116,7 @@ public class MapsActivity extends FragmentActivity implements
     public void onMyLocationClick(@NonNull Location location) {
 
         if(location.getAccuracy()>150)
-            Toast.makeText(this, "Location Accuracy is LOW"+location, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Location Accuracy is LOW. press again please!"+location, Toast.LENGTH_SHORT).show();
 
     }
 

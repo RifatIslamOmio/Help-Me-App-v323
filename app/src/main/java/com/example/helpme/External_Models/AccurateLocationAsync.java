@@ -12,8 +12,8 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
     private PostActivity postActivity;
     private int count;
-    private boolean progressWasNeeded = false, asyncLocationDone= false;
-    public boolean isAsyncLocationDone() { return asyncLocationDone; }
+    private boolean progressWasNeeded = false, /*asyncLocationDone= false,*/ isLocationNull;
+    //public boolean isAsyncLocationDone() { return asyncLocationDone; }
 
     public AccurateLocationAsync(PostActivity postActivity) {
         this.postActivity = postActivity;
@@ -22,6 +22,8 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
     @Override
     protected String doInBackground(LocationsFetch... locationsFetches) {
+
+        isLocationNull = false;
 
         //halt till location is enabled
         while (!Constants.IS_LOCATION_ENABLED){
@@ -60,12 +62,26 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
             }
 
             if(this.count<=0) {
-                Log.d(Constants.LOCATION_LOG, "doInBackground: best location taken");
-
-                locationsFetches[0].setBestLocationTaken(true);
+                Log.d(Constants.LOCATION_LOG, "doInBackground: finished");
 
                 locationsFetches[0].stopLocationUpdates();
-                return locationsFetches[0].getBestLocation().getLatitude() + " " + locationsFetches[0].getBestLocation().getLongitude();
+
+                try{
+
+                    locationsFetches[0].setBestLocationTaken(true);
+
+                    return locationsFetches[0].getBestLocation().getLatitude() + " " + locationsFetches[0].getBestLocation().getLongitude();
+
+                }catch (NullPointerException e){
+
+                    Log.d(Constants.LOCATION_LOG, "doInBackground: best location not taken");
+
+                    locationsFetches[0].setBestLocationTaken(false);
+
+                    isLocationNull = true;
+                    return "null";
+                }
+
             }
         }
 
@@ -80,8 +96,8 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
 
         if(PostActivity.postClicked) {
             //TODO: show progress UI only after post click
-            Toast demo = Toast.makeText(postActivity, "Please wait and press again. Getting accurate location.", Toast.LENGTH_SHORT);
-            demo.show();
+
+            Toast.makeText(postActivity, "Move your device in zigzag. Getting accurate location.", Toast.LENGTH_SHORT).show();
 
             progressWasNeeded = true;
         }
@@ -91,31 +107,34 @@ public class AccurateLocationAsync extends AsyncTask <LocationsFetch,Integer, St
     protected void onPostExecute(String latlong) {
         Log.d(Constants.LOCATION_LOG, "onPostExecute: latlong = "+latlong);
 
-        asyncLocationDone = true;
+        //asyncLocationDone = true;
 
         if(progressWasNeeded) {
             Toast demo = Toast.makeText(postActivity, "ready to send POST now", Toast.LENGTH_LONG);
             demo.show();
         }
 
-        //if(postActivity)
-        ConnectNearby.setLatlongStringToSend(latlong);
-        postActivity.helpPost.setLatlong(latlong);
+        if(!isLocationNull) {
 
-        Log.d(Constants.LOCATION_LOG, "onPostExecute: "+postActivity.getLocationsFetch().isLocationAccurate());
-        //starting reverse geo here. CHECKKK!
-        if(postActivity.getLocationsFetch().isLocationAccurate()) {
+            ConnectNearby.setLatlongStringToSend(latlong);
+            postActivity.helpPost.setLatlong(latlong);
 
-            if(Geocoder.isPresent())
-                postActivity.startAddressFetchService(postActivity.getLocationsFetch().getLocation());
-            else{
-                Log.d(Constants.ADDRESS_LOG, "onPostExecute: geocoder not available");
-            }
+            Log.d(Constants.LOCATION_LOG, "onPostExecute: " + postActivity.getLocationsFetch().isLocationAccurate());
 
+            if (postActivity.getLocationsFetch().isLocationAccurate()) {
+
+                if (Geocoder.isPresent())
+                    postActivity.startAddressFetchService(postActivity.getLocationsFetch().getLocation());
+                else
+                    Log.d(Constants.ADDRESS_LOG, "onPostExecute: geocoder not available");
+
+            } else
+                Log.d(Constants.ADDRESS_LOG, "location not accurate?");
         }
 
-        else
-            Log.d(Constants.ADDRESS_LOG, "location not accurate?");
+        else{
+
+        }
 
     }
 
