@@ -7,9 +7,9 @@
     android:elevation="3.5dp"
     app:contentInsetStartWithNavigation="0dp"
     app:titleTextColor="#FFF"
-    app:title="Post Comments"
+    app:title="Settings"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    android:id="@+id/comment_feed_toolbar">
+    android:id="@+id/settings_toolbar">
 
 
 </androidx.appcompat.widget.Toolbar>

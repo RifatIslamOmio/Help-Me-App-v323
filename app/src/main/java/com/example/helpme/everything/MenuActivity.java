@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,20 +49,40 @@ public class MenuActivity extends AppCompatActivity {
     Button seek_help;
     Button help_feed;
     Button profile;
+    Button settings;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        startService(new Intent(getApplicationContext(),MyService.class));
+
+        //retrieving the status
+        SharedPreferences sharedPreferences = getSharedPreferences(SettingsActivity.SHARED_PREFERENCES,MODE_PRIVATE);
+        boolean switch_status = sharedPreferences.getBoolean(SettingsActivity.notification_switch_pref,true);
+        if(switch_status)
+        {
+            try {
+                //Toast.makeText(getApplicationContext(),"Starting",Toast.LENGTH_SHORT).show();
+                startService(new Intent(getApplicationContext(),MyService.class)); //Push Notification Service
+            }catch (Exception e){}
+        }
+       else
+        {
+            try {
+                //Toast.makeText(getApplicationContext(),"Stopping",Toast.LENGTH_SHORT).show();
+                stopService(new Intent(getApplicationContext(),MyService.class));
+            }catch (Exception e){}
+        }
 
         promptPermissions();
-
         init();
 
         logout = findViewById(R.id.logout_btn);
         seek_help = findViewById(R.id.btn_seek_help);
         help_feed = findViewById(R.id.btn_help_feed);
         profile = findViewById(R.id.btn_profile);
+        settings = findViewById(R.id.btn_app_settings);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +111,13 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+            }
+        });
 
     }
 
@@ -222,9 +250,7 @@ public class MenuActivity extends AppCompatActivity {
                     });
             AlertDialog alert =  builder.create();
             alert.show();
-
         }
-
     }
 
     private void turnOnNearby(){

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.helpme.R;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -71,6 +72,7 @@ public class CommentFeedActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendBtn.setEnabled(false);
                 String comment_text = commentText.getText().toString().trim();
                 if(!comment_text.equals(""))
                 {
@@ -91,10 +93,16 @@ public class CommentFeedActivity extends AppCompatActivity {
                                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                             } catch (Exception e) {}
 
+                            sendBtn.setEnabled(true);
                             recyclerViewComment.smoothScrollToPosition(HelpList.COMMENT_COUNT+1);
                             Toast.makeText(getApplicationContext(),"Comment Added",Toast.LENGTH_SHORT).show();
                         }
-
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error: Check Internet Connection!", Toast.LENGTH_SHORT).show();
+                            sendBtn.setEnabled(true);
+                        }
                     });
 
                     reference.child(help_post_id).child("commentCount").setValue(list.size()+1);

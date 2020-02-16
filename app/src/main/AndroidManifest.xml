@@ -31,8 +31,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".everything.FullScreenImage"></activity>
-        <activity android:name=".everything.FullScreenImageView" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".everything.SettingsActivity" />
+        <activity android:name=".everything.FullScreenImage" />
         <activity android:name=".everything.CommentFeedActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -98,13 +101,10 @@
         <service
             android:name=".External_Models.FetchAddressIntentService"
             android:exported="false" />
-
         <service android:name=".everything.MyService" />
         <service
             android:name=".Services.NearbyReceiveScheduler"
-            android:exported="false"
-            />
-
+            android:exported="false" />
     </application>
 
 </manifest>

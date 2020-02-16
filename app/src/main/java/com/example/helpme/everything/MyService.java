@@ -29,8 +29,6 @@ public class MyService extends Service {
     long delChildCount=0;
     ArrayList<Help> list;
 
-
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -47,7 +45,7 @@ public class MyService extends Service {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 childCount = dataSnapshot.getChildrenCount();
-                Log.d("DATA","first"+":: "+childCount);
+                //Log.d("DATA","first"+":: "+childCount);
             }
 
             @Override
@@ -74,10 +72,8 @@ public class MyService extends Service {
                 {
                     childCount=dataSnapshot.getChildrenCount();
                     //Toast.makeText(getApplicationContext(),"Data Change!",Toast.LENGTH_SHORT).show();
-                    Log.d("DATA","DATA Changed"+":: "+dataSnapshot.getChildrenCount());
+                    //Log.d("DATA","DATA Changed"+":: "+dataSnapshot.getChildrenCount());
                     //Generate Notification Here.......
-
-
 
                     list = new ArrayList<>();
                     Help help=null;
@@ -95,21 +91,15 @@ public class MyService extends Service {
                                 help.getSeeker_name()+" is asking for help!");
 
                     }
-
-
                 }
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
-
         return START_STICKY;
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
